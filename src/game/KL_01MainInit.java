@@ -40,12 +40,14 @@ public class KL_01MainInit {
         character.setPosition(new Vec2(7,-9)); //по х, у позиция
         character.addImage(new BodyImage("data/student.png", 4)); //("ссылка", высота)
         character.setLinearVelocity(new Vec2(-6,0)); //скорость по х, у !непостоянная скорость
-
+        character.setName("boy");
         //second character
         DynamicBody secCharacter = new DynamicBody(world, new BoxShape(1,2));
         secCharacter.setPosition(new Vec2(-7,-9));
         secCharacter.addImage(new BodyImage("data/books.png", 4));
         secCharacter.setLinearVelocity(new Vec2(6,0));
+        secCharacter.setName("books");
+
 
         return new UserView(world, width, height);
     }
@@ -53,7 +55,7 @@ public class KL_01MainInit {
     private static void createAndStartGame(){
         WorldView view = createWorld();
         JComponent viewWithBackground = addBackground2View(view); //вызываем background (swing)
-        playBacksound(); //вызываем sound
+//        playBacksound(); //вызываем sound
         //у view есть world -> берем world в котором есть character, берем character, index)
         KeyListener listener = new KeyboardHandlerTest(view.getWorld().getDynamicBodies().get(1));
         wrapWithSwingAndShow(viewWithBackground,listener); //обертываем в swing
