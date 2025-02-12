@@ -55,7 +55,7 @@ public class KL_01MainInit {
     private static void createAndStartGame(){
         WorldView view = createWorld();
         JComponent viewWithBackground = addBackground2View(view); //вызываем background (swing)
-//        playBacksound(); //вызываем sound
+        playBacksound(); //вызываем sound
         //у view есть world -> берем world в котором есть character, берем character, index)
         KeyListener listener = new KeyboardHandlerTest(view.getWorld().getDynamicBodies().get(1));
         wrapWithSwingAndShow(viewWithBackground,listener); //обертываем в swing
@@ -75,7 +75,7 @@ public class KL_01MainInit {
             view.setBounds(0, 0, width, height); //прямоуг resize от коорд. до width height в px
 
             //backImage считываем
-            BufferedImage backImage = ImageIO.read(new File("data/background.jpg"));
+            BufferedImage backImage = ImageIO.read(new File("data/giphy.gif"));
             JLabel background = new JLabel(new ImageIcon(backImage)); //берем компонент JLabel и заполняем туда img
             layeredPane.add(background,1); //background дальше чем view
             background.setBounds(0, 0, width, height);
@@ -92,6 +92,21 @@ public class KL_01MainInit {
             SoundClip pickupSound = new SoundClip("data/backsound.wav"); //класс SoundClip - загружаем туда файл звука
             pickupSound.setVolume(.05); //задаем громкость
             pickupSound.loop(); //повтор (.play() -> до завершения аудиодорожки)
+
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void playJumpSound(){
+        try {
+            SoundClip pickupJumpSound = new SoundClip("data/jumpSound.wav"); //класс SoundClip - загружаем туда файл звука
+            pickupJumpSound.setVolume(.05); //задаем громкость
+            pickupJumpSound.play();
 
         } catch (UnsupportedAudioFileException e) {
             throw new RuntimeException(e);

@@ -6,6 +6,8 @@ import org.jbox2d.common.Vec2;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import static game.KL_01MainInit.playJumpSound;
+
 public class KeyboardHandlerTest extends KeyAdapter {
     @Override
     //функция кей прессед
@@ -27,6 +29,7 @@ public class KeyboardHandlerTest extends KeyAdapter {
         switch (key) {
             case KeyEvent.VK_W: //class KeyEvent
                 character.setLinearVelocity(new Vec2(0f, 5f));
+                playJumpSound();
 //                System.out.println("jump");
                 break;
             case KeyEvent.VK_A:
