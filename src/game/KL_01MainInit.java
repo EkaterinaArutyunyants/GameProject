@@ -16,6 +16,7 @@ import java.io.IOException;
 public class KL_01MainInit {
     private static int width=1024;
     private static int height = 800;
+    public static SoundClip pickupJumpSound; //описание переменной
 
     private static WorldView createWorld(){
         World world = new World(); //создаем контейнер world
@@ -41,6 +42,8 @@ public class KL_01MainInit {
         character.addImage(new BodyImage("data/student.png", 4)); //("ссылка", высота)
         character.setLinearVelocity(new Vec2(-6,0)); //скорость по х, у !непостоянная скорость
         character.setName("boy");
+        createJumpSound();
+
         //second character
         DynamicBody secCharacter = new DynamicBody(world, new BoxShape(1,2));
         secCharacter.setPosition(new Vec2(-7,-9));
@@ -75,7 +78,7 @@ public class KL_01MainInit {
             view.setBounds(0, 0, width, height); //прямоуг resize от коорд. до width height в px
 
             //backImage считываем
-            BufferedImage backImage = ImageIO.read(new File("data/giphy.gif"));
+            BufferedImage backImage = ImageIO.read(new File("data/background.jpg"));
             JLabel background = new JLabel(new ImageIcon(backImage)); //берем компонент JLabel и заполняем туда img
             layeredPane.add(background,1); //background дальше чем view
             background.setBounds(0, 0, width, height);
@@ -102,11 +105,10 @@ public class KL_01MainInit {
         }
     }
 
-    public static void playJumpSound(){
+    public static void createJumpSound(){
         try {
-            SoundClip pickupJumpSound = new SoundClip("data/jumpSound.wav"); //класс SoundClip - загружаем туда файл звука
+            pickupJumpSound = new SoundClip("data/jumpSound.wav"); //класс SoundClip - загружаем туда файл звука
             pickupJumpSound.setVolume(.05); //задаем громкость
-            pickupJumpSound.play();
 
         } catch (UnsupportedAudioFileException e) {
             throw new RuntimeException(e);

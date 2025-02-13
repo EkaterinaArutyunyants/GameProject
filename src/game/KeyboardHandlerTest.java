@@ -6,7 +6,7 @@ import org.jbox2d.common.Vec2;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import static game.KL_01MainInit.playJumpSound;
+import static game.KL_01MainInit.pickupJumpSound;
 
 public class KeyboardHandlerTest extends KeyAdapter {
     @Override
@@ -29,7 +29,7 @@ public class KeyboardHandlerTest extends KeyAdapter {
         switch (key) {
             case KeyEvent.VK_W: //class KeyEvent
                 character.setLinearVelocity(new Vec2(0f, 5f));
-                playJumpSound();
+                pickupJumpSound.play();
 //                System.out.println("jump");
                 break;
             case KeyEvent.VK_A:
