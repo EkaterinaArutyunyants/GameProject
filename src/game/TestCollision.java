@@ -51,7 +51,7 @@ public class TestCollision {
             @Override
             public void collide(CollisionEvent collisionEvent) {
                 //System.out.println(collisionEvent);
-                if (collisionEvent.getOtherBody().getName().equals("books")) {
+                if ("books".equals(collisionEvent.getOtherBody().getName())) {
                     pickupJumpSound.play();
                 }
             }
