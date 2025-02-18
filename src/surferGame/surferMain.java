@@ -25,6 +25,9 @@ public class surferMain {
         // platform _
         StaticBody ground = new StaticBody(world, new BoxShape(50, 0.5f)); //(пар-р, new прямоуг(полШир,полДлин float))
         ground.setPosition(new Vec2(0f, -7.5f)); //.object(new class(по x,y позиция))
+        BoxShape boxShape = new BoxShape(50, 0.5f);
+        ground.setFillColor(new Color(0,0,0,0));
+        ground.setLineColor(new Color(0,0,0,0));
 
         //serfer
         DynamicBody character = new DynamicBody(world, new BoxShape(1,2));
