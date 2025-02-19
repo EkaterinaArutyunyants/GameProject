@@ -60,41 +60,6 @@ public class TestWalker {
         }
     }
 
-    public static class Boy extends Walker {
-        private static final float JUMP_SPEED = 10.0f; // Initial jump speed
-        private static final float WALK_SPEED = 5.0f; // Walking speed
-
-        // Constructor
-        public Boy(World world) {
-            super(world); // constructor Walker
-            Shape shape = new BoxShape(1.0f, 2.0f);
-            this.addImage(new BodyImage("data/student.png", 4));
-            this.setPosition(new Vec2(0, -9));
-            this.setName("boy");
-        }
-
-        // Method to make the boy jump
-        public void jump() {
-            super.jump(JUMP_SPEED); // Call the jump method from Walker
-        }
-
-        // Method to start walking to the right
-        public void walkRight() {
-            super.startWalking(WALK_SPEED); // Start walking with + speed
-        }
-
-        // Method to start walking to the left
-        public void walkLeft() {
-            super.startWalking(-WALK_SPEED); // Start walking with - speed
-        }
-
-        // Method to stop walking
-        public void stopWalking() {
-            super.stopWalking(); // Stop walking
-        }
-    }
-
-    private static Boy characterStudent;
 
     private static WorldView createWorld(){
         World world = new World(); //создаем контейнер world
@@ -115,7 +80,11 @@ public class TestWalker {
         platformRight.setFillColor(Color.GREEN);
 
         //first character
-        characterStudent = new Boy(world);
+
+        Walker createWalker = new Walker(world, new BoxShape(1f, 2f));
+        createWalker.setPosition(new Vec2(7,-9)); //по х, у позиция
+        createWalker.addImage(new BodyImage("data/student.png", 4)); //("ссылка", высота)
+
 
 //        character = new DynamicBody(world, new BoxShape(1,2));
 //        character.setPosition(new Vec2(7,-9)); //по х, у позиция
