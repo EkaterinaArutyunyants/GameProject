@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class surferMain {
+public class SurferMain {
     private static int width=610;
     private static int height = 430;
     public static SoundClip pickupJumpSound; //описание переменной
@@ -118,7 +118,7 @@ public class surferMain {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(surferMain::createAndStartGame);
+        SwingUtilities.invokeLater(SurferMain::createAndStartGame);
     }
 }
 

@@ -37,28 +37,28 @@ public class TestWalker {
             System.out.println("keyPressed(" + e + ")");
         }
 
-        @Override
-        public void keyReleased(KeyEvent e) {
-            int key = e.getKeyCode();
-            switch (key) {
-                case KeyEvent.VK_W: // Jump
-                    characterStudent.jump();
-                    pickupJumpSound.play();
-                    break;
-                case KeyEvent.VK_A: // Move left
-                    characterStudent.walkLeft();
-                    break;
-                case KeyEvent.VK_D: // Move right
-                    characterStudent.walkRight();
-                    break;
-                case KeyEvent.VK_S: // Stop walking
-                    characterStudent.stopWalking();
-                    break;
-                default:
-                    System.out.println("Unsupported key keyReleased " + e);
-            }
-        }
-    }
+//        @Override
+//        public void keyReleased(KeyEvent e) {
+//            int key = e.getKeyCode();
+//            switch (key) {
+//                case KeyEvent.VK_W: // Jump
+//                    characterStudent.jump();
+//                    pickupJumpSound.play();
+//                    break;
+//                case KeyEvent.VK_A: // Move left
+//                    characterStudent.walkLeft();
+//                    break;
+//                case KeyEvent.VK_D: // Move right
+//                    characterStudent.walkRight();
+//                    break;
+//                case KeyEvent.VK_S: // Stop walking
+//                    characterStudent.stopWalking();
+//                    break;
+//                default:
+//                    System.out.println("Unsupported key keyReleased " + e);
+//            }
+//        }
+//    }
 
 
     private static WorldView createWorld(){
@@ -242,8 +242,8 @@ public class TestWalker {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(TestWalker::createAndStartGame);
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(TestWalker::createAndStartGame);
     }
 }
 
