@@ -66,11 +66,11 @@ public class TestWalker {
 
         // Constructor
         public Boy(World world) {
-            super(world); // Call the constructor of Walker
-            Shape shape = new BoxShape(1.0f, 2.0f); // Example shape (a box)
-            this.addImage(new BodyImage("data/student.png", 4)); // Add an image for the boy
-            this.setPosition(new Vec2(0, -9)); // Set initial position
-            this.setName("boy"); // Set name for collision detection
+            super(world); // constructor Walker
+            Shape shape = new BoxShape(1.0f, 2.0f);
+            this.addImage(new BodyImage("data/student.png", 4));
+            this.setPosition(new Vec2(0, -9));
+            this.setName("boy");
         }
 
         // Method to make the boy jump
@@ -80,12 +80,12 @@ public class TestWalker {
 
         // Method to start walking to the right
         public void walkRight() {
-            super.startWalking(WALK_SPEED); // Start walking with a positive speed
+            super.startWalking(WALK_SPEED); // Start walking with + speed
         }
 
         // Method to start walking to the left
         public void walkLeft() {
-            super.startWalking(-WALK_SPEED); // Start walking with a negative speed
+            super.startWalking(-WALK_SPEED); // Start walking with - speed
         }
 
         // Method to stop walking
