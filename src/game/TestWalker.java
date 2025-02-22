@@ -1,7 +1,6 @@
 package game;
 
 import city.cs.engine.*;
-import city.cs.engine.Shape;
 import org.jbox2d.common.Vec2;
 
 import javax.imageio.ImageIO;
@@ -20,45 +19,33 @@ public class TestWalker {
     private static int width=1024;
     private static int height = 800;
 
-    public static SoundClip pickupJumpSound; //описание переменной
-    private static DynamicBody character;
-
-    private static int redBallCounter = 0;
-    private static int maxRedBallCounter = 3;
-    private static long nextRedBallTime;
-
-    private static int yellowBallCounter = 0;
-    private static int maxYellowBallCounter = 3;
-    private static long nextYellowBallTime;
+    private static  Walker walker;
 
     public static class KeyboardHandlerFlip extends KeyAdapter {
         @Override
-        public void keyPressed(KeyEvent e) {
-            System.out.println("keyPressed(" + e + ")");
-        }
+        public void keyPressed(KeyEvent e){}
 
-//        @Override
-//        public void keyReleased(KeyEvent e) {
-//            int key = e.getKeyCode();
-//            switch (key) {
-//                case KeyEvent.VK_W: // Jump
-//                    characterStudent.jump();
-//                    pickupJumpSound.play();
-//                    break;
-//                case KeyEvent.VK_A: // Move left
-//                    characterStudent.walkLeft();
-//                    break;
-//                case KeyEvent.VK_D: // Move right
-//                    characterStudent.walkRight();
-//                    break;
-//                case KeyEvent.VK_S: // Stop walking
-//                    characterStudent.stopWalking();
-//                    break;
-//                default:
-//                    System.out.println("Unsupported key keyReleased " + e);
-//            }
-//        }
-//    }
+        @Override
+        public void keyReleased(KeyEvent e) {
+            int key = e.getKeyCode();
+            switch (key) {
+                case KeyEvent.VK_W: // Jump
+                    walker.jump(10f);
+                    break;
+                case KeyEvent.VK_A: // Move left
+                    walker.startWalking(-5f);
+                    break;
+                case KeyEvent.VK_D: // Move right
+                    walker.startWalking(5f);
+                    break;
+                case KeyEvent.VK_S: // Stop walking
+                    walker.stopWalking();
+                    break;
+                default:
+                    System.out.println("Unsupported key keyReleased " + e);
+            }
+        }
+    }
 
 
     private static WorldView createWorld(){
@@ -81,87 +68,11 @@ public class TestWalker {
 
         //first character
 
-        Walker createWalker = new Walker(world, new BoxShape(1f, 2f));
-        createWalker.setPosition(new Vec2(7,-9)); //по х, у позиция
-        createWalker.addImage(new BodyImage("data/student.png", 4)); //("ссылка", высота)
+        walker = new Walker(world, new BoxShape(1f, 2f));
+        walker.setPosition(new Vec2(7,-2)); //по х, у позиция
+        walker.addImage(new BodyImage("data/student.png", 4)); //("ссылка", высота)
 
 
-//        character = new DynamicBody(world, new BoxShape(1,2));
-//        character.setPosition(new Vec2(7,-9)); //по х, у позиция
-//        character.addImage(new BodyImage("data/student.png", 4)); //("ссылка", высота)
-//        character.setLinearVelocity(new Vec2(-6,0)); //скорость по х, у !непостоянная скорость
-//        character.setName("boy");
-//        createJumpSound();
-//        character.setAlwaysOutline(true);
-
-//        character.addCollisionListener(new CollisionListener() {
-//
-//            @Override
-//            public void collide(CollisionEvent collisionEvent) {
-//                if ("redBall".equals(collisionEvent.getOtherBody().getName())) {
-//                    character.destroy();
-//                }
-//            }
-//        });
-
-        StepListener stepListener = new StepListener() {
-            @Override
-            public void preStep(StepEvent stepEvent) {
-//               if (redBallCounter < maxRedBallCounter && nextRedBallTime < System.currentTimeMillis()) {
-//                   DynamicBody redBall = new DynamicBody(world, new CircleShape(0.2f));
-//                   redBall.setPosition(new Vec2(-10, -9));
-//                   redBall.setFillColor(Color.RED);
-//                   redBall.setLinearVelocity(new Vec2(5, 0f));
-//                   redBall.setName("redBall");
-//                   redBallCounter++;
-//                   nextRedBallTime = System.currentTimeMillis() + 2000;
-//               }
-                if (yellowBallCounter < maxYellowBallCounter && nextYellowBallTime < System.currentTimeMillis()) {
-                    DynamicBody yellowBall = new DynamicBody(world, new CircleShape(0.2f));
-                    yellowBall.setPosition(new Vec2(-10, -9));
-                    yellowBall.setFillColor(Color.yellow);
-                    yellowBall.setLinearVelocity(new Vec2(5, 0f));
-                    yellowBall.setName("yellowBall");
-                    yellowBall.addCollisionListener(new CollisionListener() {
-
-                        @Override
-                        public void collide(CollisionEvent collisionEvent) {
-                            if ("boy".equals(collisionEvent.getOtherBody().getName())) {
-                                yellowBall.destroy();
-                                yellowBallCounter--;
-                            }
-                        }
-                    });
-                    yellowBallCounter++;
-                    nextYellowBallTime = System.currentTimeMillis() + 2000;
-                }
-            }
-
-            @Override
-            public void postStep(StepEvent stepEvent) {
-
-            }
-        };
-        world.addStepListener(stepListener);
-
-//        character.addCollisionListener(new CollisionListener() {
-//
-//            @Override
-//            public void collide(CollisionEvent collisionEvent) {
-//                //System.out.println(collisionEvent);
-//                if ("books".equals(collisionEvent.getOtherBody().getName())) {
-//                    pickupJumpSound.play();
-//                }
-//            }
-//        });
-
-        //second character
-//        DynamicBody secCharacter = new DynamicBody(world, new BoxShape(1,2));
-//        secCharacter.setPosition(new Vec2(-7,-9));
-//        secCharacter.addImage(new BodyImage("data/books.png", 4));
-//        secCharacter.setLinearVelocity(new Vec2(6,0));
-//        secCharacter.setName("books");
-//        secCharacter.setAlwaysOutline(true);
 
         return new UserView(world, width, height);
     }
@@ -201,35 +112,6 @@ public class TestWalker {
         return view;
     }
 
-    private static void playBacksound(){
-        try {
-            SoundClip pickupSound = new SoundClip("data/backsound.wav"); //класс SoundClip - загружаем туда файл звука
-            pickupSound.setVolume(.05); //задаем громкость
-            pickupSound.loop(); //повтор (.play() -> до завершения аудиодорожки)
-
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void createJumpSound(){
-        try {
-            pickupJumpSound = new SoundClip("data/jumpSound.wav"); //класс SoundClip - загружаем туда файл звука
-            pickupJumpSound.setVolume(.05); //задаем громкость
-
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private static void wrapWithSwingAndShow(JComponent view, KeyListener listener){ //(тип пар-р, тип пар-р)
         final JFrame frame = new JFrame("KL_01"); //создаем frame + название
         frame.setSize(width,height); //задаем размер
@@ -242,8 +124,8 @@ public class TestWalker {
         frame.setVisible(true);
     }
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(TestWalker::createAndStartGame);
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(TestWalker::createAndStartGame);
     }
 }
 
