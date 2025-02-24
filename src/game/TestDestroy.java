@@ -110,15 +110,15 @@ public class TestDestroy {
         StepListener stepListener = new StepListener() {
             @Override
             public void preStep(StepEvent stepEvent) {
-//               if (redBallCounter < maxRedBallCounter && nextRedBallTime < System.currentTimeMillis()) {
-//                   DynamicBody redBall = new DynamicBody(world, new CircleShape(0.2f));
-//                   redBall.setPosition(new Vec2(-10, -9));
-//                   redBall.setFillColor(Color.RED);
-//                   redBall.setLinearVelocity(new Vec2(5, 0f));
-//                   redBall.setName("redBall");
-//                   redBallCounter++;
-//                   nextRedBallTime = System.currentTimeMillis() + 2000;
-//               }
+               if (redBallCounter < maxRedBallCounter && nextRedBallTime < System.currentTimeMillis()) {
+                   DynamicBody redBall = new DynamicBody(world, new CircleShape(0.2f));
+                   redBall.setPosition(new Vec2(-10, -9));
+                   redBall.setFillColor(Color.RED);
+                   redBall.setLinearVelocity(new Vec2(5, 0f));
+                   redBall.setName("redBall");
+                   redBallCounter++;
+                   nextRedBallTime = System.currentTimeMillis() + 2000;
+               }
                 if (yellowBallCounter < maxYellowBallCounter && nextYellowBallTime < System.currentTimeMillis()) {
                     DynamicBody yellowBall = new DynamicBody(world, new CircleShape(0.2f));
                     yellowBall.setPosition(new Vec2(-10, -9));
