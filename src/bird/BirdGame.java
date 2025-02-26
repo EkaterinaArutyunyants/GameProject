@@ -34,6 +34,13 @@ public class BirdGame {
     private static int maxHeartCounter = 5;
     private static long nextHeartTime;
 
+    private static float[] heightsUp = {15f,12f,17f};
+    private static float[] heightsDown = {15f,17f,12f};
+    private static int idxH = 0;
+
+    private static int health = 3;
+
+
     public static class KeyboardHandler extends KeyAdapter {
         //функция кей релисд
         @Override
@@ -60,7 +67,6 @@ public class BirdGame {
         bird.setLinearVelocity(new Vec2(7,0)); //скорость по х, у !непостоянная скорость
         bird.setName("bird");
 
-
         //pipes, coins, hearts
         StepListener stepListener = new StepListener() {
 
@@ -68,18 +74,21 @@ public class BirdGame {
             public void preStep(StepEvent stepEvent) {
                 //upper pipes
                 if (pipeUpCounter < maxPipeUpCounter && nextPipeUpTime < System.currentTimeMillis()) {
-                    DynamicBody pipeUp = new DynamicBody(world, new BoxShape(3.5f, 15f));
-                    pipeUp.setPosition(new Vec2(15,15));
-                    pipeUp.addImage(new BodyImage("data/pipeUp.png", 30)); //("ссылка", высота)
+                    DynamicBody pipeUp = new DynamicBody(world, new BoxShape(3.5f, heightsUp[idxH]));
+                    pipeUp.setPosition(new Vec2(35,15));
+                    pipeUp.addImage(new BodyImage("data/pipeUp.png", heightsUp[idxH] * 2)); //("ссылка", высота)
                     pipeUp.setGravityScale(0f);
                     pipeUp.setLinearVelocity(new Vec2(-7,0));
                     pipeUp.setName("pipeUp");
+                    pipeUp.setAlwaysOutline(true);
                     bird.addCollisionListener(new CollisionListener() {
 
                         @Override
                         public void collide(CollisionEvent collisionEvent) {
                             if("pipeUp".equals(collisionEvent.getOtherBody().getName())) {
-                                bird.destroy();
+                                health--;
+                                if(health <= 0)  //1 operator
+                                    bird.destroy();
                             }
                         }
                     });
@@ -90,9 +99,9 @@ public class BirdGame {
 
                 //down pipes
                 if (pipeDownCounter < maxPipeDownCounter && nextPipeDownTime < System.currentTimeMillis()) {
-                    DynamicBody pipeDown = new DynamicBody(world, new BoxShape(3.5f, 15f));
-                    pipeDown.setPosition(new Vec2(15,-22f));
-                    pipeDown.addImage(new BodyImage("data/pipeDown.png", 30)); //("ссылка", высота)
+                    DynamicBody pipeDown = new DynamicBody(world, new BoxShape(3.5f, heightsDown[idxH]));
+                    pipeDown.setPosition(new Vec2(35,-22f));
+                    pipeDown.addImage(new BodyImage("data/pipeDown.png", heightsDown[idxH] * 2)); //("ссылка", высота)
                     pipeDown.setGravityScale(0f);
                     pipeDown.setLinearVelocity(new Vec2(-7,0));
                     pipeDown.setName("pipeDown");
@@ -100,10 +109,16 @@ public class BirdGame {
                         @Override
                         public void collide(CollisionEvent collisionEvent) {
                             if("pipeDown".equals(collisionEvent.getOtherBody().getName())) {
-                                bird.destroy();
+                                health--;
+                                if(health <= 0)  //1 operator
+                                    bird.destroy();
                             }
                         }
                     });
+                    idxH++;
+                    if (idxH == heightsUp.length) {
+                        idxH = 0;
+                    }
                     pipeDownCounter--; //infinity pipes down
                     pipeDownCounter++;
                     nextPipeDownTime = System.currentTimeMillis() + 4000;
@@ -146,6 +161,7 @@ public class BirdGame {
                             if ("bird".equals(collisionEvent.getOtherBody().getName())) {
                                 heart.destroy();
                                 heartCounter--;
+                                health++;
                             }
                         }
                     });
@@ -178,7 +194,7 @@ public class BirdGame {
                 //string before start
                 g.setColor(Color.darkGray);
                 g.setFont(foregroundFont);
-                g.drawString("Press space to start", (getWidth()/2) - 500, 400);
+                g.drawString("Press space to start " + health, (getWidth()/2) - 500, 400);
 
                 //making img of hearts smaller
                 int newWidth = heart.getWidth(this) / 35;  // Reduce size by half
