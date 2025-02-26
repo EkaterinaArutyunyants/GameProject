@@ -36,8 +36,8 @@ public class TestGravity {
 
         //right platform
         StaticBody platformRight = new StaticBody(world, new BoxShape(0.5f, 5f));
-        platformRight.setPosition(new Vec2(10.5f, -6f));
         platformRight.setFillColor(Color.GREEN);
+        platformRight.putOn(10.5f,ground);
 
         final Image background = new ImageIcon("data/background.jpg").getImage();
         return new UserView(world, width, height) {
