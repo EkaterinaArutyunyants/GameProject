@@ -12,6 +12,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BirdGame {
     private static int width = 1400;
@@ -41,11 +43,12 @@ public class BirdGame {
     private static int idxH = 0;
 
     private static int health = 3;
+    private static Set<Body> столбыСкоторымимыстолкнулись = new HashSet<>();
 
     public static class KeyboardHandler extends KeyAdapter {
         //функция кей релисд
         @Override
-        public void keyReleased(KeyEvent e) {
+        public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode(); //method getKeyCode()
             switch (key) {
                 case KeyEvent.VK_SPACE: //class KeyEvent
@@ -94,10 +97,14 @@ public class BirdGame {
                                 //restore linear and angle velocity of pipe
                                 ((DynamicBody)collisionEvent.getOtherBody()).setLinearVelocity(new Vec2(-7,0));
                                 ((DynamicBody)collisionEvent.getOtherBody()).setAngularVelocity(0);
-                                health--;
                                 bird.setPosition((new Vec2(bird.getPosition().x - 2f, bird.getPosition().y)));
-                                if(health <= 0)  //1 operator
-                                    bird.destroy();
+                                if (!столбыСкоторымимыстолкнулись.contains(collisionEvent.getOtherBody())){
+                                    столбыСкоторымимыстолкнулись.add(collisionEvent.getOtherBody());
+                                    health--;
+                                    if(health <= 0)  //1 operator
+                                        bird.destroy();
+                                }
+
                             }
                         }
                     });
@@ -120,9 +127,14 @@ public class BirdGame {
                             if("pipeDown".equals(collisionEvent.getOtherBody().getName())) {
                                 ((DynamicBody)collisionEvent.getOtherBody()).setLinearVelocity(new Vec2(-7,0));
                                 ((DynamicBody)collisionEvent.getOtherBody()).setAngularVelocity(0);
-                                health--;
-                                if(health <= 0)  //1 operator
-                                    bird.destroy();
+                                bird.setPosition((new Vec2(bird.getPosition().x - 2f, bird.getPosition().y)));
+                                if (!столбыСкоторымимыстолкнулись.contains(collisionEvent.getOtherBody())){
+                                    столбыСкоторымимыстолкнулись.add(collisionEvent.getOtherBody());
+                                    health--;
+                                    if(health <= 0)  //1 operator
+                                        bird.destroy();
+                                }
+
                             }
                         }
                     });
