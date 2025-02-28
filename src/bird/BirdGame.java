@@ -1,6 +1,7 @@
 package bird;
 
 import city.cs.engine.*;
+import city.cs.engine.Shape;
 import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -17,6 +18,7 @@ public class BirdGame {
     private static int height = 800;
     public static SoundClip pickupJumpSound; //описание переменной
     private static DynamicBody bird;
+//    private Bird bird;
 
     private static int pipeUpCounter = 0;
     private static int maxPipeUpCounter = 5;
@@ -40,7 +42,6 @@ public class BirdGame {
 
     private static int health = 3;
 
-
     public static class KeyboardHandler extends KeyAdapter {
         //функция кей релисд
         @Override
@@ -61,9 +62,14 @@ public class BirdGame {
         World world = new World(); //создаем контейнер world
 
         //bird
-        bird = new DynamicBody(world, new CircleShape(2));
-        bird.setPosition(new Vec2(-13,-5)); //по х, у позиция
+//        Bird bird = new Bird(world);
+//        bird = new DynamicBody(world, new CircleShape(2));
+        bird = new Walker(world);
+        Shape birdShape = new CircleShape(2);
+        SolidFixture fixture = new SolidFixture(bird, birdShape);
+        fixture.setDensity(100);
         bird.addImage(new BodyImage("data/bird.png", 4)); //("ссылка", высота)
+        bird.setPosition(new Vec2(-13,-5)); //по х, у позиция
         bird.setLinearVelocity(new Vec2(7,0)); //скорость по х, у !непостоянная скорость
         bird.setName("bird");
 
@@ -80,13 +86,16 @@ public class BirdGame {
                     pipeUp.setGravityScale(0f);
                     pipeUp.setLinearVelocity(new Vec2(-7,0));
                     pipeUp.setName("pipeUp");
-                    pipeUp.setAlwaysOutline(true);
                     bird.addCollisionListener(new CollisionListener() {
 
                         @Override
                         public void collide(CollisionEvent collisionEvent) {
                             if("pipeUp".equals(collisionEvent.getOtherBody().getName())) {
+                                //restore linear and angle velocity of pipe
+                                ((DynamicBody)collisionEvent.getOtherBody()).setLinearVelocity(new Vec2(-7,0));
+                                ((DynamicBody)collisionEvent.getOtherBody()).setAngularVelocity(0);
                                 health--;
+                                bird.setPosition((new Vec2(bird.getPosition().x - 2f, bird.getPosition().y)));
                                 if(health <= 0)  //1 operator
                                     bird.destroy();
                             }
@@ -109,6 +118,8 @@ public class BirdGame {
                         @Override
                         public void collide(CollisionEvent collisionEvent) {
                             if("pipeDown".equals(collisionEvent.getOtherBody().getName())) {
+                                ((DynamicBody)collisionEvent.getOtherBody()).setLinearVelocity(new Vec2(-7,0));
+                                ((DynamicBody)collisionEvent.getOtherBody()).setAngularVelocity(0);
                                 health--;
                                 if(health <= 0)  //1 operator
                                     bird.destroy();
@@ -215,8 +226,6 @@ public class BirdGame {
         wrapWithSwingAndShow(view, listener); //обертываем в swing
         view.getWorld().start(); //запускаем симуляцию (DinamicBody работает)
     }
-
-
 
     private static void playBacksound(){
         try {
