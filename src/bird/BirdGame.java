@@ -190,6 +190,7 @@ public class BirdGame {
 
         Image background = new ImageIcon("data/sky.jpg").getImage();
         Image heart = new ImageIcon("data/heart.png").getImage();
+        Image coin = new ImageIcon("data/coin.png").getImage();
         final Font foregroundFont = new Font("Bold", Font.BOLD,60);
 
         return new UserView(world, width, height){
@@ -205,7 +206,7 @@ public class BirdGame {
                 //string before start
                 g.setColor(Color.darkGray);
                 g.setFont(foregroundFont);
-                g.drawString("Press space to start " + health, (getWidth()/2) - 500, 400);
+                //g.drawString("Press space to start " + health, (getWidth()/2) - 500, 400);
 
                 //making img of hearts smaller
                 int newWidth = heart.getWidth(this) / 35;  // Reduce size by half
@@ -214,6 +215,10 @@ public class BirdGame {
                 g.drawImage(heart, 25, 20, newWidth, newHeight, this);
                 g.drawImage(heart, 60, 20, newWidth, newHeight, this);
                 g.drawImage(heart, 95, 20, newWidth, newHeight, this);
+                //drawing 1 coin
+                g.drawImage(coin, 25, 70, newWidth, newHeight, this);
+                g.drawString(" " + health, (getWidth()/2) - 500, 400);
+
             }
         };
     }
