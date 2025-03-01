@@ -231,16 +231,10 @@ public class BirdGame {
                 int newWidth = heart.getWidth(this) / 35;  // Reduce size by half
                 int newHeight = heart.getHeight(this) / 35;
                 //drawing 3 hearts
-                if(health >= 3){
-                    g.drawImage(heart, 25, 20, newWidth, newHeight, this);
-                    g.drawImage(heart, 60, 20, newWidth, newHeight, this);
-                    g.drawImage(heart, 95, 20, newWidth, newHeight, this);
-                } else if(health == 2){
-                    g.drawImage(heart, 25, 20, newWidth, newHeight, this);
-                    g.drawImage(heart, 60, 20, newWidth, newHeight, this);
-                } else if(health == 1){
-                    g.drawImage(heart, 25, 20, newWidth, newHeight, this);
-                }
+
+                for (int i=0; i <health;i++ )
+                    g.drawImage(heart, 25+i*35, 20, newWidth, newHeight, this);
+
 
                 //drawing 1 coin
                 g.setColor(Color.ORANGE);
