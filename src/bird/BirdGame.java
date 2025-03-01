@@ -42,8 +42,11 @@ public class BirdGame {
     private static float[] heightsDown = {15f,17f,12f};
     private static int idxH = 0;
 
+    //userView foreground
     private static int health = 3;
-    private static Set<Body> столбыСкоторымимыстолкнулись = new HashSet<>();
+    private static int cash = 0;
+
+    private static Set<Body> hittedPipes = new HashSet<>();
 
     public static class KeyboardHandler extends KeyAdapter {
         //функция кей релисд
@@ -98,8 +101,8 @@ public class BirdGame {
                                 ((DynamicBody)collisionEvent.getOtherBody()).setLinearVelocity(new Vec2(-7,0));
                                 ((DynamicBody)collisionEvent.getOtherBody()).setAngularVelocity(0);
                                 bird.setPosition((new Vec2(bird.getPosition().x - 2f, bird.getPosition().y)));
-                                if (!столбыСкоторымимыстолкнулись.contains(collisionEvent.getOtherBody())){
-                                    столбыСкоторымимыстолкнулись.add(collisionEvent.getOtherBody());
+                                if (!hittedPipes.contains(collisionEvent.getOtherBody())){
+                                    hittedPipes.add(collisionEvent.getOtherBody());
                                     health--;
                                     if(health <= 0)  //1 operator
                                         bird.destroy();
@@ -128,8 +131,8 @@ public class BirdGame {
                                 ((DynamicBody)collisionEvent.getOtherBody()).setLinearVelocity(new Vec2(-7,0));
                                 ((DynamicBody)collisionEvent.getOtherBody()).setAngularVelocity(0);
                                 bird.setPosition((new Vec2(bird.getPosition().x - 2f, bird.getPosition().y)));
-                                if (!столбыСкоторымимыстолкнулись.contains(collisionEvent.getOtherBody())){
-                                    столбыСкоторымимыстолкнулись.add(collisionEvent.getOtherBody());
+                                if (!hittedPipes.contains(collisionEvent.getOtherBody())){
+                                    hittedPipes.add(collisionEvent.getOtherBody());
                                     health--;
                                     if(health <= 0)  //1 operator
                                         bird.destroy();
@@ -162,6 +165,7 @@ public class BirdGame {
                             if ("bird".equals(collisionEvent.getOtherBody().getName())) {
                                 money.destroy();
                                 moneyCounter--;
+                                cash++;
                             }
                         }
                     });
@@ -203,7 +207,10 @@ public class BirdGame {
         Image background = new ImageIcon("data/sky.jpg").getImage();
         Image heart = new ImageIcon("data/heart.png").getImage();
         Image coin = new ImageIcon("data/coin.png").getImage();
+        //font for Press space
         final Font foregroundFont = new Font("Bold", Font.BOLD,60);
+        //font for coin
+        final Font coinFont = new Font("Bold", Font.BOLD,37);
 
         return new UserView(world, width, height){
             //background
@@ -224,12 +231,22 @@ public class BirdGame {
                 int newWidth = heart.getWidth(this) / 35;  // Reduce size by half
                 int newHeight = heart.getHeight(this) / 35;
                 //drawing 3 hearts
-                g.drawImage(heart, 25, 20, newWidth, newHeight, this);
-                g.drawImage(heart, 60, 20, newWidth, newHeight, this);
-                g.drawImage(heart, 95, 20, newWidth, newHeight, this);
+                if(health >= 3){
+                    g.drawImage(heart, 25, 20, newWidth, newHeight, this);
+                    g.drawImage(heart, 60, 20, newWidth, newHeight, this);
+                    g.drawImage(heart, 95, 20, newWidth, newHeight, this);
+                } else if(health == 2){
+                    g.drawImage(heart, 25, 20, newWidth, newHeight, this);
+                    g.drawImage(heart, 60, 20, newWidth, newHeight, this);
+                } else if(health == 1){
+                    g.drawImage(heart, 25, 20, newWidth, newHeight, this);
+                }
+
                 //drawing 1 coin
+                g.setColor(Color.ORANGE);
+                g.setFont(coinFont);
                 g.drawImage(coin, 25, 70, newWidth, newHeight, this);
-                g.drawString(" " + health, (getWidth()/2) - 500, 400);
+                g.drawString(cash + "", (getWidth()/2) - 620, 100);
 
             }
         };
