@@ -34,9 +34,9 @@ public class BirdGame2 {
     private static Bird bird;
 //    private Bird bird;
 
-    private static int moneyCounter = 0;
-    private static int maxMoneyCounter = 5;
-    private static long nextMoneyTime;
+//    private static int moneyCounter = 0;
+//    private static int maxMoneyCounter = 5;
+//    private static long nextMoneyTime;
 
     private static Set<Body> hittedPipes = new HashSet<>();
 
@@ -60,7 +60,9 @@ public class BirdGame2 {
         World world = new World(); //создаем контейнер world
         PipeFactory factory = new PipeFactory(world);
         bird = new Bird(world);
+
         HeartFactory heartFactory = new HeartFactory(bird,world);
+        CoinFactory coinFactory = new CoinFactory(bird,world);
 
 
         bird.addCollisionListener(new CollisionListener() {
@@ -89,32 +91,7 @@ public class BirdGame2 {
             public void preStep(StepEvent stepEvent) {
                 factory.createNewPipeIfNeeded();
                 heartFactory.createNewHeartIfNeeded();
-
-                //coins
-                if (moneyCounter < maxMoneyCounter && nextMoneyTime < System.currentTimeMillis()) {
-                    DynamicBody money = new DynamicBody(world, new CircleShape(1f));
-                    money.setPosition(new Vec2(30,0));
-                    money.addImage(new BodyImage("data/coin.png", 2));
-                    money.setGravityScale(0f);
-                    money.setLinearVelocity(new Vec2(-7,0));
-                    money.setName("money");
-                    money.addCollisionListener(new CollisionListener() {
-
-                        @Override
-                        public void collide(CollisionEvent collisionEvent) {
-                            if ("bird".equals(collisionEvent.getOtherBody().getName())) {
-                                money.destroy();
-                                moneyCounter--;
-                                bird.coins++;
-                            }
-                        }
-                    });
-                    moneyCounter++;
-                    nextMoneyTime = System.currentTimeMillis() + 7000;
-                }
-
-
-
+                coinFactory.createNewCoinIfNeeded();
             }
 
             @Override
