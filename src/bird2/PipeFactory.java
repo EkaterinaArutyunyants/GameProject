@@ -9,8 +9,7 @@ public class PipeFactory {
     private int pipeCounter = 0;
     private int maxPipeCounter = 5;
     private long nextPipeTime;
-    private static float[] heightsUp = {15f,12f,17f};
-    private static float[] heightsDown = {15f,17f,12f};
+    private static float[] holes = {5f,7f,10f};
     private static int idxH = 0;
 
 
@@ -23,9 +22,9 @@ public class PipeFactory {
             pipeCounter--; //infinity pipes up
             pipeCounter++;
             nextPipeTime = System.currentTimeMillis() + 4000;
-            new Pipe(heightsUp[idxH], heightsDown[idxH], world);
+            new PipeNew(holes[idxH], world);
             idxH++;
-            if (idxH == heightsUp.length) {
+            if (idxH == holes.length) {
                 idxH = 0;
             }
 

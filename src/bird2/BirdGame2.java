@@ -64,24 +64,39 @@ public class BirdGame2 {
         HeartFactory heartFactory = new HeartFactory(bird,world);
         CoinFactory coinFactory = new CoinFactory(bird,world);
 
-
         bird.addCollisionListener(new CollisionListener() {
-
             @Override
             public void collide(CollisionEvent collisionEvent) {
-                if("pipeUp".equals(collisionEvent.getOtherBody().getName())) {
-                    //restore linear and angle velocity of pipe
-                    ((DynamicBody)collisionEvent.getOtherBody()).setLinearVelocity(new Vec2(-7,0));
-                    ((DynamicBody)collisionEvent.getOtherBody()).setAngularVelocity(0);
-                    bird.setPosition((new Vec2(bird.getPosition().x - 2f, bird.getPosition().y)));
-                    if (!hittedPipes.contains(collisionEvent.getOtherBody())){
-                        hittedPipes.add(collisionEvent.getOtherBody());
-                        bird.lostHealth();
-                    }
-
+                Body body = collisionEvent.getOtherBody();
+                if(body instanceof Coin){
+                    System.out.println("Coin");
+                } else if(body instanceof Heart){
+                    System.out.println("Heart");
+                } else if(body instanceof PipeNew){
+                    System.out.println("Pipe");
+                } else {
+                    System.out.println("Unsupported collisionEvent " + collisionEvent);
                 }
             }
         });
+
+//        bird.addCollisionListener(new CollisionListener() {
+//
+//            @Override
+//            public void collide(CollisionEvent collisionEvent) {
+//                if("pipeUp".equals(collisionEvent.getOtherBody().getName())) {
+//                    //restore linear and angle velocity of pipe
+//                    ((DynamicBody)collisionEvent.getOtherBody()).setLinearVelocity(new Vec2(-7,0));
+//                    ((DynamicBody)collisionEvent.getOtherBody()).setAngularVelocity(0);
+//                    bird.setPosition((new Vec2(bird.getPosition().x - 2f, bird.getPosition().y)));
+//                    if (!hittedPipes.contains(collisionEvent.getOtherBody())){
+//                        hittedPipes.add(collisionEvent.getOtherBody());
+//                        bird.lostHealth();
+//                    }
+//
+//                }
+//            }
+//        });
 
 
         //pipes, coins, hearts
