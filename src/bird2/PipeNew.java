@@ -31,4 +31,9 @@ public class PipeNew extends DynamicBody {
         setName("pipe");
         setAlwaysOutline(true);
     }
+    public void restorePosition(){
+        setLinearVelocity(new Vec2(-7,0));
+        setAngleDegrees(0f);
+        setAngularVelocity(0f);
+    }
 }

@@ -69,35 +69,26 @@ public class BirdGame2 {
             public void collide(CollisionEvent collisionEvent) {
                 Body body = collisionEvent.getOtherBody();
                 if(body instanceof Coin){
-                    System.out.println("Coin");
+                    body.destroy();
+                    coinFactory.moneyCounter--;
+                    bird.coins++;
                 } else if(body instanceof Heart){
-                    System.out.println("Heart");
+                    body.destroy();
+                    heartFactory.heartCounter--;
+                    bird.addHealth();
                 } else if(body instanceof PipeNew){
-                    System.out.println("Pipe");
+                    //restore linear and angle velocity of pipe
+                    ((PipeNew) body).restorePosition();
+                    bird.setPosition((new Vec2(bird.getPosition().x - 2f, bird.getPosition().y)));
+                    if (!hittedPipes.contains(collisionEvent.getOtherBody())){
+                        hittedPipes.add(collisionEvent.getOtherBody());
+                        bird.lostHealth();
+                    }
                 } else {
                     System.out.println("Unsupported collisionEvent " + collisionEvent);
                 }
             }
         });
-
-//        bird.addCollisionListener(new CollisionListener() {
-//
-//            @Override
-//            public void collide(CollisionEvent collisionEvent) {
-//                if("pipeUp".equals(collisionEvent.getOtherBody().getName())) {
-//                    //restore linear and angle velocity of pipe
-//                    ((DynamicBody)collisionEvent.getOtherBody()).setLinearVelocity(new Vec2(-7,0));
-//                    ((DynamicBody)collisionEvent.getOtherBody()).setAngularVelocity(0);
-//                    bird.setPosition((new Vec2(bird.getPosition().x - 2f, bird.getPosition().y)));
-//                    if (!hittedPipes.contains(collisionEvent.getOtherBody())){
-//                        hittedPipes.add(collisionEvent.getOtherBody());
-//                        bird.lostHealth();
-//                    }
-//
-//                }
-//            }
-//        });
-
 
         //pipes, coins, hearts
         StepListener stepListener = new StepListener() {
