@@ -31,14 +31,8 @@ public class BirdGame2 {
     private static int width = 1400;
     private static int height = 800;
     public static SoundClip pickupJumpSound; //описание переменной
-    private static Bird bird;
-//    private Bird bird;
+    public static BirdWorld world;
 
-//    private static int moneyCounter = 0;
-//    private static int maxMoneyCounter = 5;
-//    private static long nextMoneyTime;
-
-    private static Set<Body> hittedPipes = new HashSet<>();
 
     public static class KeyboardHandler extends KeyAdapter {
         //функция кей релисд
@@ -47,7 +41,7 @@ public class BirdGame2 {
             int key = e.getKeyCode(); //method getKeyCode()
             switch (key) {
                 case KeyEvent.VK_SPACE: //class KeyEvent
-                    bird.setLinearVelocity(new Vec2(0f, 5f));
+                    world.bird.setLinearVelocity(new Vec2(0f, 5f));
                     break;
                 default:
                     System.out.println("Unsupported key keyReleased " + e);
@@ -57,55 +51,8 @@ public class BirdGame2 {
 
 
     private static WorldView createWorld(){
-        World world = new World(); //создаем контейнер world
-        PipeFactory factory = new PipeFactory(world);
-        bird = new Bird(world);
-
-        HeartFactory heartFactory = new HeartFactory(world);
-        CoinFactory coinFactory = new CoinFactory(world);
-
-        bird.addCollisionListener(new CollisionListener() {
-            @Override
-            public void collide(CollisionEvent collisionEvent) {
-                Body body = collisionEvent.getOtherBody();
-                if(body instanceof Coin){
-                    body.destroy();
-                    coinFactory.moneyCounter--;
-                    bird.coins += ((Coin) body).coinAmount;
-                } else if(body instanceof Heart){
-                    body.destroy();
-                    heartFactory.heartCounter--;
-                    bird.addHealth();
-                } else if(body instanceof PipeNew){
-                    //restore linear and angle velocity of pipe
-                    ((PipeNew) body).restorePosition();
-                    bird.setPosition((new Vec2(bird.getPosition().x - 2f, bird.getPosition().y)));
-                    if (!hittedPipes.contains(collisionEvent.getOtherBody())){
-                        hittedPipes.add(collisionEvent.getOtherBody());
-                        bird.lostHealth();
-                    }
-                } else {
-                    System.out.println("Unsupported collisionEvent " + collisionEvent);
-                }
-            }
-        });
-
-        //pipes, coins, hearts
-        StepListener stepListener = new StepListener() {
-
-            @Override
-            public void preStep(StepEvent stepEvent) {
-                factory.createNewPipeIfNeeded();
-                heartFactory.createNewHeartIfNeeded();
-                coinFactory.createNewCoinIfNeeded();
-            }
-
-            @Override
-            public void postStep(StepEvent stepEvent) {
-
-            }
-        };
-        world.addStepListener(stepListener);
+        //создаем контейнер bird world
+        world = new BirdWorld();
 
         Image background = new ImageIcon("data/sky.jpg").getImage();
         Image heart = new ImageIcon("data/heart.png").getImage();
@@ -135,7 +82,7 @@ public class BirdGame2 {
                 int newHeight = heart.getHeight(this) / 35;
                 //drawing 3 hearts
 
-                for (int i=0; i <bird.health;i++ )
+                for (int i=0; i < world.bird.health;i++ )
                     g.drawImage(heart, 25+i*35, 20, newWidth, newHeight, this);
 
 
@@ -143,7 +90,7 @@ public class BirdGame2 {
                 g.setColor(Color.ORANGE);
                 g.setFont(coinFont);
                 g.drawImage(coin, 25, 70, newWidth, newHeight, this);
-                g.drawString(bird.coins + "", (getWidth()/2) - 620, 100);
+                g.drawString(world.bird.coins + "", (getWidth()/2) - 620, 100);
 
             }
         };
