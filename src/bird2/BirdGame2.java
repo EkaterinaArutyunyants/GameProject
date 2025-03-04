@@ -61,8 +61,8 @@ public class BirdGame2 {
         PipeFactory factory = new PipeFactory(world);
         bird = new Bird(world);
 
-        HeartFactory heartFactory = new HeartFactory(bird,world);
-        CoinFactory coinFactory = new CoinFactory(bird,world);
+        HeartFactory heartFactory = new HeartFactory(world);
+        CoinFactory coinFactory = new CoinFactory(world);
 
         bird.addCollisionListener(new CollisionListener() {
             @Override
@@ -71,7 +71,7 @@ public class BirdGame2 {
                 if(body instanceof Coin){
                     body.destroy();
                     coinFactory.moneyCounter--;
-                    bird.coins++;
+                    bird.coins += ((Coin) body).coinAmount;
                 } else if(body instanceof Heart){
                     body.destroy();
                     heartFactory.heartCounter--;

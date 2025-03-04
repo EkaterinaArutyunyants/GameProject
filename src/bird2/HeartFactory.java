@@ -9,26 +9,14 @@ public class HeartFactory {
     private int maxHeartCounter = 5;
     private long nextHeartTime;
     private World world;
-    private Bird bird;
 
-    public HeartFactory(Bird bird, World world) {
-        this.bird = bird;
+    public HeartFactory(World world) {
         this.world = world;
     }
 
     public void createNewHeartIfNeeded(){
         if (heartCounter < maxHeartCounter && nextHeartTime < System.currentTimeMillis()) {
             Heart heart = new Heart(world);
-//            heart.addCollisionListener(new CollisionListener() {
-//                @Override
-//                public void collide(CollisionEvent collisionEvent) {
-//                    if ("bird".equals(collisionEvent.getOtherBody().getName())) {
-//                        heart.destroy();
-//                        heartCounter--;
-//                        bird.addHealth();
-//                    }
-//                }
-//            });
             heartCounter++;
             nextHeartTime = System.currentTimeMillis() + 8000;
         }

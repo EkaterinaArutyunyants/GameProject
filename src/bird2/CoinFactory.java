@@ -9,26 +9,14 @@ public class CoinFactory {
     private int maxMoneyCounter = 5;
     private long nextMoneyTime;
     private World world;
-    private Bird bird;
 
-    public CoinFactory(Bird bird, World world) {
-        this.bird = bird;
+    public CoinFactory(World world) {
         this.world = world;
     }
 
     public void createNewCoinIfNeeded() {
         if (moneyCounter < maxMoneyCounter && nextMoneyTime < System.currentTimeMillis()) {
-            Coin coin = new Coin(world);
-//            coin.addCollisionListener(new CollisionListener() {
-//                @Override
-//                public void collide(CollisionEvent collisionEvent) {
-//                    if ("bird".equals(collisionEvent.getOtherBody().getName())) {
-//                        coin.destroy();
-//                        moneyCounter--;
-//                        bird.coins++;
-//                    }
-//                }
-//            });
+            Coin coin = new Coin(2, world);
             moneyCounter++;
             nextMoneyTime = System.currentTimeMillis() + 7000;
         }
