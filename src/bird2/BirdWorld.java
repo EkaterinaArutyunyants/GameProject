@@ -3,18 +3,40 @@ package bird2;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
 public class BirdWorld extends World {
-    public Bird bird;
+    private Bird bird;
+    private HeartFactory heartFactory = new HeartFactory(this);
+    private CoinFactory coinFactory = new CoinFactory(this);
+    private  Set<Body> hittedPipes = new HashSet<>();
+    private  PipeFactory pipeFactory;
+    private KeyAdapter keyHandler = new  KeyAdapter() {
+        //функция кей релисд
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode(); //method getKeyCode()
+            switch (key) {
+                case KeyEvent.VK_SPACE: //class KeyEvent
+                    bird.setLinearVelocity(new Vec2(0f, 5f));
+                    break;
+                default:
+                    System.out.println("Unsupported key keyReleased " + e);
+            }
+        }
+    };
+
+
+
     public BirdWorld() {
         bird = new Bird(this);
-        HeartFactory heartFactory = new HeartFactory(this);
-        CoinFactory coinFactory = new CoinFactory(this);
-        Set<Body> hittedPipes = new HashSet<>();
-
-        PipeFactory factory = new PipeFactory(this);
+        heartFactory = new HeartFactory(this);
+        coinFactory = new CoinFactory(this);
+        hittedPipes = new HashSet<>();
+        pipeFactory = new PipeFactory(this);
 
         bird.addCollisionListener(new CollisionListener() {
             @Override
@@ -46,7 +68,7 @@ public class BirdWorld extends World {
 
             @Override
             public void preStep(StepEvent stepEvent) {
-                factory.createNewPipeIfNeeded();
+                pipeFactory.createNewPipeIfNeeded();
                 heartFactory.createNewHeartIfNeeded();
                 coinFactory.createNewCoinIfNeeded();
             }
@@ -58,6 +80,14 @@ public class BirdWorld extends World {
         };
 
         addStepListener(stepListener);
+    }
+
+    public Bird getBird() {
+        return bird;
+    }
+
+    public KeyAdapter getKeyHandler() {
+        return keyHandler;
     }
 }
 
