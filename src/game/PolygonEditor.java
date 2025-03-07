@@ -1,15 +1,18 @@
 package game;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Very basic polygon editor.
@@ -254,7 +257,7 @@ public class PolygonEditor extends JPanel
                 }
             }
         }
-        ArrayList<String> coordStrings = new ArrayList<String>();
+        java.util.ArrayList<String> coordStrings = new java.util.ArrayList<String>();
         for (int i = firstCoordIndex; i < args.length; i++) {
             String[] coords = args[i].split("[, ]+");
             for (String x : coords) coordStrings.add(x);

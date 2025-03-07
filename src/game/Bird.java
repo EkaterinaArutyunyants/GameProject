@@ -1,6 +1,11 @@
 package game;
 
-import city.cs.engine.*;
+import city.cs.engine.BodyImage;
+import city.cs.engine.PolygonShape;
+import city.cs.engine.Shape;
+import city.cs.engine.SolidFixture;
+import city.cs.engine.Walker;
+import city.cs.engine.World;
 import org.jbox2d.common.Vec2;
 
 public class Bird extends Walker {

@@ -3,6 +3,7 @@ package game;
 import city.cs.engine.BodyImage;
 import city.cs.engine.CircleShape;
 import city.cs.engine.DynamicBody;
+import city.cs.engine.Shape;
 import city.cs.engine.World;
 import org.jbox2d.common.Vec2;
 

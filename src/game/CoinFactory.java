@@ -1,6 +1,9 @@
 package game;
 
+import city.cs.engine.CollisionEvent;
+import city.cs.engine.CollisionListener;
 import city.cs.engine.World;
+import org.jbox2d.common.Vec2;
 
 public class CoinFactory {
     public int moneyCounter = 0;
