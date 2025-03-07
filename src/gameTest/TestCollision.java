@@ -13,8 +13,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static game.KL_01MainInit.pickupJumpSound;
-
 public class TestCollision {
     private static int width=1024;
     private static int height = 800;

@@ -1,13 +1,6 @@
-package bird2;
+package game;
 
-import city.cs.engine.BodyImage;
-import city.cs.engine.CircleShape;
-import city.cs.engine.DynamicBody;
-import city.cs.engine.PolygonShape;
-import city.cs.engine.Shape;
-import city.cs.engine.SolidFixture;
-import city.cs.engine.Walker;
-import city.cs.engine.World;
+import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
 public class Bird extends Walker {
@@ -21,8 +14,7 @@ public class Bird extends Walker {
         super(w, birdShape);
         addImage(birdImage);
         SolidFixture fixture = new SolidFixture(this, birdShape);
-        fixture.setDensity(58);
-        fixture.setDensity(100);
+        fixture.setDensity(50);
         setPosition(new Vec2(-13,-5)); //по х, у позиция
         setLinearVelocity(new Vec2(7,0)); //скорость по х, у !непостоянная скорость
         setName("bird");
@@ -30,12 +22,11 @@ public class Bird extends Walker {
 
     public void lostHealth(){
         health--;
+
         if(health <= 0)  //1 operator
             destroy();
     }
     public void addHealth(){
         health++;
     }
-//    bird = new DynamicBody(world, new CircleShape(2));
-//    bird.addImage(new BodyImage("data/bird.png", 4)); //("ссылка", высота
 }

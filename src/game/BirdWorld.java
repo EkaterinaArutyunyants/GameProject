@@ -1,4 +1,4 @@
-package bird2;
+package game;
 
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
@@ -10,6 +10,7 @@ import java.util.Set;
 
 public class BirdWorld extends World {
     private Bird bird;
+    private static final BodyImage birdImage2 = new BodyImage("data/bird2.png", 4);
     private HeartFactory heartFactory = new HeartFactory(this);
     private CoinFactory coinFactory = new CoinFactory(this);
     private  Set<Body> hittedPipes = new HashSet<>();
@@ -22,7 +23,10 @@ public class BirdWorld extends World {
             switch (key) {
                 case KeyEvent.VK_SPACE: //class KeyEvent
                     bird.setLinearVelocity(new Vec2(0f, 5f));
+                    bird.addImage(birdImage2);
                     break;
+                case KeyEvent.VK_SHIFT:
+                    bird.setLinearVelocity(new Vec2(15f, 0f));
                 default:
                     System.out.println("Unsupported key keyReleased " + e);
             }
@@ -50,10 +54,10 @@ public class BirdWorld extends World {
                     body.destroy();
                     heartFactory.heartCounter--;
                     bird.addHealth();
-                } else if(body instanceof PipeNew){
+                } else if(body instanceof Pipe){
                     //restore linear and angle velocity of pipe
-                    ((PipeNew) body).restorePosition();
-                    bird.setPosition((new Vec2(bird.getPosition().x - 2f, bird.getPosition().y)));
+                    ((Pipe) body).restorePosition();
+                    bird.setPosition((new Vec2(0,0)));
                     if (!hittedPipes.contains(collisionEvent.getOtherBody())){
                         hittedPipes.add(collisionEvent.getOtherBody());
                         bird.lostHealth();

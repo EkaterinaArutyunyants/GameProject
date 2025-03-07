@@ -1,4 +1,4 @@
-package bird2;
+package game;
 
 import city.cs.engine.SoundClip;
 
@@ -24,7 +24,6 @@ public class BirdGame2 {
     private static void createAndStartGame() {
         BirdWorldView view = createWorld();
         playBacksound(); //вызываем sound
-        //у view есть world -> берем world в котором есть character, берем character, index)
         KeyAdapter listener = ((BirdWorld) view.getWorld()).getKeyHandler(); //new KeyboardHandler();
         wrapWithSwingAndShow(view, listener); //обертываем в swing
         view.getWorld().start(); //запускаем симуляцию (DinamicBody работает)
@@ -32,9 +31,9 @@ public class BirdGame2 {
 
     private static void playBacksound() {
         try {
-            SoundClip pickupSound = new SoundClip("data/birdBacksound.wav"); //класс SoundClip - загружаем туда файл звука
+            SoundClip pickupSound = new SoundClip("data/backsound.wav"); //класс SoundClip - загружаем туда файл звука
             pickupSound.setVolume(.05); //задаем громкость
-            pickupSound.loop(); //повтор (.play() -> до завершения аудиодорожки)
+            pickupSound.loop(); // (.play() -> до завершения аудиодорожки)
 
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             throw new RuntimeException(e);

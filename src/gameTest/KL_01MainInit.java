@@ -8,45 +8,15 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class TestWalker {
+public class KL_01MainInit {
     private static int width=1024;
     private static int height = 800;
-
-    private static  Walker walker;
-
-    public static class KeyboardHandlerFlip extends KeyAdapter {
-        @Override
-        public void keyPressed(KeyEvent e){}
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            int key = e.getKeyCode();
-            switch (key) {
-                case KeyEvent.VK_W: // Jump
-                    walker.jump(10f);
-                    break;
-                case KeyEvent.VK_A: // Move left
-                    walker.startWalking(-5f);
-                    break;
-                case KeyEvent.VK_D: // Move right
-                    walker.startWalking(5f);
-                    break;
-                case KeyEvent.VK_S: // Stop walking
-                    walker.stopWalking();
-                    break;
-                default:
-                    System.out.println("Unsupported key keyReleased " + e);
-            }
-        }
-    }
-
+    public static SoundClip pickupJumpSound; //описание переменной
 
     private static WorldView createWorld(){
         World world = new World(); //создаем контейнер world
@@ -67,11 +37,19 @@ public class TestWalker {
         platformRight.setFillColor(Color.GREEN);
 
         //first character
+        DynamicBody character = new DynamicBody(world, new BoxShape(1,2));
+        character.setPosition(new Vec2(7,-9)); //по х, у позиция
+        character.addImage(new BodyImage("data/student.png", 4)); //("ссылка", высота)
+        character.setLinearVelocity(new Vec2(-6,0)); //скорость по х, у !непостоянная скорость
+        character.setName("boy");
+        createJumpSound();
 
-        walker = new Walker(world, new BoxShape(1f, 2f));
-        walker.setPosition(new Vec2(7,-2)); //по х, у позиция
-        walker.addImage(new BodyImage("data/student.png", 4)); //("ссылка", высота)
-
+        //second character
+        DynamicBody secCharacter = new DynamicBody(world, new BoxShape(1,2));
+        secCharacter.setPosition(new Vec2(-7,-9));
+        secCharacter.addImage(new BodyImage("data/books.png", 4));
+        secCharacter.setLinearVelocity(new Vec2(6,0));
+        secCharacter.setName("books");
 
 
         return new UserView(world, width, height);
@@ -80,9 +58,9 @@ public class TestWalker {
     private static void createAndStartGame(){
         WorldView view = createWorld();
         JComponent viewWithBackground = addBackground2View(view); //вызываем background (swing)
-        //playBacksound(); //вызываем sound
+        playBacksound(); //вызываем sound
         //у view есть world -> берем world в котором есть character, берем character, index)
-        KeyListener listener = new KeyboardHandlerFlip();
+        KeyListener listener = new KeyboardHandlerTest(view.getWorld().getDynamicBodies().get(1));
         wrapWithSwingAndShow(viewWithBackground,listener); //обертываем в swing
         view.getWorld().start(); //запускаем симуляцию (DinamicBody работает)
     }
@@ -112,6 +90,35 @@ public class TestWalker {
         return view;
     }
 
+    private static void playBacksound(){
+        try {
+            SoundClip pickupSound = new SoundClip("data/backsound.wav"); //класс SoundClip - загружаем туда файл звука
+            pickupSound.setVolume(.05); //задаем громкость
+            pickupSound.loop(); //повтор (.play() -> до завершения аудиодорожки)
+
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void createJumpSound(){
+        try {
+            pickupJumpSound = new SoundClip("data/jumpSound.wav"); //класс SoundClip - загружаем туда файл звука
+            pickupJumpSound.setVolume(.05); //задаем громкость
+
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static void wrapWithSwingAndShow(JComponent view, KeyListener listener){ //(тип пар-р, тип пар-р)
         final JFrame frame = new JFrame("KL_01"); //создаем frame + название
         frame.setSize(width,height); //задаем размер
@@ -125,7 +132,7 @@ public class TestWalker {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(TestWalker::createAndStartGame);
+        SwingUtilities.invokeLater(KL_01MainInit::createAndStartGame);
     }
 }
 

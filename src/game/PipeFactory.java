@@ -1,4 +1,4 @@
-package bird2;
+package game;
 
 import city.cs.engine.World;
 
@@ -9,7 +9,7 @@ public class PipeFactory {
     private int pipeCounter = 0;
     private int maxPipeCounter = 5;
     private long nextPipeTime;
-    private static float[] holes = {5f,7f,10f};
+    private static float[] holes = {4.5f,6f,7.5f};
     private static int idxH = 0;
 
 
@@ -22,7 +22,7 @@ public class PipeFactory {
             pipeCounter--; //infinity pipes up
             pipeCounter++;
             nextPipeTime = System.currentTimeMillis() + 4000;
-            new PipeNew(holes[idxH], world);
+            new Pipe(holes[idxH], world);
             idxH++;
             if (idxH == holes.length) {
                 idxH = 0;

@@ -1,4 +1,4 @@
-package bird2;
+package game;
 
 import city.cs.engine.UserView;
 
@@ -11,7 +11,7 @@ public class BirdWorldView extends UserView {
     private final Image heart = new ImageIcon("data/heart.png").getImage();
     private final Image coin = new ImageIcon("data/coin.png").getImage();
     //font for Press space
-    final Font foregroundFont = new Font("Bold", Font.BOLD,60);
+    final Font foregroundFont = new Font("Bold", Font.BOLD,20);
     //font for coin
     final Font coinFont = new Font("Bold", Font.BOLD,37);
 
@@ -31,7 +31,8 @@ public class BirdWorldView extends UserView {
         //string before start
         g.setColor(Color.darkGray);
         g.setFont(foregroundFont);
-        //g.drawString("Press space to start " + health, (getWidth()/2) - 500, 400);
+        g.drawString("Press shift for speed up ", (getWidth()/2) - 670, 140);
+        //g.drawString("Press space to start ", (getWidth()/2) - 500, 400);
 
         //making img of hearts smaller
         int newWidth = heart.getWidth(this) / 35;  // Reduce size by half

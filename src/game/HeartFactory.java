@@ -1,7 +1,5 @@
-package bird2;
+package game;
 
-import city.cs.engine.CollisionEvent;
-import city.cs.engine.CollisionListener;
 import city.cs.engine.World;
 
 public class HeartFactory {
