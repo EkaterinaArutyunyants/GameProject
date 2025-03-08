@@ -15,8 +15,8 @@ public class Bird extends Walker {
     private int coins = 0;
 
     //constructor
-    public Bird(World w) {
-        super(w, shape);
+    public Bird(World world) {
+        super(world, shape);
         addImage(image);
         SolidFixture fixture = new SolidFixture(this, shape);
         fixture.setDensity(50);

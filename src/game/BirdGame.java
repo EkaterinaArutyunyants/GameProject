@@ -1,6 +1,7 @@
 package game;
 
 import city.cs.engine.SoundClip;
+import city.cs.engine.WorldView;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -9,14 +10,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
-public class BirdGame2 {
-    private static int width = 1400;
-    private static int height = 800;
+public class BirdGame {
+    private static final int width = 1400;
+    private static final int height = 800;
     public static SoundClip pickupJumpSound; //описание переменно
 
 
     private static BirdWorldView createWorld() {
-        //создаем контейнер bird world
         BirdWorld world = new BirdWorld();
         return new BirdWorldView(world, width, height);
     }
@@ -24,7 +24,7 @@ public class BirdGame2 {
     private static void createAndStartGame() {
         BirdWorldView view = createWorld();
         playBacksound(); //вызываем sound
-        KeyAdapter listener = ((BirdWorld) view.getWorld()).getKeyHandler(); //new KeyboardHandler();
+        KeyAdapter listener = ((BirdWorld) view.getWorld()).getBirdController(); //new KeyboardHandler();
         wrapWithSwingAndShow(view, listener); //обертываем в swing
         view.getWorld().start(); //запускаем симуляцию (DinamicBody работает)
     }
@@ -40,22 +40,8 @@ public class BirdGame2 {
         }
     }
 
-    public static void createJumpSound() {
-        try {
-            pickupJumpSound = new SoundClip("data/jumpSound.wav"); //класс SoundClip - загружаем туда файл звука
-            pickupJumpSound.setVolume(.05); //задаем громкость
-
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void wrapWithSwingAndShow(JComponent view, KeyListener listener) { //(тип пар-р, тип пар-р)
-        final JFrame frame = new JFrame("KL_01"); //создаем frame + название
+    private static void wrapWithSwingAndShow(WorldView view, KeyListener listener) { //(тип пар-р, тип пар-р)
+        final JFrame frame = new JFrame("Bird Game v01"); //создаем frame + название
         frame.setSize(width, height); //задаем размер
         frame.add(view); //в созданный view добавляем frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,7 +53,7 @@ public class BirdGame2 {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(BirdGame2::createAndStartGame);
+        SwingUtilities.invokeLater(BirdGame::createAndStartGame);
     }
 }
 

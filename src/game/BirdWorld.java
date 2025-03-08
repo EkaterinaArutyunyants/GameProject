@@ -9,26 +9,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class BirdWorld extends World {
-    private Bird bird;
-    private static final BodyImage birdImage2 = new BodyImage("data/bird2.png", 4);
+    private final Bird bird;
     private final PipeFactory pipeFactory = new PipeFactory(this);
     private final HeartFactory heartFactory = new HeartFactory(this);
     private final CoinFactory coinFactory = new CoinFactory(this);
     private final Set<Body> hittedPipes = new HashSet<>();
-    private final KeyAdapter keyHandler = new KeyAdapter() {
+    private final KeyAdapter birdController = new KeyAdapter() {
         //функция кей релисд
         @Override
         public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode(); //method getKeyCode()
-            switch (key) {
+            switch (e.getKeyCode()) {
                 case KeyEvent.VK_SPACE: //class KeyEvent
                     bird.setLinearVelocity(new Vec2(0f, 5f));
-                    bird.addImage(birdImage2);
                     break;
                 case KeyEvent.VK_SHIFT:
                     bird.setLinearVelocity(new Vec2(15f, 0f));
                 default:
-                    System.out.println("Unsupported key keyReleased " + e);
+                    System.out.println("Unhandled key " + e);
             }
         }
     };
@@ -81,8 +78,8 @@ public class BirdWorld extends World {
         return bird;
     }
 
-    public KeyAdapter getKeyHandler() {
-        return keyHandler;
+    public KeyAdapter getBirdController() {
+        return birdController;
     }
 }
 
