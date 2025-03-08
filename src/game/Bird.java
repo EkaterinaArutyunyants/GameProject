@@ -47,7 +47,15 @@ public class Bird extends Walker {
         this.coins += coins;
     }
 
-    public void restoreStateAfterCollision() {
+    @Override
+    public void destroy(){
+        // play sound
+        super.destroy();
+    }
+
+    public void setStateAfterCollisionWithPipe(){
         setPosition((new Vec2(0, 0)));
+        //play sound
+        // change view
     }
 }

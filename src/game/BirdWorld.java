@@ -8,9 +8,10 @@ import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BirdWorld extends World {
+public class BirdWorld extends World implements CollisionListener,DestructionListener{
     private final Bird bird;
-
+    private boolean gameOver =false;
+    private final StaticBody RIP;
     private final PipeFactory pipeFactory = new PipeFactory(this);
     private final HeartFactory heartFactory = new HeartFactory(this);
     private final CoinFactory coinFactory = new CoinFactory(this);
@@ -29,8 +30,9 @@ public class BirdWorld extends World {
                     break;
                 case KeyEvent.VK_SHIFT:
                     bird.setLinearVelocity(new Vec2(15f, 0f));
+                    break;
                 default:
-                    System.out.println("Unhandled key " + e);
+                    System.out.println("Unhandled " + e);
             }
         }
         public void keyReleased(KeyEvent e) {
@@ -48,31 +50,44 @@ public class BirdWorld extends World {
     public BirdWorld() {
         super();
         bird = new Bird(this);
-        bird.addCollisionListener(new CollisionListener() {
-            @Override
-            public void collide(CollisionEvent collisionEvent) {
-                Body body = collisionEvent.getOtherBody();
-                if (body instanceof Coin) {
-                    bird.incCoins(((Coin) body).getCoinAmount());
-                    coinFactory.decCount();
-                    body.destroy();
-                } else if (body instanceof Heart) {
-                    bird.incHealth();
-                    heartFactory.decCount();
-                    body.destroy();
-                } else if (body instanceof Pipe) {
-                    //restore linear and angle velocity of pipe
-                    ((Pipe) body).restoreStateAfterCollision();
-                    bird.restoreStateAfterCollision();
-                    if (!hittedPipes.contains(body)) {
-                        hittedPipes.add(body);
-                        bird.decHealth();
-                    }
-                } else {
-                    System.out.println("Unexpected collisionEvent " + collisionEvent);
-                }
+        bird.addCollisionListener(this);
+        bird.addDestructionListener(this);
+        RIP = new StaticBody(this, new BoxShape(40f, 0.1f, new Vec2(0,-20f)));
+    }
+
+    @Override
+    public void collide(CollisionEvent collisionEvent) {
+        Body body = collisionEvent.getOtherBody();
+        if (body instanceof Coin) {
+            bird.incCoins(((Coin) body).getCoinAmount());
+            coinFactory.decCount();
+            body.destroy();
+        } else if (body instanceof Heart) {
+            bird.incHealth();
+            heartFactory.decCount();
+            body.destroy();
+        } else if (body instanceof Pipe) {
+            //restore linear and angle velocity of pipe
+            ((Pipe) body).restoreStateAfterCollision();
+            bird.setStateAfterCollisionWithPipe();
+            if (!hittedPipes.contains(body)) {
+                hittedPipes.add(body);
+                bird.decHealth();
             }
-        });
+        } else if (RIP.equals(body)){
+            bird.destroy();
+        } else {
+            System.out.println("Unexpected " + collisionEvent);
+        }
+    }
+    @Override
+    public void destroy(DestructionEvent destructionEvent) {
+            if (destructionEvent.getSource() instanceof Bird){
+                stop();
+                gameOver = true;
+            } else{
+                System.out.println("Unexpected " + destructionEvent);
+            }
     }
 
     public Bird getBird() {
@@ -81,6 +96,10 @@ public class BirdWorld extends World {
 
     public KeyAdapter getBirdController() {
         return birdController;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
     }
 }
 
