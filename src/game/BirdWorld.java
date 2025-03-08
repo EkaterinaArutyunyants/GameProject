@@ -39,13 +39,13 @@ public class BirdWorld extends World {
             public void collide(CollisionEvent collisionEvent) {
                 Body body = collisionEvent.getOtherBody();
                 if (body instanceof Coin) {
-                    body.destroy();
-                    coinFactory.decCount();
                     bird.incCoins(((Coin) body).getCoinAmount());
-                } else if (body instanceof Heart) {
+                    coinFactory.decCount();
                     body.destroy();
-                    heartFactory.decCount();
+                } else if (body instanceof Heart) {
                     bird.incHealth();
+                    heartFactory.decCount();
+                    body.destroy();
                 } else if (body instanceof Pipe) {
                     //restore linear and angle velocity of pipe
                     ((Pipe) body).restoreStateAfterCollision();
