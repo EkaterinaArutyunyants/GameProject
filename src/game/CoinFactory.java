@@ -1,25 +1,40 @@
 package game;
 
-import city.cs.engine.CollisionEvent;
-import city.cs.engine.CollisionListener;
 import city.cs.engine.World;
-import org.jbox2d.common.Vec2;
 
-public class CoinFactory {
-    public int moneyCounter = 0;
-    private int maxMoneyCounter = 5;
-    private long nextMoneyTime;
-    private World world;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class CoinFactory  implements ActionListener {
+    private final int maxCount = 5;
+    private static final int creationDelay = 8000;
+    private int count = 0;
+    private final World world;
+    private final Timer timer;
 
     public CoinFactory(World world) {
         this.world = world;
+        timer = new Timer(creationDelay,this);
+        timer.setInitialDelay(0);
+        timer.start();
     }
 
-    public void createNewCoinIfNeeded() {
-        if (moneyCounter < maxMoneyCounter && nextMoneyTime < System.currentTimeMillis()) {
-            Coin coin = new Coin(2, world);
-            moneyCounter++;
-            nextMoneyTime = System.currentTimeMillis() + 7000;
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (count < maxCount) {
+            new Coin(world, 2);
+            count++;
         }
     }
+
+    public void decCount(){
+        count--;
+    }
+
 }

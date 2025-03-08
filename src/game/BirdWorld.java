@@ -14,6 +14,7 @@ public class BirdWorld extends World {
     private final HeartFactory heartFactory = new HeartFactory(this);
     private final CoinFactory coinFactory = new CoinFactory(this);
     private final Set<Body> hittedPipes = new HashSet<>();
+
     private final KeyAdapter birdController = new KeyAdapter() {
         //функция кей релисд
         @Override
@@ -31,6 +32,7 @@ public class BirdWorld extends World {
     };
 
     public BirdWorld() {
+        super();
         bird = new Bird(this);
         bird.addCollisionListener(new CollisionListener() {
             @Override
@@ -38,11 +40,11 @@ public class BirdWorld extends World {
                 Body body = collisionEvent.getOtherBody();
                 if (body instanceof Coin) {
                     body.destroy();
-                    coinFactory.moneyCounter--;
+                    coinFactory.decCount();
                     bird.incCoins(((Coin) body).getCoinAmount());
                 } else if (body instanceof Heart) {
                     body.destroy();
-                    heartFactory.heartCounter--;
+                    heartFactory.decCount();
                     bird.incHealth();
                 } else if (body instanceof Pipe) {
                     //restore linear and angle velocity of pipe
@@ -55,21 +57,6 @@ public class BirdWorld extends World {
                 } else {
                     System.out.println("Unexpected collisionEvent " + collisionEvent);
                 }
-            }
-        });
-
-        //pipes, coins, hearts
-        addStepListener(new StepListener() {
-            @Override
-            public void preStep(StepEvent stepEvent) {
-                pipeFactory.createNewPipeIfNeeded();
-                heartFactory.createNewHeartIfNeeded();
-                coinFactory.createNewCoinIfNeeded();
-            }
-
-            @Override
-            public void postStep(StepEvent stepEvent) {
-
             }
         });
     }

@@ -9,7 +9,7 @@ public class Heart extends DynamicBody {
     private static final Shape shape = new PolygonShape(-0.369f, 0.867f, -0.934f, 0.233f, 0.0f, -0.86f, 0.926f, 0.224f, 0.369f, 0.859f);
     private static final BodyImage image = new BodyImage("data/heart.png", 2);
     private static final Random random = new Random();
-    private static final float y_max = 5f;
+    private static final float y_max = 15f;
 
     public Heart(World world) {
         super(world, shape);

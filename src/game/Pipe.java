@@ -9,7 +9,7 @@ public class Pipe extends DynamicBody {
     private static final float scale = 2.5f;
     private static float vy = -7f;
 
-    public Pipe(float holeUp, World world) {
+    public Pipe(World world, float holeUp) {
         super(world);
 
         float halfHeightUp = (yMax - holeUp) / 2f;

@@ -1,26 +1,41 @@
 package game;
 
-import city.cs.engine.CollisionEvent;
-import city.cs.engine.CollisionListener;
 import city.cs.engine.World;
 
-public class HeartFactory {
-    public int heartCounter = 0;
-    private int maxHeartCounter = 5;
-    private long nextHeartTime;
-    private World world;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class HeartFactory implements ActionListener {
+    private final int maxCount = 5;
+    private static final int creationDelay = 7000;
+    public int count = 0;
+    private final World world;
+    private final Timer timer;
 
     public HeartFactory(World world) {
         this.world = world;
+        timer = new Timer(creationDelay,this);
+        timer.setInitialDelay(0);
+        timer.start();
     }
 
-    public void createNewHeartIfNeeded(){
-        if (heartCounter < maxHeartCounter && nextHeartTime < System.currentTimeMillis()) {
-            Heart heart = new Heart(world);
-            heartCounter++;
-            nextHeartTime = System.currentTimeMillis() + 8000;
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (count < maxCount) {
+            new Heart(world);
+            count++;
         }
     }
 
+
+    public void decCount(){
+        count--;
+    }
 
 }
