@@ -1,2 +1,32 @@
-- сделать форму стобов так чтобы при изменении размера стоба shape столба менялся
-- to do shape for heart and coin
+        REQUIREMENTS:
+- use inheritance to create extensible groups of game
+  assets (ex: platforms, enemies, collectibles)
+
+- consider introducing many, diverse types of bodies
+
+- make interesting use of images
+  (e.g., animated GIFs; left/front/right images for your characters)
+  ! поменять коин на гиф коин
+
+- use bodies composed of
+  multiple fixtures or having different physical properties
+  (ex: trampoline)
+
+- use bodies that change
+  shape or appearance during game play
+  ! сделать птицу с крыльями наверх при спэйсе
+
+- use ghostly fixtures and sensors
+
+        ПРОВЕРИТЬ ЧТО ЕСТЬ:
++ They should also be extensions of the Physics
+Engine’s default classes – use inheritance and encapsulation to create your own classes.
+! inheritance это про extends (super class and sub class)
+
++ create visual layering by playing with transparency
+and background vs. foreground rendering
+! бэкграунд и фореграунд есть, но вроде нет прозрачности
+
++ display multiple statistics or use graphics instead of plain text
+(ex: draw a progress bar, use small icons, etc.)
+! статистика - считаем коины
