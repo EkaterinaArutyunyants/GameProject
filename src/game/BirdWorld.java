@@ -11,11 +11,11 @@ import java.util.Set;
 public class BirdWorld extends World {
     private Bird bird;
     private static final BodyImage birdImage2 = new BodyImage("data/bird2.png", 4);
-    private HeartFactory heartFactory = new HeartFactory(this);
-    private CoinFactory coinFactory = new CoinFactory(this);
-    private  Set<Body> hittedPipes = new HashSet<>();
-    private  PipeFactory pipeFactory;
-    private KeyAdapter keyHandler = new  KeyAdapter() {
+    private final PipeFactory pipeFactory = new PipeFactory(this);
+    private final HeartFactory heartFactory = new HeartFactory(this);
+    private final CoinFactory coinFactory = new CoinFactory(this);
+    private final Set<Body> hittedPipes = new HashSet<>();
+    private final KeyAdapter keyHandler = new KeyAdapter() {
         //функция кей релисд
         @Override
         public void keyPressed(KeyEvent e) {
@@ -33,43 +33,36 @@ public class BirdWorld extends World {
         }
     };
 
-
-
     public BirdWorld() {
         bird = new Bird(this);
-        heartFactory = new HeartFactory(this);
-        coinFactory = new CoinFactory(this);
-        hittedPipes = new HashSet<>();
-        pipeFactory = new PipeFactory(this);
-
         bird.addCollisionListener(new CollisionListener() {
             @Override
             public void collide(CollisionEvent collisionEvent) {
                 Body body = collisionEvent.getOtherBody();
-                if(body instanceof Coin){
+                if (body instanceof Coin) {
                     body.destroy();
                     coinFactory.moneyCounter--;
-                    bird.coins += ((Coin) body).coinAmount;
-                } else if(body instanceof Heart){
+                    bird.incCoins(((Coin) body).getCoinAmount());
+                } else if (body instanceof Heart) {
                     body.destroy();
                     heartFactory.heartCounter--;
-                    bird.addHealth();
-                } else if(body instanceof Pipe){
+                    bird.incHealth();
+                } else if (body instanceof Pipe) {
                     //restore linear and angle velocity of pipe
-                    ((Pipe) body).restorePosition();
-                    bird.setPosition((new Vec2(0,0)));
-                    if (!hittedPipes.contains(collisionEvent.getOtherBody())){
-                        hittedPipes.add(collisionEvent.getOtherBody());
-                        bird.lostHealth();
+                    ((Pipe) body).restoreStateAfterCollision();
+                    bird.restoreStateAfterCollision();
+                    if (!hittedPipes.contains(body)) {
+                        hittedPipes.add(body);
+                        bird.decHealth();
                     }
                 } else {
-                    System.out.println("Unsupported collisionEvent " + collisionEvent);
+                    System.out.println("Unexpected collisionEvent " + collisionEvent);
                 }
             }
         });
-        //pipes, coins, hearts
-        StepListener stepListener = new StepListener() {
 
+        //pipes, coins, hearts
+        addStepListener(new StepListener() {
             @Override
             public void preStep(StepEvent stepEvent) {
                 pipeFactory.createNewPipeIfNeeded();
@@ -81,9 +74,7 @@ public class BirdWorld extends World {
             public void postStep(StepEvent stepEvent) {
 
             }
-        };
-
-        addStepListener(stepListener);
+        });
     }
 
     public Bird getBird() {

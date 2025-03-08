@@ -9,29 +9,44 @@ import city.cs.engine.World;
 import org.jbox2d.common.Vec2;
 
 public class Bird extends Walker {
-    private static final Shape birdShape = new PolygonShape(-2.02f,0.43f, -2.13f,-0.23f, -0.83f,-1.94f, -0.21f,-1.95f, 2.11f,-0.83f, 2.05f,0.91f, 0.96f,1.94f, -0.78f,1.57f);
-    private static final BodyImage birdImage = new BodyImage("data/bird.png", 4);
-    int health = 3;
-    public int coins = 0;
+    private static final Shape shape = new PolygonShape(-2.02f, 0.43f, -2.13f, -0.23f, -0.83f, -1.94f, -0.21f, -1.95f, 2.11f, -0.83f, 2.05f, 0.91f, 0.96f, 1.94f, -0.78f, 1.57f);
+    private static final BodyImage image = new BodyImage("data/bird.png", 4);
+    private int health = 3;
+    private int coins = 0;
 
-//constructor
+    //constructor
     public Bird(World w) {
-        super(w, birdShape);
-        addImage(birdImage);
-        SolidFixture fixture = new SolidFixture(this, birdShape);
+        super(w, shape);
+        addImage(image);
+        SolidFixture fixture = new SolidFixture(this, shape);
         fixture.setDensity(50);
-        setPosition(new Vec2(-13,-5)); //по х, у позиция
-        setLinearVelocity(new Vec2(7,0)); //скорость по х, у !непостоянная скорость
-        setName("bird");
+        setPosition(new Vec2(-13, -5)); //по х, у позиция
+        setLinearVelocity(new Vec2(7, 0)); //скорость по х, у !непостоянная скорость
     }
 
-    public void lostHealth(){
+    public void decHealth() {
         health--;
-
-        if(health <= 0)  //1 operator
+        if (health <= 0)  //1 operator
             destroy();
     }
-    public void addHealth(){
+
+    public void incHealth() {
         health++;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void incCoins(int coins) {
+        this.coins += coins;
+    }
+
+    public void restoreStateAfterCollision() {
+        setPosition((new Vec2(0, 0)));
     }
 }
