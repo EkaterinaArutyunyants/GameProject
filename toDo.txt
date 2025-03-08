@@ -3,10 +3,7 @@
   assets (ex: platforms, enemies, collectibles)
 
 - consider introducing many, diverse types of bodies
-
-- make interesting use of images
-  (e.g., animated GIFs; left/front/right images for your characters)
-  ! поменять коин на гиф коин
+вроде нет статика
 
 - use bodies composed of
   multiple fixtures or having different physical properties
@@ -21,7 +18,7 @@
         ПРОВЕРИТЬ ЧТО ЕСТЬ:
 + They should also be extensions of the Physics
 Engine’s default classes – use inheritance and encapsulation to create your own classes.
-! inheritance это про extends (super class and sub class)
+есть
 
 + create visual layering by playing with transparency
 and background vs. foreground rendering

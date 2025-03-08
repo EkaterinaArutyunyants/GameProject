@@ -10,6 +10,7 @@ import java.util.Set;
 
 public class BirdWorld extends World {
     private final Bird bird;
+
     private final PipeFactory pipeFactory = new PipeFactory(this);
     private final HeartFactory heartFactory = new HeartFactory(this);
     private final CoinFactory coinFactory = new CoinFactory(this);
@@ -22,9 +23,22 @@ public class BirdWorld extends World {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_SPACE: //class KeyEvent
                     bird.setLinearVelocity(new Vec2(0f, 5f));
+                    //switch images when press space
+                    bird.removeAllImages();
+                    bird.addImage(Bird.image2);
                     break;
                 case KeyEvent.VK_SHIFT:
                     bird.setLinearVelocity(new Vec2(15f, 0f));
+                default:
+                    System.out.println("Unhandled key " + e);
+            }
+        }
+        public void keyReleased(KeyEvent e) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_SPACE:
+                    //switch images when release space
+                    bird.removeAllImages();
+                    bird.addImage(Bird.image);
                 default:
                     System.out.println("Unhandled key " + e);
             }

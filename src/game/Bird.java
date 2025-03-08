@@ -10,7 +10,8 @@ import org.jbox2d.common.Vec2;
 
 public class Bird extends Walker {
     private static final Shape shape = new PolygonShape(-2.02f, 0.43f, -2.13f, -0.23f, -0.83f, -1.94f, -0.21f, -1.95f, 2.11f, -0.83f, 2.05f, 0.91f, 0.96f, 1.94f, -0.78f, 1.57f);
-    private static final BodyImage image = new BodyImage("data/bird.png", 4);
+    public static final BodyImage image = new BodyImage("data/bird.png", 4);
+    public static final BodyImage image2 = new BodyImage("data/bird2.png", 4);
     private int health = 3;
     private int coins = 0;
 
