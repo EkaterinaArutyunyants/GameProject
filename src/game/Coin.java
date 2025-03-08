@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class Coin extends DynamicBody{
     private static final Shape shape = new CircleShape(1f);
-    private static final BodyImage image = new BodyImage("data/coin.png", 2);
+    private static final BodyImage image = new BodyImage("data/coinGif.gif", 2);
     private static final float y_max = 15f;
     private static final Random random = new Random();
 
