@@ -8,9 +8,10 @@ import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
+//REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class BirdWorld extends World implements CollisionListener,DestructionListener{
     private final Bird bird;
-    private boolean gameOver =false;
+    private boolean gameOver = false;
     private boolean success = false;
     private final StaticBody RIP;
     private final PipeFactory pipeFactory = new PipeFactory(this);
@@ -19,15 +20,13 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
     private final Set<Body> hittedPipes = new HashSet<>();
 
     private final KeyAdapter birdController = new KeyAdapter() {
-        //функция кей релисд
         @Override
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_SPACE: //class KeyEvent
                     bird.setLinearVelocity(new Vec2(0f, 5f));
                     //switch images when press space
-                    bird.removeAllImages();
-                    bird.addImage(Bird.image2);
+                    bird.flyUp();
                     break;
                 case KeyEvent.VK_SHIFT:
                     bird.setLinearVelocity(new Vec2(15f, 0f));
@@ -40,8 +39,7 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_SPACE:
                     //switch images when release space
-                    bird.removeAllImages();
-                    bird.addImage(Bird.image);
+                    bird.flyDown();
                 default:
                     System.out.println("Unhandled key " + e);
             }
@@ -49,13 +47,14 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
     };
 
     public BirdWorld() {
-        super();
+        super(); //parent
         bird = new Bird(this,10);
         bird.addCollisionListener(this);
         bird.addDestructionListener(this);
         RIP = new StaticBody(this, new BoxShape(40f, 0.1f, new Vec2(0,-20f)));
     }
 
+    //REQ: collision with coin,heart,pipe + bird dies
     @Override
     public void collide(CollisionEvent collisionEvent) {
         Body body = collisionEvent.getOtherBody();
@@ -81,6 +80,8 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
             System.out.println("Unexpected " + collisionEvent);
         }
     }
+
+    //destroy when win game
     @Override
     public void destroy(DestructionEvent destructionEvent) {
             if (destructionEvent.getSource() instanceof Bird){

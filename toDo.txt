@@ -1,29 +1,23 @@
+Milstone 2:
+- Разобраться с коэф в пайпе 1.2
+
+Milestone1:
         REQUIREMENTS:
 - use inheritance to create extensible groups of game
   assets (ex: platforms, enemies, collectibles)
-
-- consider introducing many, diverse types of bodies
-вроде нет статика
+  собираем коинс и хартс
 
 - use bodies composed of
   multiple fixtures or having different physical properties
   (ex: trampoline)
+  пайп с разными фикстурами, пайпы не падают
 
-- use bodies that change
-  shape or appearance during game play
-  ! сделать птицу с крыльями наверх при спэйсе
-
-- use ghostly fixtures and sensors
+- use ghostly fixtures (видно, но можно пройти)
+and sensors (не видно, но нельзя пройти)
 
         ПРОВЕРИТЬ ЧТО ЕСТЬ:
-+ They should also be extensions of the Physics
-Engine’s default classes – use inheritance and encapsulation to create your own classes.
-есть
 
-+ create visual layering by playing with transparency
++ create visual layering by playing with transparency - уровни
 and background vs. foreground rendering
 ! бэкграунд и фореграунд есть, но вроде нет прозрачности
 
-+ display multiple statistics or use graphics instead of plain text
-(ex: draw a progress bar, use small icons, etc.)
-! статистика - считаем коины

@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//REQ: inheritance to create extensible groups of game assets
 public class CoinFactory  implements ActionListener {
     private final int maxCount = 5;
     private static final int creationDelay = 8000;

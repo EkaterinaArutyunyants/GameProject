@@ -14,6 +14,7 @@ public class Heart extends DynamicBody {
     public Heart(World world) {
         super(world, shape);
         addImage(image);
+        //randomness by vertical
         setPosition(new Vec2(30, (random.nextFloat() - 0.5f) * y_max));
         setPosition(new Vec2(30, 0));
         setGravityScale(0f);

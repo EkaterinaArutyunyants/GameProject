@@ -21,30 +21,30 @@ public class BirdGame {
 
     private static void createAndStartGame() {
         BirdWorldView view = createWorld();
-        playBacksound(); //вызываем sound
-        wrapWithSwingAndShow(view); //обертываем в swing
-        view.getWorld().start(); //запускаем симуляцию (DinamicBody работает)
+        playBacksound();
+        wrapWithSwingAndShow(view);
+        view.getWorld().start();
     }
 
     private static void playBacksound() {
         try {
-            SoundClip backSound = new SoundClip("data/backsound.wav"); //класс SoundClip - загружаем туда файл звука
-            backSound.setVolume(.05); //задаем громкость
-            backSound.loop(); // (.play() -> до завершения аудиодорожки)
+            SoundClip backSound = new SoundClip("data/backsound.wav");
+            backSound.setVolume(.05);
+            backSound.loop();
 
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static void wrapWithSwingAndShow(BirdWorldView view) { //(тип пар-р, тип пар-р)
-        final JFrame frame = new JFrame("Bird Game v01"); //создаем frame + название
-        frame.setSize(width, height); //задаем размер
-        frame.add(view); //в созданный view добавляем frame
+    private static void wrapWithSwingAndShow(BirdWorldView view) {
+        final JFrame frame = new JFrame("Bird Game v01"); //create frame + frame title
+        frame.setSize(width, height); //size
+        frame.add(view); //add frame to created view
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
         frame.setResizable(false);
-        frame.addKeyListener(view.getWorld().getBirdController()); //клавиши
+        frame.addKeyListener(view.getWorld().getBirdController()); //keys
         frame.pack();
         frame.setVisible(true);
     }
