@@ -67,6 +67,28 @@ public class BirdGame {
         }
     }
 
+    public static void createWinSound(){
+        try {
+            SoundClip pickupJumpSound = new SoundClip("data/soundWin.mp3");
+            pickupJumpSound.setVolume(.02);
+            pickupJumpSound.play();
+
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void createLostSound(){
+        try {
+            SoundClip pickupJumpSound = new SoundClip("data/soundLost.mp3");
+            pickupJumpSound.setVolume(.02);
+            pickupJumpSound.play();
+
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static void wrapWithSwingAndShow(BirdWorldView view) {
         final JFrame frame = new JFrame("Bird Game v01"); //create frame + frame title
         frame.setSize(width, height); //size
