@@ -13,11 +13,13 @@ public class Bird extends Walker {
     public static final BodyImage image = new BodyImage("data/bird.png", 4);
     public static final BodyImage image2 = new BodyImage("data/bird2.png", 4);
     private int health = 3;
+    private final int winCoinsAmount;
     private int coins = 0;
 
     //constructor
-    public Bird(World world) {
+    public Bird(World world, int winCoinsAmount) {
         super(world, shape);
+        this.winCoinsAmount = winCoinsAmount;
         addImage(image);
         SolidFixture fixture = new SolidFixture(this, shape);
         fixture.setDensity(50);
@@ -27,8 +29,9 @@ public class Bird extends Walker {
 
     public void decHealth() {
         health--;
-        if (health <= 0)  //1 operator
+        if (health <= 0) {
             destroy();
+        }
     }
 
     public void incHealth() {
@@ -45,12 +48,13 @@ public class Bird extends Walker {
 
     public void incCoins(int coins) {
         this.coins += coins;
+        if (isWin()){
+            destroy();
+        }
     }
 
-    @Override
-    public void destroy(){
-        // play sound
-        super.destroy();
+    public boolean isWin(){
+        return coins>=winCoinsAmount;
     }
 
     public void setStateAfterCollisionWithPipe(){

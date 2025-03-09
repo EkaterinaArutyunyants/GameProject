@@ -32,31 +32,47 @@ public class BirdWorldView extends UserView {
     @Override
     protected void paintForeground(Graphics2D g) {
         if (getWorld().isGameOver()){
-            g.setColor(Color.darkGray);
-            g.setFont(foregroundFont);
-            g.drawString("Game over ", (getWidth() / 2) - 670, 140);
-
+            if (getWorld().isSuccess()) {
+                paintSuccess(g);
+            } else{
+                paintLost(g);
+            }
         } else {
-            //string before start
-            g.setColor(Color.darkGray);
-            g.setFont(foregroundFont);
-            g.drawString("Press shift for speed up ", (getWidth() / 2) - 670, 140);
-
-            //making img of hearts smaller
-            int newWidth = heart.getWidth(this) / 35;  // Reduce size by half
-            int newHeight = heart.getHeight(this) / 35;
-            //drawing 3 hearts
-
-            for (int i = 0; i < getWorld().getBird().getHealth(); i++)
-                g.drawImage(heart, 25 + i * 35, 20, newWidth, newHeight, this);
-
-
-            //drawing 1 coin
-            g.setColor(Color.ORANGE);
-            g.setFont(coinFont);
-            g.drawImage(coin, 25, 70, newWidth, newHeight, this);
-            g.drawString(Integer.toString(getWorld().getBird().getCoins()), (getWidth() / 2) - 580, 100);
+            paintGameState(g);
         }
+    }
+
+    private void paintGameState(Graphics2D g){
+        //string before start
+        g.setColor(Color.darkGray);
+        g.setFont(foregroundFont);
+        g.drawString("Press shift for speed up ", (getWidth() / 2) - 670, 140);
+
+        //making img of hearts smaller
+        int newWidth = heart.getWidth(this) / 35;  // Reduce size by half
+        int newHeight = heart.getHeight(this) / 35;
+        //drawing 3 hearts
+
+        for (int i = 0; i < getWorld().getBird().getHealth(); i++)
+            g.drawImage(heart, 25 + i * 35, 20, newWidth, newHeight, this);
+
+
+        //drawing 1 coin
+        g.setColor(Color.ORANGE);
+        g.setFont(coinFont);
+        g.drawImage(coin, 25, 70, newWidth, newHeight, this);
+        g.drawString(Integer.toString(getWorld().getBird().getCoins()), (getWidth() / 2) - 580, 100);
+    }
+
+    private void paintSuccess(Graphics2D g){
+        g.setColor(Color.darkGray);
+        g.setFont(foregroundFont);
+        g.drawString("You are win! ", (getWidth() / 2) - 670, 140);
+    }
+    private void paintLost(Graphics2D g){
+        g.setColor(Color.darkGray);
+        g.setFont(foregroundFont);
+        g.drawString("Game over ", (getWidth() / 2) - 670, 140);
     }
 
 }

@@ -11,6 +11,7 @@ import java.util.Set;
 public class BirdWorld extends World implements CollisionListener,DestructionListener{
     private final Bird bird;
     private boolean gameOver =false;
+    private boolean success = false;
     private final StaticBody RIP;
     private final PipeFactory pipeFactory = new PipeFactory(this);
     private final HeartFactory heartFactory = new HeartFactory(this);
@@ -49,7 +50,7 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
 
     public BirdWorld() {
         super();
-        bird = new Bird(this);
+        bird = new Bird(this,10);
         bird.addCollisionListener(this);
         bird.addDestructionListener(this);
         RIP = new StaticBody(this, new BoxShape(40f, 0.1f, new Vec2(0,-20f)));
@@ -85,6 +86,7 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
             if (destructionEvent.getSource() instanceof Bird){
                 stop();
                 gameOver = true;
+                success = bird.isWin();
             } else{
                 System.out.println("Unexpected " + destructionEvent);
             }
@@ -100,6 +102,10 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
 
     public boolean isGameOver() {
         return gameOver;
+    }
+
+    public boolean isSuccess() {
+        return success;
     }
 }
 
