@@ -1,13 +1,10 @@
 package game;
 
 import city.cs.engine.SoundClip;
-import city.cs.engine.WorldView;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 
 public class BirdGame {
@@ -31,6 +28,39 @@ public class BirdGame {
             SoundClip backSound = new SoundClip("data/backsound.wav");
             backSound.setVolume(.05);
             backSound.loop();
+
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void createCrashSound(){
+        try {
+            SoundClip pickupJumpSound = new SoundClip("data/soundCrash.wav");
+            pickupJumpSound.setVolume(.02);
+            pickupJumpSound.play();
+
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void createCoinSound(){
+        try {
+            SoundClip pickupJumpSound = new SoundClip("data/soundCoin.wav");
+            pickupJumpSound.setVolume(.02);
+            pickupJumpSound.play();
+
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void createHeartSound(){
+        try {
+            SoundClip pickupJumpSound = new SoundClip("data/soundHeart.wav");
+            pickupJumpSound.setVolume(.02);
+            pickupJumpSound.play();
 
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             throw new RuntimeException(e);

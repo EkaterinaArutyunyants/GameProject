@@ -59,10 +59,12 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
     public void collide(CollisionEvent collisionEvent) {
         Body body = collisionEvent.getOtherBody();
         if (body instanceof Coin) {
+            BirdGame.createCoinSound();
             bird.incCoins(((Coin) body).getCoinAmount());
             coinFactory.decCount();
             body.destroy();
         } else if (body instanceof Heart) {
+            BirdGame.createHeartSound();
             bird.incHealth();
             heartFactory.decCount();
             body.destroy();
@@ -71,6 +73,7 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
             ((Pipe) body).restoreStateAfterCollision();
             bird.setStateAfterCollisionWithPipe();
             if (!hittedPipes.contains(body)) {
+                BirdGame.createCrashSound();
                 hittedPipes.add(body);
                 bird.decHealth();
             }
