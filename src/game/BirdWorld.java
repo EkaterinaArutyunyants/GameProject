@@ -3,8 +3,11 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +17,8 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
     private boolean gameOver = false;
     private boolean success = false;
     private final StaticBody RIP;
+    private SoundClip winSound = null;
+    private SoundClip lostSound = null;
     private final PipeFactory pipeFactory = new PipeFactory(this);
     private final HeartFactory heartFactory = new HeartFactory(this);
     private final CoinFactory coinFactory = new CoinFactory(this);
@@ -36,12 +41,11 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
             }
         }
         public void keyReleased(KeyEvent e) {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_SPACE:
-                    //switch images when release space
-                    bird.flyDown();
-                default:
-                    System.out.println("Unhandled key " + e);
+            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                //switch images when release space
+                bird.flyDown();
+            } else {
+                System.out.println("Unhandled key " + e);
             }
         }
     };
@@ -52,6 +56,18 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
         bird.addCollisionListener(this);
         bird.addDestructionListener(this);
         RIP = new StaticBody(this, new BoxShape(40f, 0.1f, new Vec2(0,-20f)));
+        try {
+            winSound = new SoundClip("data/soundWin.wav");
+            winSound.setVolume(.05);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println(e);
+        }
+        try {
+            lostSound = new SoundClip("data/soundLost.wav");
+            lostSound.setVolume(.05);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println(e);
+        }
     }
 
     //REQ: collision with coin,heart,pipe + bird dies
@@ -59,12 +75,10 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
     public void collide(CollisionEvent collisionEvent) {
         Body body = collisionEvent.getOtherBody();
         if (body instanceof Coin) {
-            BirdGame.createCoinSound();
             bird.incCoins(((Coin) body).getCoinAmount());
             coinFactory.decCount();
             body.destroy();
         } else if (body instanceof Heart) {
-            BirdGame.createHeartSound();
             bird.incHealth();
             heartFactory.decCount();
             body.destroy();
@@ -73,7 +87,6 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
             ((Pipe) body).restoreStateAfterCollision();
             bird.setStateAfterCollisionWithPipe();
             if (!hittedPipes.contains(body)) {
-                BirdGame.createCrashSound();
                 hittedPipes.add(body);
                 bird.decHealth();
             }
@@ -91,6 +104,11 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
                 stop();
                 gameOver = true;
                 success = bird.isWin();
+                if (success){
+                    if (winSound != null) winSound.play();
+                } else {
+                    if (lostSound != null) lostSound.play();
+                }
             } else{
                 System.out.println("Unexpected " + destructionEvent);
             }

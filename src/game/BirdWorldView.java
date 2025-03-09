@@ -47,7 +47,8 @@ public class BirdWorldView extends UserView {
         //string speed up
         g.setColor(Color.darkGray);
         g.setFont(foregroundFont);
-        g.drawString("Press shift for speed up ", (getWidth() / 2) - 670, 140);
+        g.drawString("Press SHIFT for speed up ", (getWidth() / 2) - 670, 140);
+        g.drawString("Press SPACE for jump ", (getWidth() / 2) - 670, 180);
 
         //reduce size of img hearts
         int newWidth = heart.getWidth(this) / 35;

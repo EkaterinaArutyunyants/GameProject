@@ -34,7 +34,6 @@ public class HeartFactory implements ActionListener {
         }
     }
 
-
     public void decCount(){
         count--;
     }
