@@ -3,32 +3,19 @@ package game;
 import city.cs.engine.World;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-
-public class PipeFactory implements ActionListener {
-    private static final float[] holes = {4.5f,6f,7.5f};
-    private static final int creationDelay = 4000;
-    private final World world;
-    private final Timer timer;
+public class PipeFactory extends GenericFactory {
+    private static final float[] holes = {4.5f, 6f, 7.5f};
     private int idx = 0;
 
-    public PipeFactory(World world) {
-        this.world = world;
-        timer = new Timer(creationDelay,this);
-        timer.setInitialDelay(0);
-        timer.start();
+    public PipeFactory(World world, int creationDelay) {
+        super(world, creationDelay);
     }
 
-    /**
-     * Invoked when an action occurs.
-     *
-     * @param e the event to be processed
-     */
     @Override
-    public void actionPerformed(ActionEvent e) {
+    protected void createAsset() {
+        super.createAsset();
         new Pipe(world, holes[idx++]);
-        idx%=holes.length;
+        idx %= holes.length;
     }
 }

@@ -9,19 +9,48 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
-public class BirdWorld extends World implements CollisionListener,DestructionListener{
+public class BirdWorld extends World implements CollisionListener, DestructionListener {
     private final Bird bird;
     private boolean gameOver = false;
     private boolean success = false;
     private final StaticBody RIP;
     private SoundClip winSound = null;
     private SoundClip lostSound = null;
-    private final PipeFactory pipeFactory = new PipeFactory(this);
-    private final HeartFactory heartFactory = new HeartFactory(this);
-    private final CoinFactory coinFactory = new CoinFactory(this);
+    private final List<GenericFactory> factories = List.of(
+            new PipeFactory(this, 4000),
+            new GenericFactory(this, 7000) {
+                @Override
+                protected void createAsset() {
+                    super.createAsset();
+                    new Heart(world);
+                }
+            },
+            new GenericFactory(this, 8000) {
+                @Override
+                protected void createAsset() {
+                    super.createAsset();
+                    new Coin(this.world, 2);
+                }
+            });
+    private final PipeFactory pipeFactory = new PipeFactory(this, 4000);
+    private final GenericFactory heartFactory = new GenericFactory(this, 7000) {
+        @Override
+        protected void createAsset() {
+            super.createAsset();
+            new Heart(world);
+        }
+    };
+    private final GenericFactory coinFactory = new GenericFactory(this, 8000) {
+        @Override
+        protected void createAsset() {
+            super.createAsset();
+            new Coin(this.world, 2);
+        }
+    };
     private final Set<Body> hittedPipes = new HashSet<>();
 
     private final KeyAdapter birdController = new KeyAdapter() {
@@ -40,6 +69,7 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
                     System.out.println("Unhandled " + e);
             }
         }
+
         public void keyReleased(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                 //switch images when release space
@@ -52,10 +82,10 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
 
     public BirdWorld() {
         super(); //parent
-        bird = new Bird(this,10);
+        bird = new Bird(this, 10);
         bird.addCollisionListener(this);
         bird.addDestructionListener(this);
-        RIP = new StaticBody(this, new BoxShape(40f, 0.1f, new Vec2(0,-20f)));
+        RIP = new StaticBody(this, new BoxShape(40f, 0.1f, new Vec2(0, -20f)));
         try {
             winSound = new SoundClip("data/soundWin.wav");
             winSound.setVolume(.05);
@@ -90,7 +120,7 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
                 hittedPipes.add(body);
                 bird.decHealth();
             }
-        } else if (RIP.equals(body)){
+        } else if (RIP.equals(body)) {
             bird.destroy();
         } else {
             System.out.println("Unexpected " + collisionEvent);
@@ -100,18 +130,18 @@ public class BirdWorld extends World implements CollisionListener,DestructionLis
     //destroy when win game
     @Override
     public void destroy(DestructionEvent destructionEvent) {
-            if (destructionEvent.getSource() instanceof Bird){
-                stop();
-                gameOver = true;
-                success = bird.isWin();
-                if (success){
-                    if (winSound != null) winSound.play();
-                } else {
-                    if (lostSound != null) lostSound.play();
-                }
-            } else{
-                System.out.println("Unexpected " + destructionEvent);
+        if (destructionEvent.getSource() instanceof Bird) {
+            stop();
+            gameOver = true;
+            success = bird.isWin();
+            if (success) {
+                if (winSound != null) winSound.play();
+            } else {
+                if (lostSound != null) lostSound.play();
             }
+        } else {
+            System.out.println("Unexpected " + destructionEvent);
+        }
     }
 
     public Bird getBird() {
