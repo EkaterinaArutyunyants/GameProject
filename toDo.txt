@@ -1,23 +1,7 @@
 Milstone 2:
 - Разобраться с коэф в пайпе 1.2
 
-Milestone1:
-        REQUIREMENTS:
-- use inheritance to create extensible groups of game
-  assets (ex: platforms, enemies, collectibles)
-  собираем коинс и хартс
-
-- use bodies composed of
-  multiple fixtures or having different physical properties
-  (ex: trampoline)
-  пайп с разными фикстурами, пайпы не падают
-
-- use ghostly fixtures (видно, но можно пройти)
-and sensors (не видно, но нельзя пройти)
-
-        ПРОВЕРИТЬ ЧТО ЕСТЬ:
-
-+ create visual layering by playing with transparency - уровни
-and background vs. foreground rendering
-! бэкграунд и фореграунд есть, но вроде нет прозрачности
-
+1. После окончания игры удалить все объекты (монетки, сердечки и столбы)
+2. описать какие объекты будут на каждом уровне, как они будут взаимодействовать, и критерий окончания уровня.
+Потом:
+3. сохранения истории (когда быда игра, солько времени она продолжадась, скольо очком была заработано.)

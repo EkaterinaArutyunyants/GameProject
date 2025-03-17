@@ -40,4 +40,8 @@ public class GenericFactory implements ActionListener {
         count--;
     }
 
+    public void stop(){
+        timer.stop();
+    }
+
 }
