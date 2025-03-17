@@ -7,14 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //REQ: inheritance to create extensible groups of game assets
-public class CoinFactory  implements ActionListener {
+public class GenericFactory implements ActionListener {
     private final int maxCount = 5;
-    private static final int creationDelay = 8000;
     private int count = 0;
-    private final World world;
+    protected final World world;
     private final Timer timer;
 
-    public CoinFactory(World world) {
+    public GenericFactory(World world, int creationDelay) {
         this.world = world;
         timer = new Timer(creationDelay,this);
         timer.setInitialDelay(0);
@@ -29,9 +28,12 @@ public class CoinFactory  implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (count < maxCount) {
-            new Coin(world, 2);
+            createAsset();
             count++;
         }
+    }
+
+    protected void createAsset(){
     }
 
     public void decCount(){
