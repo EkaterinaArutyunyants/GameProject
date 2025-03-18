@@ -1,8 +1,7 @@
-package game;
+package game.level1;
 
 import city.cs.engine.World;
-
-import javax.swing.*;
+import game.GenericFactory;
 
 public class PipeFactory extends GenericFactory {
     private static final float[] holes = {4.5f, 6f, 7.5f};

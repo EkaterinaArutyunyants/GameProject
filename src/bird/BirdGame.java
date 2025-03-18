@@ -204,7 +204,7 @@ public class BirdGame {
         };
         world.addStepListener(stepListener);
 
-        Image background = new ImageIcon("data/sky.jpg").getImage();
+        Image background = new ImageIcon("data/level1/sky.jpg").getImage();
         Image heart = new ImageIcon("data/heart.png").getImage();
         Image coin = new ImageIcon("data/coin.png").getImage();
         //font for Press space

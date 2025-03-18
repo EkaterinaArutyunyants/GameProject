@@ -1,13 +1,13 @@
-package game;
+package game.level1;
 
 import city.cs.engine.UserView;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class BirdWorldView extends UserView {
+public class LevelView1 extends UserView {
 
-    private static final Image background = new ImageIcon("data/sky.jpg").getImage();
+    private static final Image background = new ImageIcon("data/level1/sky.jpg").getImage();
     private static final Image heart = new ImageIcon("data/heart.png").getImage();
     private static final Image coin = new ImageIcon("data/coin.png").getImage();
     //font for press shift
@@ -15,14 +15,14 @@ public class BirdWorldView extends UserView {
     //font for coin
     private static final Font coinFont = new Font("Bold", Font.BOLD, 37);
 
-    public BirdWorldView(BirdWorld world, int width, int height) {
+    public LevelView1(LevelWorld1 world, int width, int height) {
         super(world, width, height);
     }
 
     //REQ: background, foreground rendering + visual layering
     @Override
-    public BirdWorld getWorld(){
-        return (BirdWorld)super.getWorld();
+    public LevelWorld1 getWorld(){
+        return (LevelWorld1)super.getWorld();
     }
     @Override
     protected void paintBackground(Graphics2D g) {

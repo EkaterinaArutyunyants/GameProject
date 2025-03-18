@@ -1,4 +1,4 @@
-package game;
+package game.level1;
 
 import city.cs.engine.Body;
 import city.cs.engine.BoxShape;
@@ -9,6 +9,10 @@ import city.cs.engine.DestructionListener;
 import city.cs.engine.SoundClip;
 import city.cs.engine.StaticBody;
 import city.cs.engine.World;
+import game.Bird;
+import game.Coin;
+import game.GenericFactory;
+import game.Heart;
 import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -21,7 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
-public class BirdWorld extends World implements CollisionListener, DestructionListener {
+public class LevelWorld1 extends World implements CollisionListener, DestructionListener {
     private final Bird bird;
     private boolean gameOver = false;
     private boolean success = false;
@@ -75,7 +79,7 @@ public class BirdWorld extends World implements CollisionListener, DestructionLi
         }
     };
 
-    public BirdWorld() {
+    public LevelWorld1() {
         super(); //parent
         bird = new Bird(this, 10);
         bird.addCollisionListener(this);
@@ -128,9 +132,6 @@ public class BirdWorld extends World implements CollisionListener, DestructionLi
         if (destructionEvent.getSource() instanceof Bird) {
             stop();
             factories.values().forEach(GenericFactory::stop);
-
-            //TODO: delete all assets
-
             gameOver = true;
             success = bird.isWin();
             if (success) {
