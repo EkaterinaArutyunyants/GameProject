@@ -127,9 +127,6 @@ public class BirdWorld extends World implements CollisionListener, DestructionLi
     public void destroy(DestructionEvent destructionEvent) {
         if (destructionEvent.getSource() instanceof Bird) {
             stop();
-//TODO: Find out how it works
-//            for (GenericFactory factory : factories.values())
-//                factory.stop();
             factories.values().forEach(GenericFactory::stop);
 
             //TODO: delete all assets
