@@ -10,6 +10,7 @@ import city.cs.engine.SoundClip;
 import city.cs.engine.StaticBody;
 import city.cs.engine.World;
 import game.Bird;
+import game.BirdGame;
 import game.Coin;
 import game.GenericFactory;
 import game.Heart;
@@ -25,7 +26,9 @@ import java.util.Map;
 import java.util.Set;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
-public class LevelWorld1 extends World implements CollisionListener, DestructionListener {
+public class Level1 extends World implements CollisionListener, DestructionListener {
+    private final String name;
+    private final BirdGame game;
     private final Bird bird;
     private boolean gameOver = false;
     private boolean success = false;
@@ -52,7 +55,8 @@ public class LevelWorld1 extends World implements CollisionListener, Destruction
 
     private final Set<Body> hittedPipes = new HashSet<>();
 
-    private final KeyAdapter birdController = new KeyAdapter() {
+    private final KeyAdapter birdController
+    = new KeyAdapter() {
         @Override
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
@@ -78,12 +82,14 @@ public class LevelWorld1 extends World implements CollisionListener, Destruction
             }
         }
     };
-
-    public LevelWorld1() {
+    public Level1(BirdGame game,String name) {
         super(); //parent
+        this.game = game;
+        this.name = name;
         bird = new Bird(this, 10);
         bird.addCollisionListener(this);
         bird.addDestructionListener(this);
+
         RIP = new StaticBody(this, new BoxShape(40f, 0.1f, new Vec2(0, -20f)));
         try {
             winSound = new SoundClip("data/soundWin.wav");
@@ -139,6 +145,7 @@ public class LevelWorld1 extends World implements CollisionListener, Destruction
             } else {
                 if (lostSound != null) lostSound.play();
             }
+            game.completeLevel(this);
         } else {
             System.out.println("Unexpected " + destructionEvent);
         }
@@ -158,6 +165,17 @@ public class LevelWorld1 extends World implements CollisionListener, Destruction
 
     public boolean isSuccess() {
         return success;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public int getScore(){
+        return bird.getCoins();
+    }
+
+    public int getHealth(){
+        return bird.getHealth();
     }
 }
 

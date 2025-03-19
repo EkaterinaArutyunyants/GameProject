@@ -1,11 +1,12 @@
-package game.level1;
+package game;
 
 import city.cs.engine.UserView;
+import game.level1.Level1;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class LevelView1 extends UserView {
+public class GameView extends UserView {
 
     private static final Image background = new ImageIcon("data/level1/sky.jpg").getImage();
     private static final Image heart = new ImageIcon("data/heart.png").getImage();
@@ -15,14 +16,14 @@ public class LevelView1 extends UserView {
     //font for coin
     private static final Font coinFont = new Font("Bold", Font.BOLD, 37);
 
-    public LevelView1(LevelWorld1 world, int width, int height) {
+    public GameView(Level1 world, int width, int height) {
         super(world, width, height);
     }
 
     //REQ: background, foreground rendering + visual layering
     @Override
-    public LevelWorld1 getWorld(){
-        return (LevelWorld1)super.getWorld();
+    public Level1 getWorld(){
+        return (Level1)super.getWorld();
     }
     @Override
     protected void paintBackground(Graphics2D g) {
@@ -47,6 +48,7 @@ public class LevelView1 extends UserView {
         //string speed up
         g.setColor(Color.darkGray);
         g.setFont(foregroundFont);
+        g.drawString(getWorld().getName(), (getWidth() / 2) - 670, 100);
         g.drawString("Press SHIFT for speed up ", (getWidth() / 2) - 670, 140);
         g.drawString("Press SPACE for jump ", (getWidth() / 2) - 670, 180);
 
@@ -55,7 +57,7 @@ public class LevelView1 extends UserView {
         int newHeight = heart.getHeight(this) / 35;
 
         //drawing 3 hearts
-        for (int i = 0; i < getWorld().getBird().getHealth(); i++)
+        for (int i = 0; i < getWorld().getHealth(); i++)
             g.drawImage(heart, 25 + i * 35, 20, newWidth, newHeight, this);
 
         //drawing 1 coin
@@ -63,7 +65,7 @@ public class LevelView1 extends UserView {
         g.setFont(coinFont);
         g.drawImage(coin, 25, 70, newWidth, newHeight, this);
         //REQ: coin statistics
-        g.drawString(Integer.toString(getWorld().getBird().getCoins()), (getWidth() / 2) - 580, 100);
+        g.drawString(Integer.toString(getWorld().getScore()), (getWidth() / 2) - 580, 100);
     }
 
     //string when win game
