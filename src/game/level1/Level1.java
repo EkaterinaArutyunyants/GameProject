@@ -18,6 +18,8 @@ import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -27,6 +29,7 @@ import java.util.Set;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class Level1 extends World implements CollisionListener, DestructionListener {
+    private final Image background = new ImageIcon("data/level1/sky.jpg").getImage();
     private final String name;
     private final BirdGame game;
     private final Bird bird;
@@ -153,6 +156,10 @@ public class Level1 extends World implements CollisionListener, DestructionListe
 
     public Bird getBird() {
         return bird;
+    }
+
+    public Image getBackground() {
+        return background;
     }
 
     public KeyAdapter getBirdController() {

@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class GameView extends UserView {
 
-    private static final Image background = new ImageIcon("data/level1/sky.jpg").getImage();
     private static final Image heart = new ImageIcon("data/heart.png").getImage();
     private static final Image coin = new ImageIcon("data/coin.png").getImage();
     //font for press shift
@@ -27,7 +26,7 @@ public class GameView extends UserView {
     }
     @Override
     protected void paintBackground(Graphics2D g) {
-        g.drawImage(background, 0, 0, this);
+        g.drawImage(getWorld().getBackground(), 0, 0, this);
     }
 
     //REQ: paintForeground method
