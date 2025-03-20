@@ -24,6 +24,7 @@ public class DadsAndKids {
 
         for(Person person : people) {
             printKids(person, people);
+            printYungest(person, people);
         }
     }
     static void printKids(Person dad, List<Person> people) {
@@ -33,7 +34,18 @@ public class DadsAndKids {
             }
         }
     }
+    static void printYungest(Person dad, List<Person> people) {
+        Person youngest = null;
+        for (Person person : people) {
+            if (dad.name.equals(person.secName)) {
+                if (youngest == null || person.age < youngest.age) {
+                    youngest = person;
+                }
+            }
+        }
+        if (youngest != null) {
+            System.out.println("Youngest kid name: " + youngest.name + " dad name: " + dad.name);
+        }
+    }
 }
 
-//TODO:
-// для каждого человека вывести имя его младшего ребенка
