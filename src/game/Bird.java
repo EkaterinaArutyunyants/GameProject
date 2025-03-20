@@ -20,14 +20,14 @@ public class Bird extends Walker {
     private SoundClip crashSound = null;
     private SoundClip coinSound = null;
     private SoundClip heartSound = null;
-    private int health = 3;
-    private final int winCoinsAmount;
-    private int coins = 0;
+//    private int health = 3;
+//    private final int winCoinsAmount;
+//    private int coins = 0;
 
     //bird constructor
     public Bird(World world, int winCoinsAmount) {
         super(world, shape);
-        this.winCoinsAmount = winCoinsAmount;
+//        this.winCoinsAmount = winCoinsAmount;
         addImage(image);
         SolidFixture fixture = new SolidFixture(this, shape);
         fixture.setDensity(50);
@@ -56,39 +56,39 @@ public class Bird extends Walker {
     //REQ: changing state of body (decreasing health until destroy)
     public void decHealth() {
         if (crashSound != null) crashSound.play();
-        health--;
-        if (health <= 0) {
-            destroy();
-        }
+//        health--;
+//        if (health <= 0) {
+//            destroy();
+//        }
     }
 
     //increasing health
     public void incHealth() {
         if (heartSound != null) heartSound.play();
-        health++;
+//        health++;
     }
 
     //getter methods
-    public int getHealth() {
-        return health;
-    }
+//    public int getHealth() {
+//        return health;
+//    }
 
-    public int getCoins() {
-        return coins;
-    }
+//    public int getCoins() {
+//        return coins;
+//    }
 
     //increasing coins and if win destroy
     public void incCoins(int coins) {
-        this.coins += coins;
+//        this.coins += coins;
         if (coinSound != null) coinSound.play();
-        if (isWin()) {
-            destroy();
-        }
+//        if (isWin()) {
+//            destroy();
+//        }
     }
 
-    public boolean isWin() {
-        return coins >= winCoinsAmount;
-    }
+//    public boolean isWin() {
+//        return coins >= winCoinsAmount;
+//    }
 
     public void setStateAfterCollisionWithPipe() {
         setPosition((new Vec2(0, 0)));

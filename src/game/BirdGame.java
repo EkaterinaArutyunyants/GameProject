@@ -9,16 +9,22 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BirdGame {
     private static final int width = 1400;
     private static final int height = 800;
     private final GameView view;
-    private Level1 level;
-    private int levelNum=1;
+    private BasicLevel level;
+    private int levelNum;
+    private final List<BasicLevel> levels = new ArrayList<>();
 
     public BirdGame() {
-        level = new Level1(this,"LEVEL"+levelNum);
+        for (int levelNum=0; levelNum<3;levelNum++)
+            levels.add(new Level1(this,"LEVEL"+levelNum,levelNum+1));
+        levelNum=0;
+        level= levels.get(levelNum);
         view = new GameView(level, width, height);
         view.addKeyListener(level.getBirdController());
 
@@ -31,14 +37,18 @@ public class BirdGame {
         wrapWithSwingAndShow();
     }
 
-    public void completeLevel(Level1 oldLevel){
+    public void completeLevel(BasicLevel oldLevel){
         for (var listener :  view.getKeyListeners())
             view.removeKeyListener(listener);
         levelNum++;
-        level = new Level1(this,"LEVEL"+levelNum);
-        view.setWorld(level);
-        view.addKeyListener(level.getBirdController());
-        level.start();
+        if (levelNum<levels.size()){
+            level= levels.get(levelNum);
+            view.setWorld(level);
+            view.addKeyListener(level.getBirdController());
+            level.start();
+        } else {
+            System.out.println("GameOver");
+        }
     }
 
 

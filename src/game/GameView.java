@@ -1,7 +1,6 @@
 package game;
 
 import city.cs.engine.UserView;
-import game.level1.Level1;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,14 +14,14 @@ public class GameView extends UserView {
     //font for coin
     private static final Font coinFont = new Font("Bold", Font.BOLD, 37);
 
-    public GameView(Level1 world, int width, int height) {
+    public GameView(BasicLevel world, int width, int height) {
         super(world, width, height);
     }
 
     //REQ: background, foreground rendering + visual layering
     @Override
-    public Level1 getWorld(){
-        return (Level1)super.getWorld();
+    public BasicLevel getWorld(){
+        return (BasicLevel)super.getWorld();
     }
     @Override
     protected void paintBackground(Graphics2D g) {
@@ -32,7 +31,7 @@ public class GameView extends UserView {
     //REQ: paintForeground method
     @Override
     protected void paintForeground(Graphics2D g) {
-        if (getWorld().isGameOver()){
+        if (getWorld().isComplete()){
             if (getWorld().isSuccess()) {
                 paintSuccess(g);
             } else{

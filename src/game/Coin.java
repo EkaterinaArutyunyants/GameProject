@@ -9,7 +9,7 @@ import org.jbox2d.common.Vec2;
 
 import java.util.Random;
 
-public class Coin extends DynamicBody{
+public class Coin extends Asset{
     private static final Shape shape = new CircleShape(1f);
     //REQ: interesting use of image - GIF
     private static final BodyImage image = new BodyImage("data/coinGif.gif", 2);
@@ -18,8 +18,8 @@ public class Coin extends DynamicBody{
 
     private final int coinAmount;
 
-    public Coin(World world, int coinAmount) {
-        super(world, shape);
+    public Coin(AssetFactory factory, int coinAmount) {
+        super(factory, shape);
         addImage(image);
         this.coinAmount = coinAmount;
         //randomness by vertical

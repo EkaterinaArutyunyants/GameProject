@@ -1,16 +1,18 @@
 package game.level1;
 
 import city.cs.engine.*;
+import game.Asset;
+import game.AssetFactory;
 import org.jbox2d.common.Vec2;
 
-public class Pipe extends DynamicBody {
+public class Pipe extends Asset {
     private static final float yMax = 19f;
     private static final float halfWidth = 3.5f / 2;
     private static final float scale = 2.5f;
-    private static float vy = -7f;
+    private static float vx = -7f;
 
-    public Pipe(World world, float holeUp) {
-        super(world); //parent
+    public Pipe(AssetFactory factory, float holeUp) {
+        super(factory); //parent
 
         //dif size of holes between pipes
         float halfHeightUp = (yMax - holeUp) / 2f;
@@ -33,14 +35,14 @@ public class Pipe extends DynamicBody {
         setPosition(new Vec2(35, 0));
         //REQ: dif physical property
         setGravityScale(0f);
-        setLinearVelocity(new Vec2(vy, 0));
+        setLinearVelocity(new Vec2(vx, 0));
         setAngleDegrees(0f);
         setAngularVelocity(0f);
     }
 
     //after collision restoring velocity
     public void restoreStateAfterCollision() {
-        setLinearVelocity(new Vec2(vy, 0));
+        setLinearVelocity(new Vec2(vx, 0));
         setAngleDegrees(0f);
         setAngularVelocity(0f);
     }

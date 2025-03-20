@@ -7,13 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //REQ: inheritance to create extensible groups of game assets
-public class GenericFactory implements ActionListener {
-    private final int maxCount = 5;
+public class AssetFactory implements ActionListener {
+    private final int maxCount;
     private int count = 0;
     protected final World world;
     private final Timer timer;
 
-    public GenericFactory(World world, int creationDelay) {
+    public AssetFactory(World world, int creationDelay, int maxCount) {
+        this.maxCount = maxCount;
         this.world = world;
         timer = new Timer(creationDelay,this);
         timer.setInitialDelay(0);
@@ -44,4 +45,7 @@ public class GenericFactory implements ActionListener {
         timer.stop();
     }
 
+    public World getWorld() {
+        return world;
+    }
 }
