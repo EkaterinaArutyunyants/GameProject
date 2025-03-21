@@ -1,0 +1,101 @@
+package game.level2;
+
+import city.cs.engine.*;
+import org.jbox2d.common.Vec2;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
+
+public class Bird2 extends Walker {
+    private static final Shape shape = new PolygonShape(-2.02f, 0.43f, -2.13f, -0.23f, -0.83f, -1.94f, -0.21f, -1.95f, 2.11f, -0.83f, 2.05f, 0.91f, 0.96f, 1.94f, -0.78f, 1.57f);
+    private static final BodyImage image = new BodyImage("data/level2/dessertBird.png", 4);
+    private static final BodyImage imageBirdFlyUp = new BodyImage("data/level2/dessertBirdFlyUp.png", 4);
+    private SoundClip crashSound = null;
+    private SoundClip coinSound = null;
+    private SoundClip heartSound = null;
+//    private int health = 3;
+//    private final int winCoinsAmount;
+//    private int coins = 0;
+
+    //bird constructor
+    public Bird2(World world, int winCoinsAmount) {
+        super(world, shape);
+//        this.winCoinsAmount = winCoinsAmount;
+        addImage(image);
+        SolidFixture fixture = new SolidFixture(this, shape);
+        fixture.setDensity(50);
+        setPosition(new Vec2(-13, -5));
+        setLinearVelocity(new Vec2(7, 0));
+        try {
+            crashSound = new SoundClip("data/soundCrash.wav");
+            crashSound.setVolume(.05);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println(e);
+        }
+        try {
+            coinSound = new SoundClip("data/soundCoin.wav");
+            coinSound.setVolume(.05);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println(e);
+        }
+        try {
+            heartSound = new SoundClip("data/soundHeart.wav");
+            heartSound.setVolume(.05);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println(e);
+        }
+    }
+
+    //REQ: changing state of body (decreasing health until destroy)
+    public void decHealth() {
+        if (crashSound != null) crashSound.play();
+//        health--;
+//        if (health <= 0) {
+//            destroy();
+//        }
+    }
+
+    //increasing health
+    public void incHealth() {
+        if (heartSound != null) heartSound.play();
+//        health++;
+    }
+
+    //getter methods
+//    public int getHealth() {
+//        return health;
+//    }
+
+//    public int getCoins() {
+//        return coins;
+//    }
+
+    //increasing coins and if win destroy
+    public void incCoins(int coins) {
+//        this.coins += coins;
+        if (coinSound != null) coinSound.play();
+//        if (isWin()) {
+//            destroy();
+//        }
+    }
+
+//    public boolean isWin() {
+//        return coins >= winCoinsAmount;
+//    }
+
+    public void setStateAfterCollisionWithPipe() {
+        setPosition((new Vec2(0, 0)));
+    }
+
+    //REQ: changing bird appearance
+    public void flyUp() {
+        removeAllImages();
+        addImage(imageBirdFlyUp);
+    }
+
+    public void flyDown() {
+        removeAllImages();
+        addImage(image);
+    }
+}

@@ -23,7 +23,7 @@ import java.util.Collection;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class BasicLevel extends World implements CollisionListener, SensorListener {
-    protected final Image background = new ImageIcon("data/level1/sky.jpg").getImage();
+    protected Image background = new ImageIcon("data/level1/sky.jpg").getImage();
     private final String name;
     private final BirdGame game;
     private boolean complete = false;

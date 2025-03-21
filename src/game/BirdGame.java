@@ -2,6 +2,7 @@ package game;
 
 import city.cs.engine.SoundClip;
 import game.level1.Level1;
+import game.level2.Level2;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -21,8 +22,9 @@ public class BirdGame {
     private final List<BasicLevel> levels = new ArrayList<>();
 
     public BirdGame() {
-        for (int levelNum=0; levelNum<3;levelNum++)
-            levels.add(new Level1(this,"LEVEL"+levelNum,levelNum+1));
+//        for (int levelNum=0; levelNum<3;levelNum++)
+        levels.add(new Level1(this,"LEVEL"+levelNum,4));
+        levels.add(new Level2(this,"LEVEL2",4));
         levelNum=0;
         level= levels.get(levelNum);
         view = new GameView(level, width, height);
