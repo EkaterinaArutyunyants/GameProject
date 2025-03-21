@@ -23,7 +23,7 @@ import java.util.Collection;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class BasicLevel extends World implements CollisionListener, SensorListener {
-    private final Image background = new ImageIcon("data/level1/sky.jpg").getImage();
+    protected final Image background = new ImageIcon("data/level1/sky.jpg").getImage();
     private final String name;
     private final BirdGame game;
     private boolean complete = false;
@@ -77,17 +77,16 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
 
     @Override
     public void collide(CollisionEvent collisionEvent) {
-        Body body = collisionEvent.getOtherBody();
-        if (body instanceof Coin coin) {
+        if (collisionEvent.getOtherBody() instanceof Coin coin) {
             score += coin.getCoinAmount();
             if (score >= targetScore) complete();
             coin.getFactory().decCount();
-            body.destroy();
-        } else if (body instanceof Heart heart) {
+            coin.destroy();
+        } else if (collisionEvent.getOtherBody() instanceof Heart heart) {
             health++;
             heart.getFactory().decCount();
-            body.destroy();
-        } else if (RIP.equals(body)) {
+            heart.destroy();
+        } else if (RIP.equals(collisionEvent.getOtherBody())) {
             complete();
         } else {
             System.out.println("Unexpected " + collisionEvent);
