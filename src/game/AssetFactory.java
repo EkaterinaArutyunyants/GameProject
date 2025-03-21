@@ -10,12 +10,12 @@ import java.awt.event.ActionListener;
 public class AssetFactory implements ActionListener {
     private final int maxCount;
     private int count = 0;
-    protected final World world;
+    protected final BasicLevel level;
     private final Timer timer;
 
-    public AssetFactory(World world, int creationDelay, int maxCount) {
+    public AssetFactory(BasicLevel level, int creationDelay, int maxCount) {
         this.maxCount = maxCount;
-        this.world = world;
+        this.level = level;
         timer = new Timer(creationDelay,this);
         timer.setInitialDelay(0);
         timer.start();
@@ -45,7 +45,7 @@ public class AssetFactory implements ActionListener {
         timer.stop();
     }
 
-    public World getWorld() {
-        return world;
+    public BasicLevel getLevel() {
+        return level;
     }
 }

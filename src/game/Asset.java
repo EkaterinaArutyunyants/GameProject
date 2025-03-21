@@ -8,12 +8,12 @@ public class Asset extends DynamicBody {
 
 
     public Asset(AssetFactory factory) {
-        super(factory.getWorld());
+        super(factory.getLevel());
         this.factory = factory;
     }
 
     public Asset(AssetFactory factory,Shape shape) {
-        super(factory.getWorld(),shape);
+        super(factory.getLevel(),shape);
         this.factory = factory;
     }
 

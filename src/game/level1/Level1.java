@@ -2,7 +2,7 @@ package game.level1;
 
 import city.cs.engine.Body;
 import city.cs.engine.CollisionEvent;
-import city.cs.engine.CollisionListener;
+import city.cs.engine.SensorEvent;
 import game.BasicLevel;
 import game.Bird;
 import game.BirdGame;
@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
-public class Level1 extends BasicLevel implements CollisionListener {
+public class Level1 extends BasicLevel {
     private final Bird bird;
     private final Set<Body> hittedPipes = new HashSet<>();
 
@@ -54,12 +54,11 @@ public class Level1 extends BasicLevel implements CollisionListener {
 
     @Override
     public void collide(CollisionEvent collisionEvent) {
-        Body body = collisionEvent.getOtherBody();
-        if (body instanceof Pipe pipe) {
+        if (collisionEvent.getOtherBody() instanceof Pipe pipe) {
             pipe.restoreStateAfterCollision();
             bird.setStateAfterCollisionWithPipe();
-            if (!hittedPipes.contains(body)) {
-                hittedPipes.add(body);
+            if (!hittedPipes.contains(pipe)) {
+                hittedPipes.add(pipe);
                 bird.decHealth();
                 health--;
                 if (health <= 0) complete();
@@ -69,6 +68,18 @@ public class Level1 extends BasicLevel implements CollisionListener {
         }
     }
 
-
+    @Override
+    public void beginContact(SensorEvent sensorEvent) {
+        if ((sensorEvent.getSensor().getBody() instanceof SensorPipe pipe) && (sensorEvent.getContactBody() instanceof Bird)) {
+            if (!hittedPipes.contains(pipe)) {
+                hittedPipes.add(pipe);
+                bird.decHealth();
+                health--;
+                if (health <= 0) complete();
+            }
+        } else {
+            super.beginContact(sensorEvent);
+        }
+    }
 }
 

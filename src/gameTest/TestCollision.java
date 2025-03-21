@@ -1,4 +1,4 @@
-package game;
+package gameTest;
 
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
@@ -39,7 +39,7 @@ public class TestCollision {
         //first character
         DynamicBody character = new DynamicBody(world, new BoxShape(1,2));
         character.setPosition(new Vec2(7,-9)); //по х, у позиция
-        character.addImage(new BodyImage("data/student.png", 4)); //("ссылка", высота)
+        character.addImage(new BodyImage("dataTest/student.png", 4)); //("ссылка", высота)
         character.setLinearVelocity(new Vec2(-6,0)); //скорость по х, у !непостоянная скорость
         character.setName("boy");
         createJumpSound();
@@ -58,7 +58,7 @@ public class TestCollision {
         //second character
         DynamicBody secCharacter = new DynamicBody(world, new BoxShape(1,2));
         secCharacter.setPosition(new Vec2(-7,-9));
-        secCharacter.addImage(new BodyImage("data/books.png", 4));
+        secCharacter.addImage(new BodyImage("dataTest/books.png", 4));
         secCharacter.setLinearVelocity(new Vec2(6,0));
         secCharacter.setName("books");
         secCharacter.setAlwaysOutline(true);
@@ -89,7 +89,7 @@ public class TestCollision {
             view.setBounds(0, 0, width, height); //прямоуг resize от коорд. до width height в px
 
             //backImage считываем
-            BufferedImage backImage = ImageIO.read(new File("data/background.jpg"));
+            BufferedImage backImage = ImageIO.read(new File("dataTest/background.jpg"));
             JLabel background = new JLabel(new ImageIcon(backImage)); //берем компонент JLabel и заполняем туда img
             layeredPane.add(background,1); //background дальше чем view
             background.setBounds(0, 0, width, height);
@@ -103,16 +103,12 @@ public class TestCollision {
 
     private static void playBacksound(){
         try {
-            SoundClip pickupSound = new SoundClip("data/backsound.wav"); //класс SoundClip - загружаем туда файл звука
+            SoundClip pickupSound = new SoundClip("dataTest/backsound.wav"); //класс SoundClip - загружаем туда файл звука
             pickupSound.setVolume(.05); //задаем громкость
             pickupSound.loop(); //повтор (.play() -> до завершения аудиодорожки)
 
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println(e);
         }
     }
 

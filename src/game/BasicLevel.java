@@ -5,6 +5,8 @@ import city.cs.engine.BoxShape;
 import city.cs.engine.CollisionEvent;
 import city.cs.engine.CollisionListener;
 import city.cs.engine.DynamicBody;
+import city.cs.engine.SensorEvent;
+import city.cs.engine.SensorListener;
 import city.cs.engine.SoundClip;
 import city.cs.engine.StaticBody;
 import city.cs.engine.World;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
-public class BasicLevel extends World implements CollisionListener {
+public class BasicLevel extends World implements CollisionListener, SensorListener {
     private final Image background = new ImageIcon("data/level1/sky.jpg").getImage();
     private final String name;
     private final BirdGame game;
@@ -90,6 +92,18 @@ public class BasicLevel extends World implements CollisionListener {
         } else {
             System.out.println("Unexpected " + collisionEvent);
         }
+    }
+
+
+
+    @Override
+    public void beginContact(SensorEvent sensorEvent) {
+        System.out.println("beginContact("+sensorEvent+")");
+    }
+
+    @Override
+    public void endContact(SensorEvent sensorEvent) {
+        System.out.println("endContact("+sensorEvent+")");
     }
 
     protected void complete() {

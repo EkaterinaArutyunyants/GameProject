@@ -1,7 +1,7 @@
 package surferGame;
 
 import city.cs.engine.*;
-import game.KeyboardHandlerTest;
+import gameTest.KeyboardHandlerTest;
 import org.jbox2d.common.Vec2;
 
 import javax.imageio.ImageIO;

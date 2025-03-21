@@ -1,4 +1,4 @@
-package game;
+package gameTest;
 
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;

@@ -1,4 +1,4 @@
-package game;
+package gameTest;
 
 import city.cs.engine.BodyImage;
 import city.cs.engine.BoxShape;
