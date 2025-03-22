@@ -89,7 +89,7 @@ public class TestMouse {
             view.setBounds(0, 0, width, height); //прямоуг resize от коорд. до width height в px
 
             //backImage считываем
-            BufferedImage backImage = ImageIO.read(new File("data/background.jpg"));
+            BufferedImage backImage = ImageIO.read(new File("data/level1/sky.jpg"));
             JLabel background = new JLabel(new ImageIcon(backImage)); //берем компонент JLabel и заполняем туда img
             layeredPane.add(background,1); //background дальше чем view
             background.setBounds(0, 0, width, height);
