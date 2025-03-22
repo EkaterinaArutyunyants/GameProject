@@ -31,10 +31,19 @@ public class Level2 extends BasicLevel {
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
-                    case KeyEvent.VK_SPACE: //class KeyEvent
+                    case KeyEvent.VK_W:
                         bird.setLinearVelocity(new Vec2(0f, 5f));
                         //switch images when press space
                         bird.flyUp();
+                        break;
+                    case KeyEvent.VK_A:
+                        bird.setLinearVelocity(new Vec2(-7f, 0f));
+                        break;
+                    case KeyEvent.VK_D:
+                        bird.setLinearVelocity(new Vec2(7f, 0f));
+                        break;
+                    case KeyEvent.VK_S:
+                        bird.setLinearVelocity(new Vec2(0f, -7f));
                         break;
                     case KeyEvent.VK_SHIFT:
                         bird.setLinearVelocity(new Vec2(15f, 0f));
@@ -45,7 +54,7 @@ public class Level2 extends BasicLevel {
             }
 
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if (e.getKeyCode() == KeyEvent.VK_W) {
                     //switch images when release space
                     bird.flyDown();
                 } else {
