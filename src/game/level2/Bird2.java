@@ -1,6 +1,7 @@
 package game.level2;
 
 import city.cs.engine.*;
+import game.BasicLevel;
 import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -14,14 +15,10 @@ public class Bird2 extends Walker {
     private SoundClip crashSound = null;
     private SoundClip coinSound = null;
     private SoundClip heartSound = null;
-//    private int health = 3;
-//    private final int winCoinsAmount;
-//    private int coins = 0;
 
     //bird constructor
-    public Bird2(World world, int winCoinsAmount) {
-        super(world, shape);
-//        this.winCoinsAmount = winCoinsAmount;
+    public Bird2(BasicLevel level) {
+        super(level, shape);
         addImage(image);
         SolidFixture fixture = new SolidFixture(this, shape);
         fixture.setDensity(50);
@@ -50,39 +47,17 @@ public class Bird2 extends Walker {
     //REQ: changing state of body (decreasing health until destroy)
     public void decHealth() {
         if (crashSound != null) crashSound.play();
-//        health--;
-//        if (health <= 0) {
-//            destroy();
-//        }
     }
 
     //increasing health
     public void incHealth() {
         if (heartSound != null) heartSound.play();
-//        health++;
     }
-
-    //getter methods
-//    public int getHealth() {
-//        return health;
-//    }
-
-//    public int getCoins() {
-//        return coins;
-//    }
 
     //increasing coins and if win destroy
     public void incCoins(int coins) {
-//        this.coins += coins;
         if (coinSound != null) coinSound.play();
-//        if (isWin()) {
-//            destroy();
-//        }
     }
-
-//    public boolean isWin() {
-//        return coins >= winCoinsAmount;
-//    }
 
     public void setStateAfterCollisionWithPipe() {
         setPosition((new Vec2(0, 0)));

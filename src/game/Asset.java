@@ -17,7 +17,8 @@ public class Asset extends DynamicBody {
         this.factory = factory;
     }
 
-    public AssetFactory getFactory() {
-        return factory;
+    public void destroy(){
+        factory.decCount();
+        super.destroy();
     }
 }

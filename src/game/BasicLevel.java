@@ -80,11 +80,9 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
         if (collisionEvent.getOtherBody() instanceof Coin coin) {
             score += coin.getCoinAmount();
             if (score >= targetScore) complete();
-            coin.getFactory().decCount();
             coin.destroy();
         } else if (collisionEvent.getOtherBody() instanceof Heart heart) {
             health++;
-            heart.getFactory().decCount();
             heart.destroy();
         } else if (RIP.equals(collisionEvent.getOtherBody())) {
             complete();

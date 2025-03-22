@@ -1,12 +1,13 @@
 package game;
 
 import city.cs.engine.BodyImage;
+import city.cs.engine.BoxShape;
 import city.cs.engine.PolygonShape;
+import city.cs.engine.Sensor;
 import city.cs.engine.Shape;
 import city.cs.engine.SolidFixture;
 import city.cs.engine.SoundClip;
 import city.cs.engine.Walker;
-import city.cs.engine.World;
 import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -20,16 +21,14 @@ public class Bird extends Walker {
     private SoundClip crashSound = null;
     private SoundClip coinSound = null;
     private SoundClip heartSound = null;
-//    private int health = 3;
-//    private final int winCoinsAmount;
-//    private int coins = 0;
 
     //bird constructor
-    public Bird(World world, int winCoinsAmount) {
-        super(world, shape);
-//        this.winCoinsAmount = winCoinsAmount;
+    public Bird(BasicLevel level) {
+        super(level, shape);
         addImage(image);
         SolidFixture fixture = new SolidFixture(this, shape);
+        Sensor sensor = new Sensor(this,new BoxShape(10f,10f));
+        sensor.addSensorListener(level);
         fixture.setDensity(50);
         setPosition(new Vec2(-13, -5));
         setLinearVelocity(new Vec2(7, 0));
@@ -56,39 +55,17 @@ public class Bird extends Walker {
     //REQ: changing state of body (decreasing health until destroy)
     public void decHealth() {
         if (crashSound != null) crashSound.play();
-//        health--;
-//        if (health <= 0) {
-//            destroy();
-//        }
     }
 
     //increasing health
     public void incHealth() {
         if (heartSound != null) heartSound.play();
-//        health++;
     }
-
-    //getter methods
-//    public int getHealth() {
-//        return health;
-//    }
-
-//    public int getCoins() {
-//        return coins;
-//    }
 
     //increasing coins and if win destroy
     public void incCoins(int coins) {
-//        this.coins += coins;
         if (coinSound != null) coinSound.play();
-//        if (isWin()) {
-//            destroy();
-//        }
     }
-
-//    public boolean isWin() {
-//        return coins >= winCoinsAmount;
-//    }
 
     public void setStateAfterCollisionWithPipe() {
         setPosition((new Vec2(0, 0)));

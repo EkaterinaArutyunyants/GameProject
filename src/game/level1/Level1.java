@@ -20,7 +20,7 @@ public class Level1 extends BasicLevel {
 
     public Level1(BirdGame game, String name, int targetScore) {
         super(game, name, targetScore); //parent
-        bird = new Bird(this, 10);
+        bird = new Bird(this);
         bird.addCollisionListener(this);
         factories.add(new PipeFactory(this, 4000));
         birdController = new KeyAdapter() {
@@ -81,5 +81,16 @@ public class Level1 extends BasicLevel {
             super.beginContact(sensorEvent);
         }
     }
+
+    @Override
+    public void endContact(SensorEvent sensorEvent) {
+        System.out.println("endContact("+sensorEvent+")");
+        if (sensorEvent.getSensor().getBody() instanceof Bird) {
+            sensorEvent.getContactBody().destroy();
+        } else {
+            super.endContact(sensorEvent);
+        }
+    }
+
 }
 

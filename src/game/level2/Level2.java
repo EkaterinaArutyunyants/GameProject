@@ -10,7 +10,6 @@ import game.level1.SensorPipe;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
@@ -23,7 +22,7 @@ public class Level2 extends BasicLevel {
 
     public Level2(BirdGame game, String name, int targetScore) {
         super(game, name, targetScore); //parent
-        bird = new Bird2(this, 10);
+        bird = new Bird2(this);
         bird.addCollisionListener(this);
         background = new ImageIcon("data/level2/dessertBackground.jpeg").getImage();
         factories.add(new CactusFactory(this, 4000));
