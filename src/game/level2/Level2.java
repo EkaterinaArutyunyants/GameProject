@@ -32,7 +32,7 @@ public class Level2 extends BasicLevel {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_W:
-                        bird.setLinearVelocity(new Vec2(0f, 5f));
+                        bird.setLinearVelocity(new Vec2(0f, 7f));
                         //switch images when press space
                         bird.flyUp();
                         break;

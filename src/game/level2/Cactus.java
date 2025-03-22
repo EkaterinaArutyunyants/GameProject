@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class Cactus extends Asset {
     private static float vx = -7f;
-    private static final BodyImage image = new BodyImage("data/level2/cactus.png", 20);
+    private static final BodyImage image = new BodyImage("data/level2/cactus.png", 19);
     private static final Random random = new Random();
     private static final float minHeight = 6f;
     private static final float maxHeight = 14f;
