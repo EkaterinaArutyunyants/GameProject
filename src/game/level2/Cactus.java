@@ -9,22 +9,21 @@ import java.util.Random;
 
 public class Cactus extends Asset {
     private static float vx = -7f;
-    private static final BodyImage image = new BodyImage("data/level2/cactus.png", 19);
     private static final Random random = new Random();
-    private static final float minHeight = 6f;
-    private static final float maxHeight = 14f;
-    private static final float width = 3f;
-    private static final float height = minHeight + random.nextFloat() * (maxHeight - minHeight);
-    private static final float yPos = -13f + height;
+    private static final float minHalfHeight = 6f;
+    private static final float maxHalfHeight = 11f;
+    private static final float halfWidth = 3f;
 
     public Cactus(AssetFactory factory) {
-        super(factory, new BoxShape(width, height)); //parent
+        super(factory);
+        final float halfHeight = minHalfHeight + random.nextFloat() * (maxHalfHeight - minHalfHeight);
+        final BodyImage image = new BodyImage("data/level2/cactus.png", halfHeight * 2);
+        //TODO: replace boxShape with polygon shape
+        new SolidFixture(this,new BoxShape(halfWidth, halfHeight));
         addImage(image);
 
-        //randomness height
-        setPosition(new Vec2(30, yPos));
+        setPosition(new Vec2(30, -13));
         setGravityScale(0f);
-        setLinearVelocity(new Vec2(-7, 0));
         setGravityScale(0f);
         setLinearVelocity(new Vec2(vx, 0));
         setAngleDegrees(0f);

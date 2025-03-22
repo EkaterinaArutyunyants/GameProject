@@ -1,5 +1,19 @@
 Milstone 2:
+
+LEVEL 1:
 - Разобраться с коэф в пайпе 1.2
+
+LEVEL 2:
+- cactus polygon shape
+* Spiders iz heart
+* Clouds iz heart (ghost)
+* bombs iz heart so zvukom
+* лианы из кактусов
+
+BETWEEN LEVELS:
+exit/quit na menu
+intro
+you win/lost + menu
 
 1. После окончания игры удалить все объекты (монетки, сердечки и столбы)
 2. описать какие объекты будут на каждом уровне, как они будут взаимодействовать, и критерий окончания уровня.
