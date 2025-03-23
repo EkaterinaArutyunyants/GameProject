@@ -3,9 +3,7 @@ package game.level2;
 import city.cs.engine.Body;
 import city.cs.engine.CollisionEvent;
 import city.cs.engine.SensorEvent;
-import game.BasicLevel;
-import game.Bird;
-import game.BirdGame;
+import game.*;
 import game.level1.SensorPipe;
 import org.jbox2d.common.Vec2;
 
@@ -26,6 +24,27 @@ public class Level2 extends BasicLevel {
         bird.addCollisionListener(this);
         background = new ImageIcon("data/level2/dessertBackground.jpeg").getImage();
         factories.add(new CactusFactory(this, 4000));
+        factories.add(new AssetFactory(this, 10000, 3) {
+            @Override
+            protected void createAsset() {
+                super.createAsset();
+                new Spider(this);
+            }
+        });
+        factories.add(new AssetFactory(this, 15000, 3) {
+            @Override
+            protected void createAsset() {
+                super.createAsset();
+                new Bomb(this);
+            }
+        });
+        factories.add(new AssetFactory(this, 13000, 3) {
+            @Override
+            protected void createAsset() {
+                super.createAsset();
+                new Cloud(this);
+            }
+        });
         birdController = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {

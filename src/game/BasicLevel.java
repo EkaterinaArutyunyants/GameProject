@@ -10,6 +10,8 @@ import city.cs.engine.SensorListener;
 import city.cs.engine.SoundClip;
 import city.cs.engine.StaticBody;
 import city.cs.engine.World;
+import game.level2.Bomb;
+import game.level2.Spider;
 import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -58,7 +60,6 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
             }
         });
 
-
         RIP = new StaticBody(this, new BoxShape(40f, 0.1f, new Vec2(0, -20f)));
         try {
             winSound = new SoundClip("data/soundWin.wav");
@@ -84,6 +85,12 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
         } else if (collisionEvent.getOtherBody() instanceof Heart heart) {
             health++;
             heart.destroy();
+        } else if (collisionEvent.getOtherBody() instanceof Spider spider) {
+            health--;
+            spider.destroy();
+        } else if (collisionEvent.getOtherBody() instanceof Bomb bomb) {
+            health--;
+            bomb.destroy();
         } else if (RIP.equals(collisionEvent.getOtherBody())) {
             complete();
         } else {
