@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class Cloud extends Asset {
     private static final Shape shape = new PolygonShape(-0.369f, 0.867f, -0.934f, 0.233f, 0.0f, -0.86f, 0.926f, 0.224f, 0.369f, 0.859f);
-    private static final BodyImage image = new BodyImage("data/level2/cloud.png", 10);
+    private static final BodyImage image = new BodyImage("data/level2/cloud.png", 9);
 
     public Cloud(AssetFactory factory) {
         super(factory, shape);

@@ -24,21 +24,21 @@ public class Level2 extends BasicLevel {
         bird.addCollisionListener(this);
         background = new ImageIcon("data/level2/dessertBackground.jpeg").getImage();
         factories.add(new CactusFactory(this, 4000));
-        factories.add(new AssetFactory(this, 10000, 3) {
+        factories.add(new AssetFactory(this, 11000, 3) {
             @Override
             protected void createAsset() {
                 super.createAsset();
                 new Spider(this);
             }
         });
-        factories.add(new AssetFactory(this, 15000, 3) {
+        factories.add(new AssetFactory(this, 16000, 3) {
             @Override
             protected void createAsset() {
                 super.createAsset();
                 new Bomb(this);
             }
         });
-        factories.add(new AssetFactory(this, 13000, 3) {
+        factories.add(new AssetFactory(this, 14000, 3) {
             @Override
             protected void createAsset() {
                 super.createAsset();

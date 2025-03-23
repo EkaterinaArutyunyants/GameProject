@@ -85,6 +85,7 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
         } else if (collisionEvent.getOtherBody() instanceof Heart heart) {
             health++;
             heart.destroy();
+            //level2
         } else if (collisionEvent.getOtherBody() instanceof Spider spider) {
             health--;
             spider.destroy();
