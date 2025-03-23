@@ -4,6 +4,7 @@ import city.cs.engine.BodyImage;
 import city.cs.engine.DynamicBody;
 import city.cs.engine.PolygonShape;
 import city.cs.engine.Shape;
+import city.cs.engine.StaticBody;
 import city.cs.engine.UserView;
 import city.cs.engine.World;
 import city.cs.engine.WorldView;
@@ -24,12 +25,11 @@ public class TestMouse {
     private static final Shape shape = new PolygonShape(-2.02f, 0.43f, -2.13f, -0.23f, -0.83f, -1.94f, -0.21f, -1.95f, 2.11f, -0.83f, 2.05f, 0.91f, 0.96f, 1.94f, -0.78f, 1.57f);
     private static final BodyImage image = new BodyImage("data/level1/bird.png", 4);
     private static final BodyImage imageBirdFlyUp = new BodyImage("data/level1/birdFlyUp.png", 4);
-    private static  DynamicBody bird;
+    private static StaticBody bird;
 
 
     private static class MouseHandler extends MouseAdapter {
         private final UserView view;
-        private boolean overBird=false;
 
         private MouseHandler(UserView view) {
             this.view = view;
@@ -41,13 +41,9 @@ public class TestMouse {
         }
         public void mouseMoved(MouseEvent e){
             if (bird.contains(view.viewToWorld(e.getPoint()))) {
-                if (overBird) return;
-                overBird = true;
                 bird.removeAllImages();
                 bird.addImage(imageBirdFlyUp);
             } else{
-                if (!overBird) return;
-                overBird = false;
                 bird.removeAllImages();
                 bird.addImage(image);
             }
@@ -57,11 +53,11 @@ public class TestMouse {
 
     private static WorldView createWorld(){
         World world = new World();
-        bird = new DynamicBody(world, shape);
+        bird = new StaticBody(world, shape);
         bird.setPosition(new Vec2(7,-9));
         bird.addImage(image);
         bird.setAlwaysOutline(true);
-        bird.setGravityScale(0f);
+//        bird.setGravityScale(0f);
         UserView view = new UserView(world, width, height);
         var mouseHandler = new MouseHandler(view);
         view.addMouseListener(mouseHandler);
@@ -84,12 +80,13 @@ public class TestMouse {
             layeredPane.setPreferredSize(new Dimension(width,height)); //размер
 
             //view объекты (чел)
-            layeredPane.add(view,0); //индекс от 0 чем больше тем дальше
+            layeredPane.add(view,0);
+            //индекс от 0 чем больше тем дальше
             view.setOpaque(false);
             view.setBounds(0, 0, width, height); //прямоуг resize от коорд. до width height в px
 
             //backImage считываем
-            BufferedImage backImage = ImageIO.read(new File("data/level1/sky.jpg"));
+            BufferedImage backImage = ImageIO.read(new File("data/startBackground.jpeg"));
             JLabel background = new JLabel(new ImageIcon(backImage)); //берем компонент JLabel и заполняем туда img
             layeredPane.add(background,1); //background дальше чем view
             background.setBounds(0, 0, width, height);
