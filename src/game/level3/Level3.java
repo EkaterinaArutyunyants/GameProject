@@ -1,9 +1,13 @@
-package game.level2;
+package game.level3;
 
 import city.cs.engine.Body;
 import city.cs.engine.CollisionEvent;
 import city.cs.engine.SensorEvent;
-import game.*;
+import game.AssetFactory;
+import game.BasicLevel;
+import game.Bird;
+import game.BirdGame;
+import game.level1.PipeFactory;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
@@ -13,31 +17,26 @@ import java.util.HashSet;
 import java.util.Set;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
-public class Level2 extends BasicLevel {
-    private final Bird2 bird;
-    private final Set<Body> hittedCactuses = new HashSet<>();
+public class Level3 extends BasicLevel {
+    private final Bird3 bird;
+    private final Set<Body> hittedRockets = new HashSet<>();
 
-    public Level2(BirdGame game, String name, int targetScore) {
+    public Level3(BirdGame game, String name, int targetScore) {
         super(game, name, targetScore); //parent
-        bird = new Bird2(this);
+        bird = new Bird3(this);
         bird.addCollisionListener(this);
-        background = new ImageIcon("data/level2/dessertBackground.jpeg").getImage();
-        factories.add(new CactusFactory(this, 4000));
+        background = new ImageIcon("data/level3/moonBackground.jpg").getImage();
+
+        factories.add(new RocketFactory(this, 4000));
 
         factories.add(new AssetFactory(this, 16000, 3) {
             @Override
             protected void createAsset() {
                 super.createAsset();
-                new Bomb(this);
+                new Alien(this);
             }
         });
-        factories.add(new AssetFactory(this, 14000, 3) {
-            @Override
-            protected void createAsset() {
-                super.createAsset();
-                new Cloud(this);
-            }
-        });
+
         birdController = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -69,11 +68,11 @@ public class Level2 extends BasicLevel {
 
     @Override
     public void collide(CollisionEvent collisionEvent) {
-        if (collisionEvent.getOtherBody() instanceof Cactus cactus) {
-            cactus.restoreStateAfterCollision();
+        if (collisionEvent.getOtherBody() instanceof Rocket rocket) {
+            rocket.restoreStateAfterCollision();
             bird.setStateAfterCollisionWithRocket();
-            if (!hittedCactuses.contains(cactus)) {
-                hittedCactuses.add(cactus);
+            if (!hittedRockets.contains(rocket)) {
+                hittedRockets.add(rocket);
                 bird.decHealth();
                 health--;
                 if (health <= 0) complete();
@@ -85,9 +84,9 @@ public class Level2 extends BasicLevel {
 
     @Override
     public void beginContact(SensorEvent sensorEvent) {
-        if ((sensorEvent.getSensor().getBody() instanceof SensorCactus cactus) && (sensorEvent.getContactBody() instanceof Bird)) {
-            if (!hittedCactuses.contains(cactus)) {
-                hittedCactuses.add(cactus);
+        if ((sensorEvent.getSensor().getBody() instanceof SensorRocket rocket) && (sensorEvent.getContactBody() instanceof Bird)) {
+            if (!hittedRockets.contains(rocket)) {
+                hittedRockets.add(rocket);
                 bird.decHealth();
                 health--;
                 if (health <= 0) complete();

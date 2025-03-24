@@ -22,5 +22,6 @@ public class Bomb extends Asset {
         setPosition(new Vec2(30, (random.nextFloat() - 0.5f) * y_max));
         setGravityScale(0f);
         setLinearVelocity(new Vec2(-7, 0));
+        setAlwaysOutline(true);
     }
 }

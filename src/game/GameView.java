@@ -9,6 +9,8 @@ public class GameView extends UserView {
 
     private static final Image heart = new ImageIcon("data/heart.png").getImage();
     private static final Image coin = new ImageIcon("data/coin.png").getImage();
+    private static final Image imageYouWin = new ImageIcon("data/youWinBackground.png").getImage();
+    private static final Image imageGameOver = new ImageIcon("data/gameOver.png").getImage();
     //font for press shift
     private static final Font foregroundFont = new Font("Bold", Font.BOLD, 20);
     //font for coin
@@ -70,14 +72,16 @@ public class GameView extends UserView {
     private void paintSuccess(Graphics2D g){
         g.setColor(Color.RED);
         g.setFont(foregroundFont);
-        g.drawString("You win! ", (getWidth() / 2) - 670, 140);
+        g.drawImage(imageYouWin, 0, 0, this);
+//        g.drawString("You win! ", (getWidth() / 2) - 670, 140);
     }
 
     //string when lost game
     private void paintLost(Graphics2D g){
         g.setColor(Color.RED);
         g.setFont(foregroundFont);
-        g.drawString("Game over! ", (getWidth() / 2) - 670, 140);
+        g.drawImage(imageGameOver, 0, 0, this);
+//        g.drawString("Game over! ", (getWidth() / 2) - 670, 140);
     }
 
 }

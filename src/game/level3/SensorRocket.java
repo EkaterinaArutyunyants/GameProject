@@ -1,20 +1,20 @@
-package game.level2;
+package game.level3;
 
 import city.cs.engine.AttachedImage;
 import city.cs.engine.BodyImage;
 import city.cs.engine.BoxShape;
-import city.cs.engine.SolidFixture;
+import city.cs.engine.Sensor;
 import game.Asset;
 import game.AssetFactory;
 import org.jbox2d.common.Vec2;
 
-public class Cactus extends Asset {
+public class SensorRocket extends Asset {
     private static final float yMax = 19f;
     private static final float halfWidth = 3.5f / 2;
     private static final float scale = 2.5f;
     private static float vx = -7f;
 
-    public Cactus(AssetFactory factory, float holeUp) {
+    public SensorRocket(AssetFactory factory, float holeUp) {
         super(factory); //parent
 
         //dif size of holes between pipes
@@ -24,13 +24,15 @@ public class Cactus extends Asset {
         Vec2 centerDown = new Vec2(0, -yCenterUp);
 
         //REQ: multiple fixtures
-        new SolidFixture(this, new BoxShape(halfWidth, halfHeightUp * 1.2f, centerUp));
-        new SolidFixture(this, new BoxShape(halfWidth, halfHeightUp * 1.2f, centerDown));
+        Sensor sensor = new Sensor(this, new BoxShape(halfWidth, halfHeightUp * 1.2f, centerUp));
+        sensor.addSensorListener(factory.getLevel());
+        sensor = new Sensor(this, new BoxShape(halfWidth, halfHeightUp * 1.2f, centerDown));
+        sensor.addSensorListener(factory.getLevel());
 
-        AttachedImage imageUp = addImage(new BodyImage("data/level2/cactusUp.png", halfHeightUp));
+        AttachedImage imageUp = addImage(new BodyImage("data/level3/rocketUp.png", halfHeightUp));
         imageUp.setOffset(centerUp);
         imageUp.setScale(scale);
-        AttachedImage imageDown = addImage(new BodyImage("data/level2/cactusDown.png", halfHeightUp));
+        AttachedImage imageDown = addImage(new BodyImage("data/level1/rocketDown.png", halfHeightUp));
         imageDown.setOffset(centerDown);
         imageDown.setScale(scale);
 
@@ -41,13 +43,6 @@ public class Cactus extends Asset {
         setLinearVelocity(new Vec2(vx, 0));
         setAngleDegrees(0f);
         setAngularVelocity(0f);
-        setAlwaysOutline(true);
     }
 
-    //after collision restoring velocity
-    public void restoreStateAfterCollision() {
-        setLinearVelocity(new Vec2(vx, 0));
-        setAngleDegrees(0f);
-        setAngularVelocity(0f);
-    }
 }

@@ -1,8 +1,6 @@
 package game.level2;
 
-import city.cs.engine.BodyImage;
-import city.cs.engine.PolygonShape;
-import city.cs.engine.Shape;
+import city.cs.engine.*;
 import game.Asset;
 import game.AssetFactory;
 import org.jbox2d.common.Vec2;
@@ -14,10 +12,12 @@ public class Cloud extends Asset {
     private static final BodyImage image = new BodyImage("data/level2/cloud.png", 9);
 
     public Cloud(AssetFactory factory) {
-        super(factory, shape);
+        super(factory);
+        new GhostlyFixture(this, shape);
         addImage(image);
         setPosition(new Vec2(30, 15));
         setGravityScale(0f);
         setLinearVelocity(new Vec2(-7, 0));
+        setAlwaysOutline(true);
     }
 }

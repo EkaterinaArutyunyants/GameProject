@@ -4,14 +4,13 @@ import city.cs.engine.Body;
 import city.cs.engine.BoxShape;
 import city.cs.engine.CollisionEvent;
 import city.cs.engine.CollisionListener;
-import city.cs.engine.DynamicBody;
 import city.cs.engine.SensorEvent;
 import city.cs.engine.SensorListener;
 import city.cs.engine.SoundClip;
 import city.cs.engine.StaticBody;
 import city.cs.engine.World;
 import game.level2.Bomb;
-import game.level2.Spider;
+import game.level3.Alien;
 import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -86,9 +85,9 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
             health++;
             heart.destroy();
             //level2
-        } else if (collisionEvent.getOtherBody() instanceof Spider spider) {
+        } else if (collisionEvent.getOtherBody() instanceof Alien alien) {
             health--;
-            spider.destroy();
+            alien.destroy();
         } else if (collisionEvent.getOtherBody() instanceof Bomb bomb) {
             health--;
             bomb.destroy();
