@@ -16,6 +16,7 @@ import java.io.IOException;
 
 public class Bird extends Walker {
     private static final Shape shape = new PolygonShape(-2.02f, 0.43f, -2.13f, -0.23f, -0.83f, -1.94f, -0.21f, -1.95f, 2.11f, -0.83f, 2.05f, 0.91f, 0.96f, 1.94f, -0.78f, 1.57f);
+    private static final Shape sensorShape = new  PolygonShape(-7f,10f, 2.1f,10f, 2.1f,-10f, -7f, -10f);
     private static final BodyImage image = new BodyImage("data/level1/bird.png", 4);
     private static final BodyImage imageBirdFlyUp = new BodyImage("data/level1/birdFlyUp.png", 4);
     private SoundClip crashSound = null;
@@ -27,7 +28,7 @@ public class Bird extends Walker {
         super(level, shape);
         addImage(image);
         SolidFixture fixture = new SolidFixture(this, shape);
-        Sensor sensor = new Sensor(this,new BoxShape(10f,10f));
+        Sensor sensor = new Sensor(this,sensorShape);
         sensor.addSensorListener(level);
         fixture.setDensity(50);
         setPosition(new Vec2(-13, -5));
