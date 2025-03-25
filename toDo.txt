@@ -12,10 +12,12 @@ LEVEL 2:
 - звуки на лвл2 и 3 для объектов
 
 LEVEL 3:
+- balckhole
+- поменять картинку элиана
 
 BETWEEN LEVELS:
 - сделать интро без птичек
-- exit/quit na menu
+- exit/quit na menu сделать картинку
 - intro с инструкцией как играть: shift speed up image instead of string
 - После окончания игры удалить все объекты (монетки, сердечки и столбы)
 

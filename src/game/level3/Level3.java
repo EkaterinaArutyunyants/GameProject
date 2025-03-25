@@ -5,9 +5,8 @@ import city.cs.engine.CollisionEvent;
 import city.cs.engine.SensorEvent;
 import game.AssetFactory;
 import game.BasicLevel;
-import game.Bird;
 import game.BirdGame;
-import game.level1.PipeFactory;
+import game.level2.Bomb;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
@@ -18,31 +17,41 @@ import java.util.Set;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class Level3 extends BasicLevel {
-    private final Bird3 bird;
+    private final Bird bird;
     private final Set<Body> hittedRockets = new HashSet<>();
 
     public Level3(BirdGame game, String name, int targetScore) {
         super(game, name, targetScore); //parent
-        bird = new Bird3(this);
+        bird = new Bird(this);
         bird.addCollisionListener(this);
         background = new ImageIcon("data/level3/moonBackground.jpg").getImage();
 
-        factories.add(new RocketFactory(this, 4000));
+        //FACTORIES:
 
-        factories.add(new AssetFactory(this, 16000, 3) {
+        factories.add(new RocketFactory(this, 4000));
+        factories.add(new AssetFactory(this, 17000, 3) {
             @Override
             protected void createAsset() {
                 super.createAsset();
                 new Alien(this);
             }
         });
+        factories.add(new AssetFactory(this, 20000, 2) {
+            @Override
+            protected void createAsset() {
+                super.createAsset();
+                new BlackHole(this);
+            }
+        });
+
+        //KEYS:
 
         birdController = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_SPACE:
-                        bird.setLinearVelocity(new Vec2(0f, 7f));
+                        bird.setLinearVelocity(new Vec2(0f, 5f));
                         //switch images when press space
                         bird.flyUp();
                         break;
@@ -66,6 +75,8 @@ public class Level3 extends BasicLevel {
 
     }
 
+    //COLLISION:
+
     @Override
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Rocket rocket) {
@@ -84,7 +95,7 @@ public class Level3 extends BasicLevel {
 
     @Override
     public void beginContact(SensorEvent sensorEvent) {
-        if ((sensorEvent.getSensor().getBody() instanceof SensorRocket rocket) && (sensorEvent.getContactBody() instanceof Bird)) {
+        if ((sensorEvent.getSensor().getBody() instanceof SensorRocket rocket) && (sensorEvent.getContactBody() instanceof game.level1.Bird)) {
             if (!hittedRockets.contains(rocket)) {
                 hittedRockets.add(rocket);
                 bird.decHealth();

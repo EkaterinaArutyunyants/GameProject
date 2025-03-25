@@ -44,18 +44,18 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
         this.name = name;
         this.targetScore = targetScore;
 
-        factories.add(new AssetFactory(this, 7000, 3) {
+        factories.add(new AssetFactory(this, 9000, 3) {
             @Override
             protected void createAsset() {
                 super.createAsset();
                 new Heart(this);
             }
         });
-        factories.add(new AssetFactory(this, 8000, 3) {
+        factories.add(new AssetFactory(this, 11000, 3) {
             @Override
             protected void createAsset() {
                 super.createAsset();
-                new Coin(this, 2);
+                new Coin(this, 1);
             }
         });
 
@@ -140,7 +140,6 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
     public Image getBackground() {
         return background;
     }
-
     public boolean isComplete() {
         return complete;
     }

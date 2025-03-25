@@ -10,7 +10,7 @@ import org.jbox2d.common.Vec2;
 import java.util.Random;
 
 public class Alien extends Asset {
-    private static final Shape shape = new PolygonShape(-0.369f, 0.867f, -0.934f, 0.233f, 0.0f, -0.86f, 0.926f, 0.224f, 0.369f, 0.859f);
+    private static final Shape shape = new PolygonShape(-1.18f,1.32f, 0.96f,1.32f, 1.59f,-0.77f, -0.09f,-1.09f, -1.77f,-0.74f);
     private static final BodyImage image = new BodyImage("data/level3/alien.gif", 4);
     private static final Random random = new Random();
     private static final float y_max = 15f;

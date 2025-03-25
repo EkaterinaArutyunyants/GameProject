@@ -14,36 +14,39 @@ import java.util.Set;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class Level2 extends BasicLevel {
-    private final Bird2 bird;
+    private final Bird bird;
     private final Set<Body> hittedCactuses = new HashSet<>();
 
     public Level2(BirdGame game, String name, int targetScore) {
         super(game, name, targetScore); //parent
-        bird = new Bird2(this);
+        bird = new Bird(this);
         bird.addCollisionListener(this);
         background = new ImageIcon("data/level2/dessertBackground.jpeg").getImage();
-        factories.add(new CactusFactory(this, 4000));
 
-        factories.add(new AssetFactory(this, 16000, 3) {
+        //FACTORIES:
+        factories.add(new CactusFactory(this, 4000));
+        factories.add(new AssetFactory(this, 17000, 3) {
             @Override
             protected void createAsset() {
                 super.createAsset();
                 new Bomb(this);
             }
         });
-        factories.add(new AssetFactory(this, 14000, 3) {
+        factories.add(new AssetFactory(this, 15000, 3) {
             @Override
             protected void createAsset() {
                 super.createAsset();
                 new Cloud(this);
             }
         });
+
+        //KEYS:
         birdController = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_SPACE:
-                        bird.setLinearVelocity(new Vec2(0f, 7f));
+                        bird.setLinearVelocity(new Vec2(0f, 5f));
                         //switch images when press space
                         bird.flyUp();
                         break;
@@ -67,6 +70,7 @@ public class Level2 extends BasicLevel {
 
     }
 
+    //COLLISION
     @Override
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Cactus cactus) {
@@ -85,7 +89,7 @@ public class Level2 extends BasicLevel {
 
     @Override
     public void beginContact(SensorEvent sensorEvent) {
-        if ((sensorEvent.getSensor().getBody() instanceof SensorCactus cactus) && (sensorEvent.getContactBody() instanceof Bird)) {
+        if ((sensorEvent.getSensor().getBody() instanceof SensorCactus cactus) && (sensorEvent.getContactBody() instanceof game.level1.Bird)) {
             if (!hittedCactuses.contains(cactus)) {
                 hittedCactuses.add(cactus);
                 bird.decHealth();

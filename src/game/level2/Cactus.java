@@ -27,10 +27,10 @@ public class Cactus extends Asset {
         new SolidFixture(this, new BoxShape(halfWidth, halfHeightUp * 1.2f, centerUp));
         new SolidFixture(this, new BoxShape(halfWidth, halfHeightUp * 1.2f, centerDown));
 
-        AttachedImage imageUp = addImage(new BodyImage("data/level2/cactusUp.png", halfHeightUp));
+        AttachedImage imageUp = addImage(new BodyImage("data/level2/cactusUp.png", halfHeightUp * 1.1f));
         imageUp.setOffset(centerUp);
         imageUp.setScale(scale);
-        AttachedImage imageDown = addImage(new BodyImage("data/level2/cactusDown.png", halfHeightUp));
+        AttachedImage imageDown = addImage(new BodyImage("data/level2/cactusDown.png", halfHeightUp * 1.1f));
         imageDown.setOffset(centerDown);
         imageDown.setScale(scale);
 
