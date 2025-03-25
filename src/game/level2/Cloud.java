@@ -8,7 +8,7 @@ import org.jbox2d.common.Vec2;
 import java.util.Random;
 
 public class Cloud extends Asset {
-    private static final Shape shape = new PolygonShape(-0.369f, 0.867f, -0.934f, 0.233f, 0.0f, -0.86f, 0.926f, 0.224f, 0.369f, 0.859f);
+    private static final Shape shape = new PolygonShape(-8.68f,-0.68f, -3.89f,2.95f, 1.62f,3.85f, 6.73f,2.2f, 8.42f,-0.32f, 4.21f,-3.42f, -4.36f,-3.38f);
     private static final BodyImage image = new BodyImage("data/level2/cloud.png", 9);
 
     public Cloud(AssetFactory factory) {

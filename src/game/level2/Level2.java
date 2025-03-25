@@ -14,12 +14,12 @@ import java.util.Set;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class Level2 extends BasicLevel {
-    private final Bird2 bird;
+    private final Bird bird;
     private final Set<Body> hittedCactuses = new HashSet<>();
 
     public Level2(BirdGame game, String name, int targetScore) {
         super(game, name, targetScore); //parent
-        bird = new Bird2(this);
+        bird = new Bird(this);
         bird.addCollisionListener(this);
         background = new ImageIcon("data/level2/dessertBackground.jpeg").getImage();
         factories.add(new CactusFactory(this, 4000));
@@ -85,7 +85,7 @@ public class Level2 extends BasicLevel {
 
     @Override
     public void beginContact(SensorEvent sensorEvent) {
-        if ((sensorEvent.getSensor().getBody() instanceof SensorCactus cactus) && (sensorEvent.getContactBody() instanceof Bird)) {
+        if ((sensorEvent.getSensor().getBody() instanceof SensorCactus cactus) && (sensorEvent.getContactBody() instanceof game.level1.Bird)) {
             if (!hittedCactuses.contains(cactus)) {
                 hittedCactuses.add(cactus);
                 bird.decHealth();

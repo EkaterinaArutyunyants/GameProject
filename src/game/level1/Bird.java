@@ -1,13 +1,13 @@
-package game;
+package game.level1;
 
 import city.cs.engine.BodyImage;
-import city.cs.engine.BoxShape;
 import city.cs.engine.PolygonShape;
 import city.cs.engine.Sensor;
 import city.cs.engine.Shape;
 import city.cs.engine.SolidFixture;
 import city.cs.engine.SoundClip;
 import city.cs.engine.Walker;
+import game.BasicLevel;
 import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;

@@ -10,7 +10,7 @@ import org.jbox2d.common.Vec2;
 import java.util.Random;
 
 public class Bomb extends Asset {
-    private static final Shape shape = new PolygonShape(-0.369f, 0.867f, -0.934f, 0.233f, 0.0f, -0.86f, 0.926f, 0.224f, 0.369f, 0.859f);
+    private static final Shape shape = new PolygonShape(-1.13f,-0.14f, 0.18f,1.5f, 1.1f,-0.13f, 1.13f,-0.86f, 0.23f,-1.61f, -0.22f,-1.62f, -1.14f,-0.83f);
     private static final BodyImage image = new BodyImage("data/level2/bomb.gif", 4);
     private static final Random random = new Random();
     private static final float y_max = 15f;

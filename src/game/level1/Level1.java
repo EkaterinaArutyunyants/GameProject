@@ -4,7 +4,6 @@ import city.cs.engine.Body;
 import city.cs.engine.CollisionEvent;
 import city.cs.engine.SensorEvent;
 import game.BasicLevel;
-import game.Bird;
 import game.BirdGame;
 import org.jbox2d.common.Vec2;
 
@@ -85,7 +84,7 @@ public class Level1 extends BasicLevel {
     @Override
     public void endContact(SensorEvent sensorEvent) {
         System.out.println("endContact("+sensorEvent+")");
-        if (sensorEvent.getSensor().getBody() instanceof Bird) {
+        if (sensorEvent.getSensor().getBody() instanceof Bird && !RIP.equals(sensorEvent.getContactBody())) {
             sensorEvent.getContactBody().destroy();
         } else {
             super.endContact(sensorEvent);

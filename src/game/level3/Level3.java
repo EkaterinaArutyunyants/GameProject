@@ -5,9 +5,7 @@ import city.cs.engine.CollisionEvent;
 import city.cs.engine.SensorEvent;
 import game.AssetFactory;
 import game.BasicLevel;
-import game.Bird;
 import game.BirdGame;
-import game.level1.PipeFactory;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
@@ -18,12 +16,12 @@ import java.util.Set;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class Level3 extends BasicLevel {
-    private final Bird3 bird;
+    private final Bird bird;
     private final Set<Body> hittedRockets = new HashSet<>();
 
     public Level3(BirdGame game, String name, int targetScore) {
         super(game, name, targetScore); //parent
-        bird = new Bird3(this);
+        bird = new Bird(this);
         bird.addCollisionListener(this);
         background = new ImageIcon("data/level3/moonBackground.jpg").getImage();
 
@@ -84,7 +82,7 @@ public class Level3 extends BasicLevel {
 
     @Override
     public void beginContact(SensorEvent sensorEvent) {
-        if ((sensorEvent.getSensor().getBody() instanceof SensorRocket rocket) && (sensorEvent.getContactBody() instanceof Bird)) {
+        if ((sensorEvent.getSensor().getBody() instanceof SensorRocket rocket) && (sensorEvent.getContactBody() instanceof game.level1.Bird)) {
             if (!hittedRockets.contains(rocket)) {
                 hittedRockets.add(rocket);
                 bird.decHealth();

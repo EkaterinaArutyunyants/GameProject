@@ -8,7 +8,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
-public class Bird2 extends Walker {
+public class Bird extends Walker {
     private static final Shape shape = new PolygonShape(-2.02f, 0.43f, -2.13f, -0.23f, -0.83f, -1.94f, -0.21f, -1.95f, 2.11f, -0.83f, 2.05f, 0.91f, 0.96f, 1.94f, -0.78f, 1.57f);
     private static final BodyImage image = new BodyImage("data/level2/dessertBird.png", 4);
     private static final BodyImage imageBirdFlyUp = new BodyImage("data/level2/dessertBirdFlyUp.png", 4);
@@ -17,7 +17,7 @@ public class Bird2 extends Walker {
     private SoundClip heartSound = null;
 
     //bird constructor
-    public Bird2(BasicLevel level) {
+    public Bird(BasicLevel level) {
         super(level, shape);
         addImage(image);
         SolidFixture fixture = new SolidFixture(this, shape);
