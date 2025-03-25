@@ -125,6 +125,18 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
         game.completeLevel(this);
     }
 
+    @Override
+    public void start(){
+        super.start();
+        factories.forEach(AssetFactory::start);
+    }
+
+    @Override
+    public void stop(){
+        factories.forEach(AssetFactory::stop);
+        super.stop();
+    }
+
     public Image getBackground() {
         return background;
     }

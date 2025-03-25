@@ -20,6 +20,9 @@ public class GameView extends UserView {
         super(world, width, height);
     }
 
+    public void startLevel(int index){
+
+    }
     //REQ: background, foreground rendering + visual layering
     @Override
     public BasicLevel getWorld(){

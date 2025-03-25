@@ -18,7 +18,6 @@ public class AssetFactory implements ActionListener {
         this.level = level;
         timer = new Timer(creationDelay,this);
         timer.setInitialDelay(0);
-        timer.start();
     }
 
     /**
@@ -37,12 +36,22 @@ public class AssetFactory implements ActionListener {
     protected void createAsset(){
     }
 
+    public void start(){
+        if (!timer.isRunning()) {
+            timer.start();
+        }
+    }
+
     public void decCount(){
         count--;
     }
 
+
+
     public void stop(){
-        timer.stop();
+        if (timer.isRunning()) {
+            timer.stop();
+        }
     }
 
     public BasicLevel getLevel() {
