@@ -22,6 +22,8 @@ public class Level1 extends BasicLevel {
         bird = new Bird(this);
         bird.addCollisionListener(this);
         factories.add(new PipeFactory(this, 4000));
+
+        //KEYS:
         birdController = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -51,6 +53,7 @@ public class Level1 extends BasicLevel {
 
     }
 
+    //COLLISION:
     @Override
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Pipe pipe) {

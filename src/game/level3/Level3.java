@@ -6,6 +6,7 @@ import city.cs.engine.SensorEvent;
 import game.AssetFactory;
 import game.BasicLevel;
 import game.BirdGame;
+import game.level2.Bomb;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
@@ -25,15 +26,25 @@ public class Level3 extends BasicLevel {
         bird.addCollisionListener(this);
         background = new ImageIcon("data/level3/moonBackground.jpg").getImage();
 
-        factories.add(new RocketFactory(this, 4000));
+        //FACTORIES:
 
-        factories.add(new AssetFactory(this, 16000, 3) {
+        factories.add(new RocketFactory(this, 4000));
+        factories.add(new AssetFactory(this, 17000, 3) {
             @Override
             protected void createAsset() {
                 super.createAsset();
                 new Alien(this);
             }
         });
+        factories.add(new AssetFactory(this, 20000, 2) {
+            @Override
+            protected void createAsset() {
+                super.createAsset();
+                new BlackHole(this);
+            }
+        });
+
+        //KEYS:
 
         birdController = new KeyAdapter() {
             @Override
@@ -63,6 +74,8 @@ public class Level3 extends BasicLevel {
         };
 
     }
+
+    //COLLISION:
 
     @Override
     public void collide(CollisionEvent collisionEvent) {

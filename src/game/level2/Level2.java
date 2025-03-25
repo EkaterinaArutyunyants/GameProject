@@ -22,22 +22,25 @@ public class Level2 extends BasicLevel {
         bird = new Bird(this);
         bird.addCollisionListener(this);
         background = new ImageIcon("data/level2/dessertBackground.jpeg").getImage();
-        factories.add(new CactusFactory(this, 4000));
 
-        factories.add(new AssetFactory(this, 16000, 3) {
+        //FACTORIES:
+        factories.add(new CactusFactory(this, 4000));
+        factories.add(new AssetFactory(this, 17000, 3) {
             @Override
             protected void createAsset() {
                 super.createAsset();
                 new Bomb(this);
             }
         });
-        factories.add(new AssetFactory(this, 14000, 3) {
+        factories.add(new AssetFactory(this, 15000, 3) {
             @Override
             protected void createAsset() {
                 super.createAsset();
                 new Cloud(this);
             }
         });
+
+        //KEYS:
         birdController = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -67,6 +70,7 @@ public class Level2 extends BasicLevel {
 
     }
 
+    //COLLISION
     @Override
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Cactus cactus) {
