@@ -27,10 +27,10 @@ public class Rocket extends Asset {
         new SolidFixture(this, new BoxShape(halfWidth, halfHeightUp * 1.2f, centerUp));
         new SolidFixture(this, new BoxShape(halfWidth, halfHeightUp * 1.2f, centerDown));
 
-        AttachedImage imageUp = addImage(new BodyImage("data/level3/rocketUp.png", halfHeightUp));
+        AttachedImage imageUp = addImage(new BodyImage("data/level3/rocketUp.png", halfHeightUp * 1.1f));
         imageUp.setOffset(centerUp);
         imageUp.setScale(scale);
-        AttachedImage imageDown = addImage(new BodyImage("data/level3/rocketDown.png", halfHeightUp));
+        AttachedImage imageDown = addImage(new BodyImage("data/level3/rocketDown.png", halfHeightUp * 1.1f));
         imageDown.setOffset(centerDown);
         imageDown.setScale(scale);
 

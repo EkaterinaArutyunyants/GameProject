@@ -55,7 +55,7 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
             @Override
             protected void createAsset() {
                 super.createAsset();
-                new Coin(this, 2);
+                new Coin(this, 1);
             }
         });
 
@@ -128,7 +128,6 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
     public Image getBackground() {
         return background;
     }
-
     public boolean isComplete() {
         return complete;
     }

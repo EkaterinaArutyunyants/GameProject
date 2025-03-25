@@ -51,7 +51,7 @@ public class BirdGame {
             throw new RuntimeException(e);
         }
         if (levelNum<levels.size()){
-            level= levels.get(levelNum);
+            level = levels.get(levelNum);
             view.setWorld(level);
             view.addKeyListener(level.getBirdController());
             level.start();
