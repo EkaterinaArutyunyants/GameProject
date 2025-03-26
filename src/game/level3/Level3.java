@@ -32,14 +32,12 @@ public class Level3 extends BasicLevel {
         factories.add(new AssetFactory(this, 17000, 3) {
             @Override
             protected void createAsset() {
-                super.createAsset();
                 new Alien(this);
             }
         });
         factories.add(new AssetFactory(this, 20000, 2) {
             @Override
             protected void createAsset() {
-                super.createAsset();
                 new BlackHole(this);
             }
         });

@@ -28,14 +28,12 @@ public class Level2 extends BasicLevel {
         factories.add(new AssetFactory(this, 17000, 3) {
             @Override
             protected void createAsset() {
-                super.createAsset();
                 new Bomb(this);
             }
         });
         factories.add(new AssetFactory(this, 15000, 3) {
             @Override
             protected void createAsset() {
-                super.createAsset();
                 new Cloud(this);
             }
         });

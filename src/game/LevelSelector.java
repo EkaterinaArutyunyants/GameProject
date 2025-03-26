@@ -28,7 +28,7 @@ public class LevelSelector extends World  {
     private static final int imageHeight=4;
     private final List<BodyImage> activeImages = new ArrayList<>(activeImagePaths.length);
     private final List<BodyImage> passiveImages = new ArrayList<>(passiveImagePaths.length);
-    private int exitBodyIndex = -1;
+    private int exitBodyIndex;
     private int lastIndex = -1;
 
     private final MouseAdapter mouseHandler  = new MouseAdapter() {

@@ -14,7 +14,6 @@ public class CactusFactory extends AssetFactory {
 
     @Override
     protected void createAsset() {
-        super.createAsset();
         new Cactus(this, holes[idx++]);
         idx %= holes.length;
     }

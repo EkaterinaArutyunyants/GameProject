@@ -14,7 +14,6 @@ public class PipeFactory extends AssetFactory {
 
     @Override
     protected void createAsset() {
-        super.createAsset();
         new Pipe(this, holes[idx++]);
         idx %= holes.length;
     }

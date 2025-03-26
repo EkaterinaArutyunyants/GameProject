@@ -24,7 +24,7 @@ import java.util.Collection;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class BasicLevel extends World implements CollisionListener, SensorListener {
-    protected Image background = new ImageIcon("data/level1/sky.jpg").getImage();
+    protected Image background;
     private final String name;
     private final BirdGame game;
     private boolean complete = false;
@@ -47,14 +47,12 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
         factories.add(new AssetFactory(this, 9000, 3) {
             @Override
             protected void createAsset() {
-                super.createAsset();
                 new Heart(this);
             }
         });
         factories.add(new AssetFactory(this, 11000, 3) {
             @Override
             protected void createAsset() {
-                super.createAsset();
                 new Coin(this, 1);
             }
         });

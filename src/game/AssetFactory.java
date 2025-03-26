@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //REQ: inheritance to create extensible groups of game assets
-public class AssetFactory implements ActionListener {
+public abstract class AssetFactory implements ActionListener {
     private final int maxCount;
     private int count = 0;
     protected final BasicLevel level;
@@ -33,8 +33,7 @@ public class AssetFactory implements ActionListener {
         }
     }
 
-    protected void createAsset(){
-    }
+    abstract protected void createAsset();
 
     public void start(){
         if (!timer.isRunning()) {

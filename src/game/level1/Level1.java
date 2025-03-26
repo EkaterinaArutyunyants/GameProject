@@ -7,6 +7,7 @@ import game.BasicLevel;
 import game.BirdGame;
 import org.jbox2d.common.Vec2;
 
+import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
@@ -21,6 +22,8 @@ public class Level1 extends BasicLevel {
         super(game, name, targetScore); //parent
         bird = new Bird(this);
         bird.addCollisionListener(this);
+        background = new ImageIcon("data/level1/sky.jpg").getImage();
+
         factories.add(new PipeFactory(this, 4000));
 
         //KEYS:

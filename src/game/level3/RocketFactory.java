@@ -14,7 +14,6 @@ public class RocketFactory extends AssetFactory {
 
     @Override
     protected void createAsset() {
-        super.createAsset();
         new Rocket(this, holes[idx++]);
         idx %= holes.length;
     }
