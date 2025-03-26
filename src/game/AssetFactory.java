@@ -13,6 +13,12 @@ public abstract class AssetFactory implements ActionListener {
     protected final BasicLevel level;
     private final Timer timer;
 
+    /**
+     *
+     * @param level - this level manages this factory.
+     * @param creationDelay -
+     * @param maxCount
+     */
     public AssetFactory(BasicLevel level, int creationDelay, int maxCount) {
         this.maxCount = maxCount;
         this.level = level;

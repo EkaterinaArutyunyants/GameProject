@@ -11,6 +11,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.io.IOException;
 
+/**
+ *
+ */
 public class BirdGame {
     private static final int width = 1400;
     private static final int height = 800;
@@ -28,14 +31,25 @@ public class BirdGame {
         wrapWithSwingAndShow();
     }
 
+    /**
+     * This method .....
+     * @param oldLevel
+     */
     public void completeLevel(BasicLevel oldLevel){
-        System.out.println("completeLevel("+oldLevel+")");
+        System.out.println("completeLevel("+oldLevel.getName()+")");
         for (var listener :  view.getKeyListeners())
             view.removeKeyListener(listener);
+        /**
+         *
+         */
         view.setWorld(selector);
         selector.start();
     }
 
+    /**
+     * assdfsdfsdfsdfsdfsdfsdfds
+     * @param index
+     */
     public void startLevel(int index){
         System.out.println("startLevel("+index+")");
         for (var listener :  view.getKeyListeners())
