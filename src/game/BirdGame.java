@@ -1,6 +1,7 @@
 package game;
 
 import city.cs.engine.SoundClip;
+import city.cs.engine.World;
 import game.level1.Level1;
 import game.level2.Level2;
 import game.level3.Level3;
@@ -8,62 +9,61 @@ import game.level3.Level3;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BirdGame {
     private static final int width = 1400;
     private static final int height = 800;
     private final GameView view;
-    private BasicLevel level;
-    private int levelNum;
-    private final List<BasicLevel> levels = new ArrayList<>();
+    private final LevelSelector selector;
+    private World activeWorld;
 
     public BirdGame() {
-//        for (int levelNum=0; levelNum<3;levelNum++)
-        levels.add(new Level1(this,"LEVEL"+levelNum,4));
-        levels.add(new Level2(this,"LEVEL2",4));
-        levels.add(new Level3(this,"LEVEL3",4));
-        levelNum=0;
-        level= levels.get(levelNum);
-        view = new GameView(level, width, height);
-        view.addKeyListener(level.getBirdController());
-
-        view.addMouseListener(new MouseAdapter(){
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                view.requestFocus();
-            }
-        });
+        selector = new LevelSelector(this);
+        view = new GameView(selector, width, height);
+        selector.setView(view);
+        view.addMouseListener(selector.getMouseHandler());
+        view.addMouseMotionListener(selector.getMouseHandler());
+        activeWorld = selector;
         wrapWithSwingAndShow();
     }
 
     public void completeLevel(BasicLevel oldLevel){
+        System.out.println("completeLevel("+oldLevel+")");
         for (var listener :  view.getKeyListeners())
             view.removeKeyListener(listener);
-        levelNum++;
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        if (levelNum<levels.size()){
-            level = levels.get(levelNum);
-            view.setWorld(level);
-            view.addKeyListener(level.getBirdController());
-            level.start();
-        } else {
-            System.out.println("GameOver");
-        }
+        view.setWorld(selector);
+        selector.start();
     }
 
+    public void startLevel(int index){
+        System.out.println("startLevel("+index+")");
+        for (var listener :  view.getKeyListeners())
+            view.removeKeyListener(listener);
+        var level = createLevel(index);
+        view.setWorld(level);
+        view.addKeyListener(level.getBirdController());
+
+        activeWorld = level;
+        activeWorld.start();
+    }
+
+    private BasicLevel createLevel(int index) {
+        return switch (index) {
+            case 0 -> new Level1(this, "LEVEL1", 4);
+            case 1 -> new Level2(this, "LEVEL2", 4);
+            case 2 -> new Level3(this, "LEVEL3", 4);
+            default -> throw new IllegalStateException(Integer.toString(index));
+        };
+    }
+
+    public void exitGame(){
+        System.exit(0);
+    };
 
     private void createAndStartGame() {
-        playBacksound();
-        level.start();
+//        playBacksound();
+        activeWorld.start();
     }
 
     private static void playBacksound() {
@@ -83,7 +83,6 @@ public class BirdGame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
         frame.setResizable(false);
-//        frame.addKeyListener(world.getBirdController()); //keys
         frame.pack();
         frame.setVisible(true);
     }
