@@ -26,6 +26,12 @@ public class LevelSelector extends World  {
     private static final String passiveExitImagePath ="data/level2/cloud.png";
     private static final String  activeExitImagePath ="data/level2/cloud.png";
     private static final int imageHeight=4;
+    private static final float[][] positions = {
+            {-15, 4},
+            {-4, 4},
+            {15, 4}
+    };
+    private static final float[] exitPosition = {28, 16};
     private final List<BodyImage> activeImages = new ArrayList<>(activeImagePaths.length);
     private final List<BodyImage> passiveImages = new ArrayList<>(passiveImagePaths.length);
     private int exitBodyIndex;
@@ -79,13 +85,10 @@ public class LevelSelector extends World  {
     public LevelSelector(BirdGame game){
         super();
         this.game = game;
-        float x = -7, y = 7;
-        for (String imagePath : passiveImagePaths){
+        for (int i = 0; i < passiveImagePaths.length; i++) {
             var button = new StaticBody(this, shape);
-            button.setPosition(new Vec2(x,y));
-            x+=3f;
-            y-=3f;
-            BodyImage image =new BodyImage(imagePath, imageHeight);
+            button.setPosition(new Vec2(positions[i][0], positions[i][1]));
+            BodyImage image =new BodyImage(passiveImagePaths[i], imageHeight);
             button.addImage(image);
             button.setAlwaysOutline(true);
             passiveImages.add(image);
@@ -96,7 +99,7 @@ public class LevelSelector extends World  {
         if (passiveExitImagePath != null) {
             exitBodyIndex = passiveImagePaths.length;
             var button = new StaticBody(this, shape);
-            button.setPosition(new Vec2(x,y));
+            button.setPosition(new Vec2(exitPosition[0], exitPosition[1]));
             BodyImage image =new BodyImage(passiveExitImagePath, imageHeight);
             button.addImage(image);
             button.setAlwaysOutline(true);

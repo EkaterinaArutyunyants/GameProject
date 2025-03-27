@@ -65,7 +65,6 @@ public class GameView extends UserView {
         //string speed up
         g.setColor(Color.darkGray);
         g.setFont(foregroundFont);
-        g.drawString(level.getName(), (getWidth() / 2) - 670, 100);
         g.drawString("Press SHIFT for speed up ", (getWidth() / 2) - 670, 140);
         g.drawString("Press SPACE for jump ", (getWidth() / 2) - 670, 180);
 
