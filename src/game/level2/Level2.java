@@ -24,7 +24,7 @@ public class Level2 extends BasicLevel {
         background = new ImageIcon("data/level2/dessertBackground.jpeg").getImage();
 
         //FACTORIES:
-        factories.add(new CactusFactory(this, 4000));
+        factories.add(new CactusFactory(this, 4000,6f,12f));
         factories.add(new AssetFactory(this, 17000, 3) {
             @Override
             protected void createAsset() {

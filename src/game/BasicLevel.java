@@ -20,6 +20,7 @@ import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class BasicLevel extends World implements CollisionListener, SensorListener {
@@ -36,6 +37,7 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
     protected int score = 0;
     protected final Collection<AssetFactory> factories = new ArrayList<>();
     protected KeyAdapter birdController;
+    protected final Random random = new Random();
 
     public BasicLevel(BirdGame game, String name, int targetScore) {
         super(); //parent
@@ -43,13 +45,13 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
         this.name = name;
         this.targetScore = targetScore;
 
-        factories.add(new AssetFactory(this, 9000, 3) {
+        factories.add(new AssetFactory(this,  random.nextInt(9000),9000, 3) {
             @Override
             protected void createAsset() {
                 new Heart(this);
             }
         });
-        factories.add(new AssetFactory(this, 11000, 3) {
+        factories.add(new AssetFactory(this, random.nextInt(11000),11000, 3) {
             @Override
             protected void createAsset() {
                 new Coin(this, 1);
