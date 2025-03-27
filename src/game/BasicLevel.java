@@ -15,7 +15,6 @@ import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.io.IOException;
@@ -109,10 +108,6 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
     }
 
     protected void complete() {
-        stop();
-        factories.forEach(AssetFactory::stop);
-        getDynamicBodies().forEach(Body::destroy);
-        getStaticBodies().forEach(Body::destroy);
         complete = true;
         success = score >= targetScore;
         if (success) {
@@ -120,7 +115,10 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
         } else {
             if (lostSound != null) lostSound.play();
         }
-        game.completeLevel(this);
+        stop();
+        factories.forEach(AssetFactory::stop);
+        getDynamicBodies().forEach(Body::destroy);
+        getStaticBodies().forEach(Body::destroy);
     }
 
     @Override

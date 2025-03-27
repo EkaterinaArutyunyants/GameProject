@@ -23,7 +23,7 @@ public class BirdGame {
 
     public BirdGame() {
         selector = new LevelSelector(this);
-        view = new GameView(selector, width, height);
+        view = new GameView(this, selector, width, height);
         selector.setView(view);
         view.addMouseListener(selector.getMouseHandler());
         view.addMouseMotionListener(selector.getMouseHandler());

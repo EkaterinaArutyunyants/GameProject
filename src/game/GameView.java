@@ -16,9 +16,13 @@ public class GameView extends UserView {
     private static final Font foregroundFont = new Font("Bold", Font.BOLD, 20);
     //font for coin
     private static final Font coinFont = new Font("Bold", Font.BOLD, 37);
+    private static final int waitUntil =30;
+    private final BirdGame game;
+    private int waitCount;
 
-    public GameView(World world, int width, int height) {
+    public GameView(BirdGame game, World world, int width, int height) {
         super(world, width, height);
+        this.game = game;
     }
 
     @Override
@@ -46,7 +50,13 @@ public class GameView extends UserView {
             } else{
                 paintLost(g);
             }
+            waitCount++;
+            if (waitCount>= waitUntil) {
+                waitCount=0;
+                game.completeLevel(level);
+            }
         } else {
+            waitCount=0;
             paintGameState(level, g);
         }
     }
