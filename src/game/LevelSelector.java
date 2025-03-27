@@ -19,7 +19,7 @@ import java.util.List;
 public class LevelSelector extends World  {
     private GameView view;
     private final BirdGame game;
-    private static final Image background = new ImageIcon("data/startBackground.jpeg").getImage();
+    private static final Image background = new ImageIcon("data/introBackground.jpg").getImage();
     private static final Shape shape = new PolygonShape(-2.02f, 0.43f, -2.13f, -0.23f, -0.83f, -1.94f, -0.21f, -1.95f, 2.11f, -0.83f, 2.05f, 0.91f, 0.96f, 1.94f, -0.78f, 1.57f);
     private static final String [] passiveImagePaths ={"data/level1/bird.png","data/level2/dessertBird.png","data/level3/moonBird.png"};
     private static final String [] activeImagePaths ={"data/level1/birdFlyUp.png","data/level2/dessertBirdFlyUp.png","data/level3/moonBirdFlyUp.png"};
@@ -31,6 +31,9 @@ public class LevelSelector extends World  {
     private int exitBodyIndex;
     private int lastIndex = -1;
 
+    /**
+     * when clicking mouse - start level / exit game depends on th index of the body
+     */
     private final MouseAdapter mouseHandler  = new MouseAdapter() {
         private int activeIndex = -1;
         public void mouseClicked(MouseEvent e) {
@@ -45,6 +48,11 @@ public class LevelSelector extends World  {
                     game.startLevel(index);
             }
         }
+
+        /**
+         * when moving mouse throw the body - changing passive image to active and vice versa
+         * @param e the event to be processed
+         */
         public void mouseMoved(MouseEvent e){
             int index = LevelSelector.this.getBodyIndexUnderPoint(view.viewToWorld(e.getPoint()));
             if (index!=-1){
@@ -64,6 +72,10 @@ public class LevelSelector extends World  {
         }
     };
 
+    /**
+     * setting buttons positions, adding images
+     * @param game
+     */
     public LevelSelector(BirdGame game){
         super();
         this.game = game;
@@ -110,6 +122,12 @@ public class LevelSelector extends World  {
         return background;
     }
 
+    /**
+     * returning index of body when mouse is on this body
+     * if mouse (point) is not on the body - return -1
+     * @param point
+     * @return
+     */
     private int getBodyIndexUnderPoint(Vec2 point){
         List<StaticBody> bodies = getStaticBodies();
         for (var i=0; i < bodies.size(); i++)
@@ -119,6 +137,10 @@ public class LevelSelector extends World  {
         return -1;
     }
 
+    /**
+     * changing images when moving mouse
+     * @param index
+     */
     private void makeActiveBody(int index){
         if ((0<=index) &&(index< activeImages.size())){
             Body body =  getStaticBodies().get(index);
