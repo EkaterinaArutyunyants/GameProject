@@ -29,16 +29,11 @@ public class Level3 extends BasicLevel {
         //FACTORIES:
 
         factories.add(new RocketFactory(this, 4000));
+        factories.add(new TeleportFactory(this, 10000, 10f,15f));
         factories.add(new AssetFactory(this, 17000, 3) {
             @Override
             protected void createAsset() {
                 new Alien(this);
-            }
-        });
-        factories.add(new AssetFactory(this, 20000, 2) {
-            @Override
-            protected void createAsset() {
-                new BlackHole(this);
             }
         });
 
