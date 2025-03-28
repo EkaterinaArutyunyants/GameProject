@@ -80,6 +80,9 @@ public class Level2 extends BasicLevel {
                 health--;
                 if (health <= 0) complete();
             }
+        } else if (collisionEvent.getOtherBody() instanceof Bomb bomb) {
+            health--;
+            bomb.destroy();
         } else {
             super.collide(collisionEvent);
         }

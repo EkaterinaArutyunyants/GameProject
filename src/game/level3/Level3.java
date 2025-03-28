@@ -86,6 +86,9 @@ public class Level3 extends BasicLevel {
                 health--;
                 if (health <= 0) complete();
             }
+        } else if (collisionEvent.getOtherBody() instanceof Alien alien) {
+            health--;
+            alien.destroy();
         } else {
             super.collide(collisionEvent);
         }

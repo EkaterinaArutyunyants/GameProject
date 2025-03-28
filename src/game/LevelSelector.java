@@ -21,15 +21,18 @@ public class LevelSelector extends World  {
     private final BirdGame game;
     private static final Image background = new ImageIcon("data/introBackground.jpg").getImage();
     private static final Shape shape = new PolygonShape(-2.02f, 0.43f, -2.13f, -0.23f, -0.83f, -1.94f, -0.21f, -1.95f, 2.11f, -0.83f, 2.05f, 0.91f, 0.96f, 1.94f, -0.78f, 1.57f);
+    private static final Shape exitShape = new PolygonShape(-2.33f,1.55f, -3.14f,-0.03f, -2.28f,-1.42f, 2.27f,-1.48f, 3.13f,-0.01f, 2.27f,1.53f);
     private static final String [] passiveImagePaths ={"data/level1/bird.png","data/level2/dessertBird.png","data/level3/moonBird.png"};
     private static final String [] activeImagePaths ={"data/level1/birdFlyUp.png","data/level2/dessertBirdFlyUp.png","data/level3/moonBirdFlyUp.png"};
-    private static final String passiveExitImagePath ="data/level2/cloud.png";
-    private static final String  activeExitImagePath ="data/level2/cloud.png";
-    private static final int imageHeight=4;
+    private static final String passiveExitImagePath ="data/exit.png";
+    private static final String activeExitImagePath ="data/exit.png";
+    private static final String gameRules = "data/rules.png";
+    private static final int imageHeight = 4;
+    private static final float activeImageHeight = 4.2f;
     private static final float[][] positions = {
-            {-15, 4},
-            {-4, 4},
-            {15, 4}
+            {-24, 2},
+            {-2, -4},
+            {22, 4}
     };
     private static final float[] exitPosition = {28, 16};
     private final List<BodyImage> activeImages = new ArrayList<>(activeImagePaths.length);
@@ -85,6 +88,7 @@ public class LevelSelector extends World  {
     public LevelSelector(BirdGame game){
         super();
         this.game = game;
+        addGameRulesImage();
         for (int i = 0; i < passiveImagePaths.length; i++) {
             var button = new StaticBody(this, shape);
             button.setPosition(new Vec2(positions[i][0], positions[i][1]));
@@ -98,7 +102,7 @@ public class LevelSelector extends World  {
 
         if (passiveExitImagePath != null) {
             exitBodyIndex = passiveImagePaths.length;
-            var button = new StaticBody(this, shape);
+            var button = new StaticBody(this, exitShape);
             button.setPosition(new Vec2(exitPosition[0], exitPosition[1]));
             BodyImage image =new BodyImage(passiveExitImagePath, imageHeight);
             button.addImage(image);
@@ -106,7 +110,7 @@ public class LevelSelector extends World  {
             passiveImages.add(image);
         }
         if (activeExitImagePath !=null) {
-            activeImages.add(new BodyImage(activeExitImagePath, imageHeight));
+            activeImages.add(new BodyImage(activeExitImagePath, activeImageHeight));
         }
         Collections.reverse(activeImages);
         Collections.reverse(passiveImages);
@@ -158,4 +162,15 @@ public class LevelSelector extends World  {
             body.addImage(passiveImages.get(index));
         }
     }
+
+    /**
+     * method for adding image of rules for the game
+     */
+    private void addGameRulesImage() {
+        var rulesBody = new StaticBody(this);
+        rulesBody.setPosition(new Vec2(-27, -17));
+        BodyImage rulesImage = new BodyImage(gameRules, 10);
+        rulesBody.addImage(rulesImage);
+    }
+
 }
