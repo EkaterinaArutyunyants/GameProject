@@ -1,7 +1,12 @@
-package game.level2;
+package game;
 
-import city.cs.engine.*;
-import game.BasicLevel;
+import city.cs.engine.BodyImage;
+import city.cs.engine.PolygonShape;
+import city.cs.engine.Sensor;
+import city.cs.engine.Shape;
+import city.cs.engine.SolidFixture;
+import city.cs.engine.SoundClip;
+import city.cs.engine.Walker;
 import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -10,21 +15,25 @@ import java.io.IOException;
 
 public class Bird extends Walker {
     private static final Shape shape = new PolygonShape(-2.02f, 0.43f, -2.13f, -0.23f, -0.83f, -1.94f, -0.21f, -1.95f, 2.11f, -0.83f, 2.05f, 0.91f, 0.96f, 1.94f, -0.78f, 1.57f);
-    private static final BodyImage image = new BodyImage("data/level2/dessertBird.png", 4);
-    private static final BodyImage imageBirdFlyUp = new BodyImage("data/level2/dessertBirdFlyUp.png", 4);
+    private static final Shape sensorShape = new  PolygonShape(-7f,10f, 2.1f,10f, 2.1f,-10f, -7f, -10f);
+    private final BodyImage image;
+    private final BodyImage imageBirdFlyUp;
     private SoundClip crashSound = null;
     private SoundClip coinSound = null;
     private SoundClip heartSound = null;
 
     //bird constructor
-    public Bird(BasicLevel level) {
+    public Bird(BasicLevel level, BodyImage image, BodyImage imageBirdFlyUp) {
         super(level, shape);
+        this.image = image;
+        this.imageBirdFlyUp = imageBirdFlyUp;
         addImage(image);
         SolidFixture fixture = new SolidFixture(this, shape);
+        Sensor sensor = new Sensor(this,sensorShape);
+        sensor.addSensorListener(level);
         fixture.setDensity(50);
         setPosition(new Vec2(-13, -5));
         setLinearVelocity(new Vec2(7, 0));
-        setAlwaysOutline(true);
         try {
             crashSound = new SoundClip("data/soundCrash.wav");
             crashSound.setVolume(.05);
@@ -60,7 +69,7 @@ public class Bird extends Walker {
         if (coinSound != null) coinSound.play();
     }
 
-    public void setStateAfterCollisionWithRocket() {
+    public void setStateAfterCollision() {
         setPosition((new Vec2(0, 0)));
     }
 

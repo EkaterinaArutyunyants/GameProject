@@ -1,9 +1,11 @@
 package game.level1;
 
 import city.cs.engine.Body;
+import city.cs.engine.BodyImage;
 import city.cs.engine.CollisionEvent;
 import city.cs.engine.SensorEvent;
 import game.BasicLevel;
+import game.Bird;
 import game.BirdGame;
 import org.jbox2d.common.Vec2;
 
@@ -17,10 +19,12 @@ import java.util.Set;
 public class Level1 extends BasicLevel {
     private final Bird bird;
     private final Set<Body> hittedPipes = new HashSet<>();
+    private static final BodyImage image = new BodyImage("data/level1/bird.png", 4);
+    private static final BodyImage imageBirdFlyUp = new BodyImage("data/level1/birdFlyUp.png", 4);
 
     public Level1(BirdGame game, String name, int targetScore) {
         super(game, name, targetScore); //parent
-        bird = new Bird(this);
+        bird = new Bird(this, image, imageBirdFlyUp);
         bird.addCollisionListener(this);
         background = new ImageIcon("data/level1/sky.jpg").getImage();
 
@@ -61,7 +65,7 @@ public class Level1 extends BasicLevel {
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Pipe pipe) {
             pipe.restoreStateAfterCollision();
-            bird.setStateAfterCollisionWithPipe();
+            bird.setStateAfterCollision();
             if (!hittedPipes.contains(pipe)) {
                 hittedPipes.add(pipe);
                 bird.decHealth();

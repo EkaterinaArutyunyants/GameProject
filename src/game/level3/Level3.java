@@ -1,12 +1,13 @@
 package game.level3;
 
 import city.cs.engine.Body;
+import city.cs.engine.BodyImage;
 import city.cs.engine.CollisionEvent;
 import city.cs.engine.SensorEvent;
 import game.AssetFactory;
 import game.BasicLevel;
+import game.Bird;
 import game.BirdGame;
-import game.level2.Bomb;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
@@ -19,10 +20,12 @@ import java.util.Set;
 public class Level3 extends BasicLevel {
     private final Bird bird;
     private final Set<Body> hittedRockets = new HashSet<>();
+    private static final BodyImage image = new BodyImage("data/level3/moonBird.png", 4);
+    private static final BodyImage imageBirdFlyUp = new BodyImage("data/level3/moonBirdFlyUp.png", 4);
 
     public Level3(BirdGame game, String name, int targetScore) {
         super(game, name, targetScore); //parent
-        bird = new Bird(this);
+        bird = new Bird(this, image, imageBirdFlyUp);
         bird.addCollisionListener(this);
         background = new ImageIcon("data/level3/moonBackground.jpg").getImage();
 
@@ -74,7 +77,7 @@ public class Level3 extends BasicLevel {
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Rocket rocket) {
             rocket.restoreStateAfterCollision();
-            bird.setStateAfterCollisionWithRocket();
+            bird.setStateAfterCollision();
             if (!hittedRockets.contains(rocket)) {
                 hittedRockets.add(rocket);
                 bird.decHealth();
@@ -91,7 +94,7 @@ public class Level3 extends BasicLevel {
 
     @Override
     public void beginContact(SensorEvent sensorEvent) {
-        if ((sensorEvent.getSensor().getBody() instanceof SensorRocket rocket) && (sensorEvent.getContactBody() instanceof game.level1.Bird)) {
+        if ((sensorEvent.getSensor().getBody() instanceof SensorRocket rocket) && (sensorEvent.getContactBody() instanceof game.Bird)) {
             if (!hittedRockets.contains(rocket)) {
                 hittedRockets.add(rocket);
                 bird.decHealth();

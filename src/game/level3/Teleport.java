@@ -10,6 +10,7 @@ import city.cs.engine.SensorListener;
 import city.cs.engine.SolidFixture;
 import game.Asset;
 import game.AssetFactory;
+import game.Bird;
 import org.jbox2d.common.Vec2;
 
 public class Teleport extends Asset implements SensorListener {
@@ -43,7 +44,7 @@ public class Teleport extends Asset implements SensorListener {
 
     @Override
     public void beginContact(SensorEvent sensorEvent) {
-        if ((sensorEvent.getSensor().getBody() instanceof Teleport teleport) && (sensorEvent.getContactBody() instanceof game.level3.Bird bird)){
+        if ((sensorEvent.getSensor().getBody() instanceof Teleport teleport) && (sensorEvent.getContactBody() instanceof Bird bird)){
             bird.setPosition(teleport.getPosition().add(rightHoleCenter));
         } else {
             System.out.println("beginContact("+ sensorEvent+")");

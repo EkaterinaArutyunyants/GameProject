@@ -1,6 +1,7 @@
 package game.level2;
 
 import city.cs.engine.Body;
+import city.cs.engine.BodyImage;
 import city.cs.engine.CollisionEvent;
 import city.cs.engine.SensorEvent;
 import game.*;
@@ -16,10 +17,12 @@ import java.util.Set;
 public class Level2 extends BasicLevel {
     private final Bird bird;
     private final Set<Body> hittedCactuses = new HashSet<>();
+    private static final BodyImage image = new BodyImage("data/level2/dessertBird.png", 4);
+    private static final BodyImage imageBirdFlyUp = new BodyImage("data/level2/dessertBirdFlyUp.png", 4);
 
     public Level2(BirdGame game, String name, int targetScore) {
         super(game, name, targetScore); //parent
-        bird = new Bird(this);
+        bird = new Bird(this, image, imageBirdFlyUp);
         bird.addCollisionListener(this);
         background = new ImageIcon("data/level2/dessertBackground.jpeg").getImage();
 
@@ -73,7 +76,7 @@ public class Level2 extends BasicLevel {
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Cactus cactus) {
             cactus.restoreStateAfterCollision();
-            bird.setStateAfterCollisionWithRocket();
+            bird.setStateAfterCollision();
             if (!hittedCactuses.contains(cactus)) {
                 hittedCactuses.add(cactus);
                 bird.decHealth();
@@ -90,7 +93,7 @@ public class Level2 extends BasicLevel {
 
     @Override
     public void beginContact(SensorEvent sensorEvent) {
-        if ((sensorEvent.getSensor().getBody() instanceof SensorCactus cactus) && (sensorEvent.getContactBody() instanceof game.level1.Bird)) {
+        if ((sensorEvent.getSensor().getBody() instanceof SensorCactus cactus) && (sensorEvent.getContactBody() instanceof game.Bird)) {
             if (!hittedCactuses.contains(cactus)) {
                 hittedCactuses.add(cactus);
                 bird.decHealth();
