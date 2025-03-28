@@ -3,6 +3,7 @@ package game.level3;
 import city.cs.engine.AttachedImage;
 import city.cs.engine.BodyImage;
 import city.cs.engine.BoxShape;
+import city.cs.engine.CircleShape;
 import city.cs.engine.Sensor;
 import city.cs.engine.SensorEvent;
 import city.cs.engine.SensorListener;
@@ -13,7 +14,7 @@ import org.jbox2d.common.Vec2;
 
 public class Teleport extends Asset implements SensorListener {
     private static final BodyImage holeImage = new BodyImage("data/level3/blackHole.png", 4);
-    private static final BodyImage wallImage = new BodyImage("data/level1/pipeUp.png", 4);
+    private static final BodyImage wallImage = new BodyImage("data/level3/wall.jpg", 4);
     private static final float ySky=22f, halfWallWidth = 3.5f / 2;
     private static final float holeHalfHeight=2f, rightHoleDistanceX=halfWallWidth +holeHalfHeight+2f;
     private static final float holeScale=1.5f,wallScale=5f;
@@ -22,9 +23,8 @@ public class Teleport extends Asset implements SensorListener {
     public Teleport(AssetFactory factory,float leftHoleDistanceX,float leftHoleDistanceY) {
         super(factory, new BoxShape(halfWallWidth,ySky));
         Vec2 leftHoleCenter = new Vec2(-leftHoleDistanceX, leftHoleDistanceY);
-        Sensor leftHole = new Sensor(this, new BoxShape(holeHalfHeight, holeHalfHeight, leftHoleCenter));
-        leftHole.addSensorListener(this);
-        new SolidFixture(this, new BoxShape(holeHalfHeight, holeHalfHeight, leftHoleCenter));
+        new Sensor(this, new CircleShape(holeHalfHeight, leftHoleCenter)).addSensorListener(this);
+        new Sensor(this, new CircleShape(holeHalfHeight, rightHoleCenter));
         AttachedImage wallAImage = addImage(wallImage);
         wallAImage.setScale(wallScale);
         AttachedImage leftimage = addImage(holeImage);
