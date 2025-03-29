@@ -19,7 +19,6 @@ import java.util.Set;
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class Level3 extends BasicLevel {
     private final Bird bird;
-    private final Set<Body> hittedRockets = new HashSet<>();
     private static final BodyImage image = new BodyImage("data/level3/moonBird.png", 4);
     private static final BodyImage imageBirdFlyUp = new BodyImage("data/level3/moonBirdFlyUp.png", 4);
 
@@ -78,17 +77,17 @@ public class Level3 extends BasicLevel {
         if (collisionEvent.getOtherBody() instanceof Rocket rocket) {
             rocket.restoreStateAfterCollision();
             bird.setStateAfterCollision();
-            if (!hittedRockets.contains(rocket)) {
-                hittedRockets.add(rocket);
+            if (!hittedBodies.contains(rocket)) {
+                hittedBodies.add(rocket);
                 bird.decHealth();
                 health--;
                 if (health <= 0) complete();
             }
-        } else if (collisionEvent.getOtherBody() instanceof Rocket rocket) {
-            rocket.restoreStateAfterCollision();
+        } else if (collisionEvent.getOtherBody() instanceof Planet planet) {
+            planet.restoreStateAfterCollision();
             bird.setStateAfterCollision();
-            if (!hittedRockets.contains(rocket)) {
-                hittedRockets.add(rocket);
+            if (!hittedBodies.contains(planet)) {
+                hittedBodies.add(planet);
                 bird.decHealth();
                 health--;
                 if (health <= 0) complete();
@@ -104,8 +103,8 @@ public class Level3 extends BasicLevel {
     @Override
     public void beginContact(SensorEvent sensorEvent) {
         if ((sensorEvent.getSensor().getBody() instanceof SensorRocket rocket) && (sensorEvent.getContactBody() instanceof game.Bird)) {
-            if (!hittedRockets.contains(rocket)) {
-                hittedRockets.add(rocket);
+            if (!hittedBodies.contains(rocket)) {
+                hittedBodies.add(rocket);
                 bird.decHealth();
                 health--;
                 if (health <= 0) complete();

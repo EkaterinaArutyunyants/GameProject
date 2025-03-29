@@ -18,7 +18,6 @@ import java.util.Set;
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class Level1 extends BasicLevel {
     private final Bird bird;
-    private final Set<Body> hittedPipes = new HashSet<>();
     private static final BodyImage image = new BodyImage("data/level1/bird.png", 4);
     private static final BodyImage imageBirdFlyUp = new BodyImage("data/level1/birdFlyUp.png", 4);
 
@@ -66,8 +65,8 @@ public class Level1 extends BasicLevel {
         if (collisionEvent.getOtherBody() instanceof Pipe pipe) {
             pipe.restoreStateAfterCollision();
             bird.setStateAfterCollision();
-            if (!hittedPipes.contains(pipe)) {
-                hittedPipes.add(pipe);
+            if (!hittedBodies.contains(pipe)) {
+                hittedBodies.add(pipe);
                 bird.decHealth();
                 health--;
                 if (health <= 0) complete();
@@ -76,12 +75,12 @@ public class Level1 extends BasicLevel {
             super.collide(collisionEvent);
         }
     }
-
+    @Deprecated
     @Override
     public void beginContact(SensorEvent sensorEvent) {
         if ((sensorEvent.getSensor().getBody() instanceof SensorPipe pipe) && (sensorEvent.getContactBody() instanceof Bird)) {
-            if (!hittedPipes.contains(pipe)) {
-                hittedPipes.add(pipe);
+            if (!hittedBodies.contains(pipe)) {
+                hittedBodies.add(pipe);
                 bird.decHealth();
                 health--;
                 if (health <= 0) complete();

@@ -18,9 +18,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Random;
+import java.util.*;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class BasicLevel extends WorldWithBackground implements CollisionListener, SensorListener {
@@ -36,6 +34,7 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
     protected final Collection<AssetFactory> factories = new ArrayList<>();
     protected KeyAdapter birdController;
     protected final Random random = new Random();
+    protected final Set<Body> hittedBodies = new HashSet<>();
 
     public BasicLevel(BirdGame game, String name, int targetScore) {
         super(); //parent
@@ -99,6 +98,9 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
         System.out.println("endContact("+sensorEvent+")");
     }
 
+    /**
+     * call this method when we are going to complete the level
+     */
     protected void complete() {
         complete = true;
         success = score >= targetScore;
@@ -107,8 +109,9 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
         } else {
             if (lostSound != null) lostSound.play();
         }
-        stop();
-        factories.forEach(AssetFactory::stop);
+        stop(); //stopping the world
+        factories.forEach(AssetFactory::stop); //stopping all factories
+        //destroying all objects from the world
         getDynamicBodies().forEach(Body::destroy);
         getStaticBodies().forEach(Body::destroy);
     }

@@ -16,7 +16,6 @@ import java.util.Set;
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
 public class Level2 extends BasicLevel {
     private final Bird bird;
-    private final Set<Body> hittedCactuses = new HashSet<>();
     private static final BodyImage image = new BodyImage("data/level2/dessertBird.png", 4);
     private static final BodyImage imageBirdFlyUp = new BodyImage("data/level2/dessertBirdFlyUp.png", 4);
 
@@ -78,8 +77,8 @@ public class Level2 extends BasicLevel {
         if (collisionEvent.getOtherBody() instanceof Cactus cactus) {
             cactus.restoreStateAfterCollision();
             bird.setStateAfterCollision();
-            if (!hittedCactuses.contains(cactus)) {
-                hittedCactuses.add(cactus);
+            if (!hittedBodies.contains(cactus)) {
+                hittedBodies.add(cactus);
                 bird.decHealth();
                 health--;
                 if (health <= 0) complete();
@@ -87,8 +86,8 @@ public class Level2 extends BasicLevel {
         } else if (collisionEvent.getOtherBody() instanceof Rock rock) {
             rock.restoreStateAfterCollision();
             bird.setStateAfterCollision();
-            if (!hittedCactuses.contains(rock)) {
-                hittedCactuses.add(rock);
+            if (!hittedBodies.contains(rock)) {
+                hittedBodies.add(rock);
                 bird.decHealth();
                 health--;
                 if (health <= 0) complete();
@@ -104,8 +103,8 @@ public class Level2 extends BasicLevel {
     @Override
     public void beginContact(SensorEvent sensorEvent) {
         if ((sensorEvent.getSensor().getBody() instanceof SensorCactus cactus) && (sensorEvent.getContactBody() instanceof game.Bird)) {
-            if (!hittedCactuses.contains(cactus)) {
-                hittedCactuses.add(cactus);
+            if (!hittedBodies.contains(cactus)) {
+                hittedBodies.add(cactus);
                 bird.decHealth();
                 health--;
                 if (health <= 0) complete();

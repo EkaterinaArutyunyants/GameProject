@@ -32,16 +32,14 @@ public class BirdGame {
     }
 
     /**
-     * This method .....
+     * This method removes keyListener from completed level
+     * Then starting the selector to choose new level
      * @param oldLevel
      */
     public void completeLevel(BasicLevel oldLevel){
         System.out.println("completeLevel("+oldLevel.getName()+")");
         for (var listener :  view.getKeyListeners())
             view.removeKeyListener(listener);
-        /**
-         *
-         */
         view.setWorld(selector);
         selector.start();
     }
@@ -54,12 +52,12 @@ public class BirdGame {
         System.out.println("startLevel("+index+")");
         for (var listener :  view.getKeyListeners())
             view.removeKeyListener(listener);
-        var level = createLevel(index);
-        view.setWorld(level);
+        var level = createLevel(index); //creating level by index
+        view.setWorld(level); //view displays level
         view.addKeyListener(level.getBirdController());
 
         activeWorld = level;
-        activeWorld.start();
+        activeWorld.start(); //run the level
     }
 
     private BasicLevel createLevel(int index) {

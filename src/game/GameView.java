@@ -49,6 +49,10 @@ public class GameView extends UserView {
         }
     }
 
+    /**
+     * delay for player to see result of his game play
+     * @param level
+     */
     private void waitSomeTimeToCompleteLevel(BasicLevel level){
         waitCount++;
         if (waitCount>= waitUntil) {
