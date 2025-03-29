@@ -96,10 +96,16 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
     @Override
     public void endContact(SensorEvent sensorEvent) {
         System.out.println("endContact("+sensorEvent+")");
+        if (sensorEvent.getSensor().getBody() instanceof Bird && !RIP.equals(sensorEvent.getContactBody())) {
+            sensorEvent.getContactBody().destroy();
+        } else {
+            System.out.println("endContact("+sensorEvent+")");
+        }
     }
 
     /**
      * call this method when we are going to complete the level
+     * also result of the completing the game (winn/lost)
      */
     protected void complete() {
         complete = true;

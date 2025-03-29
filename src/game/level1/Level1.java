@@ -89,16 +89,5 @@ public class Level1 extends BasicLevel {
             super.beginContact(sensorEvent);
         }
     }
-
-    @Override
-    public void endContact(SensorEvent sensorEvent) {
-        System.out.println("endContact("+sensorEvent+")");
-        if (sensorEvent.getSensor().getBody() instanceof Bird && !RIP.equals(sensorEvent.getContactBody())) {
-            sensorEvent.getContactBody().destroy();
-        } else {
-            super.endContact(sensorEvent);
-        }
-    }
-
 }
 

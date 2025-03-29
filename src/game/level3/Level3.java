@@ -99,19 +99,5 @@ public class Level3 extends BasicLevel {
             super.collide(collisionEvent);
         }
     }
-
-    @Override
-    public void beginContact(SensorEvent sensorEvent) {
-        if ((sensorEvent.getSensor().getBody() instanceof SensorRocket rocket) && (sensorEvent.getContactBody() instanceof game.Bird)) {
-            if (!hittedBodies.contains(rocket)) {
-                hittedBodies.add(rocket);
-                bird.decHealth();
-                health--;
-                if (health <= 0) complete();
-            }
-        } else {
-            super.beginContact(sensorEvent);
-        }
-    }
 }
 
