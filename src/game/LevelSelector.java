@@ -16,10 +16,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class LevelSelector extends World  {
+public class LevelSelector extends WorldWithBackground  {
     private GameView view;
     private final BirdGame game;
-    private static final Image background = new ImageIcon("data/introBackground.jpg").getImage();
     private static final Shape shape = new PolygonShape(-2.02f, 0.43f, -2.13f, -0.23f, -0.83f, -1.94f, -0.21f, -1.95f, 2.11f, -0.83f, 2.05f, 0.91f, 0.96f, 1.94f, -0.78f, 1.57f);
     private static final Shape exitShape = new PolygonShape(-2.33f,1.55f, -3.14f,-0.03f, -2.28f,-1.42f, 2.27f,-1.48f, 3.13f,-0.01f, 2.27f,1.53f);
     private static final String [] passiveImagePaths ={"data/level1/bird.png","data/level2/dessertBird.png","data/level3/moonBird.png"};
@@ -88,6 +87,7 @@ public class LevelSelector extends World  {
     public LevelSelector(BirdGame game){
         super();
         this.game = game;
+        background = new ImageIcon("data/introBackground.jpg").getImage();
         addGameRulesImage();
         for (int i = 0; i < passiveImagePaths.length; i++) {
             var button = new StaticBody(this, shape);
@@ -123,10 +123,6 @@ public class LevelSelector extends World  {
 
     public MouseAdapter getMouseHandler() {
         return mouseHandler;
-    }
-
-    public static Image getBackground() {
-        return background;
     }
 
     /**

@@ -23,10 +23,8 @@ import java.util.Collection;
 import java.util.Random;
 
 //REQ: extensions: inheritance + encapsulation (superclass, subclass)
-public class BasicLevel extends World implements CollisionListener, SensorListener {
-    protected Image background;
+public class BasicLevel extends WorldWithBackground implements CollisionListener, SensorListener {
     private final String name;
-    private final BirdGame game;
     private boolean complete = false;
     private boolean success = false;
     protected final StaticBody RIP;
@@ -41,7 +39,6 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
 
     public BasicLevel(BirdGame game, String name, int targetScore) {
         super(); //parent
-        this.game = game;
         this.name = name;
         this.targetScore = targetScore;
 
@@ -128,9 +125,7 @@ public class BasicLevel extends World implements CollisionListener, SensorListen
         super.stop();
     }
 
-    public Image getBackground() {
-        return background;
-    }
+
     public boolean isComplete() {
         return complete;
     }

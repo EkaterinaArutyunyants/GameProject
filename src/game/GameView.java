@@ -12,8 +12,6 @@ public class GameView extends UserView {
     private static final Image coin = new ImageIcon("data/coin.png").getImage();
     private static final Image imageYouWin = new ImageIcon("data/youWinBackground.png").getImage();
     private static final Image imageGameOver = new ImageIcon("data/gameOver.png").getImage();
-    //font for press shift
-    private static final Font foregroundFont = new Font("Bold", Font.BOLD, 20);
     //font for coin
     private static final Font coinFont = new Font("Bold", Font.BOLD, 37);
     private static final int waitUntil =30;
@@ -27,13 +25,7 @@ public class GameView extends UserView {
 
     @Override
     protected void paintBackground(Graphics2D g) {
-        Image image = null;
-        if (getWorld() instanceof BasicLevel level){
-            image = level.getBackground();
-        } else if (getWorld() instanceof LevelSelector selector){
-            image = LevelSelector.getBackground();
-        }
-        if (image !=null) g.drawImage(image, 0, 0, this);
+        g.drawImage(((WorldWithBackground)getWorld()).getBackground(), 0, 0, this);
     }
     @Override
     protected void paintForeground(Graphics2D g){
@@ -50,24 +42,22 @@ public class GameView extends UserView {
             } else{
                 paintLost(g);
             }
-            waitCount++;
-            if (waitCount>= waitUntil) {
-                waitCount=0;
-                game.completeLevel(level);
-            }
+            waitSomeTimeToCompleteLevel(level);
         } else {
             waitCount=0;
             paintGameState(level, g);
         }
     }
 
-    private void paintGameState(BasicLevel level, Graphics2D g){
-        //string speed up
-        g.setColor(Color.darkGray);
-        g.setFont(foregroundFont);
-        g.drawString("Press SHIFT for speed up ", (getWidth() / 2) - 670, 140);
-        g.drawString("Press SPACE for jump ", (getWidth() / 2) - 670, 180);
+    private void waitSomeTimeToCompleteLevel(BasicLevel level){
+        waitCount++;
+        if (waitCount>= waitUntil) {
+            waitCount=0;
+            game.completeLevel(level);
+        }
+    }
 
+    private void paintGameState(BasicLevel level, Graphics2D g){
         //reduce size of img hearts
         int newWidth = heart.getWidth(this) / 35;
         int newHeight = heart.getHeight(this) / 35;
@@ -86,18 +76,12 @@ public class GameView extends UserView {
 
     //string when win game
     private void paintSuccess(Graphics2D g){
-        g.setColor(Color.RED);
-        g.setFont(foregroundFont);
         g.drawImage(imageYouWin, 0, 0, this);
-//        g.drawString("You win! ", (getWidth() / 2) - 670, 140);
     }
 
     //string when lost game
     private void paintLost(Graphics2D g){
-        g.setColor(Color.RED);
-        g.setFont(foregroundFont);
         g.drawImage(imageGameOver, 0, 0, this);
-//        g.drawString("Game over! ", (getWidth() / 2) - 670, 140);
     }
 
 }
