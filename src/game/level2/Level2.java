@@ -28,6 +28,7 @@ public class Level2 extends BasicLevel {
 
         //FACTORIES:
         factories.add(new CactusFactory(this, 4000,6f,12f));
+        factories.add(new RockFactory(this, 4000,6f,12f));
         factories.add(new AssetFactory(this, 17000, 3) {
             @Override
             protected void createAsset() {
@@ -79,6 +80,15 @@ public class Level2 extends BasicLevel {
             bird.setStateAfterCollision();
             if (!hittedCactuses.contains(cactus)) {
                 hittedCactuses.add(cactus);
+                bird.decHealth();
+                health--;
+                if (health <= 0) complete();
+            }
+        } else if (collisionEvent.getOtherBody() instanceof Rock rock) {
+            rock.restoreStateAfterCollision();
+            bird.setStateAfterCollision();
+            if (!hittedCactuses.contains(rock)) {
+                hittedCactuses.add(rock);
                 bird.decHealth();
                 health--;
                 if (health <= 0) complete();

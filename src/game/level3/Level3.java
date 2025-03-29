@@ -30,8 +30,8 @@ public class Level3 extends BasicLevel {
         background = new ImageIcon("data/level3/moonBackground.jpg").getImage();
 
         //FACTORIES:
-
-        factories.add(new RocketFactory(this, 4000));
+        factories.add(new RocketFactory(this, 4000,6f,12f));
+        factories.add(new PlanetFactory(this, 4000,6f,12f));
         factories.add(new TeleportFactory(this, 10000, 10f,15f));
         factories.add(new AssetFactory(this, 17000, 3) {
             @Override
@@ -76,6 +76,15 @@ public class Level3 extends BasicLevel {
     @Override
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Rocket rocket) {
+            rocket.restoreStateAfterCollision();
+            bird.setStateAfterCollision();
+            if (!hittedRockets.contains(rocket)) {
+                hittedRockets.add(rocket);
+                bird.decHealth();
+                health--;
+                if (health <= 0) complete();
+            }
+        } else if (collisionEvent.getOtherBody() instanceof Rocket rocket) {
             rocket.restoreStateAfterCollision();
             bird.setStateAfterCollision();
             if (!hittedRockets.contains(rocket)) {
