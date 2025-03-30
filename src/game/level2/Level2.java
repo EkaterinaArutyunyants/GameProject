@@ -71,7 +71,11 @@ public class Level2 extends BasicLevel {
 
     }
 
-    //COLLISION
+    /**
+     * COLLISION for specified objects of level2
+     * common are in {@link game.BasicLevel#collide(CollisionEvent collisionEvent) BasicLevel.collide} method.
+     * @param collisionEvent
+     */
     @Override
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Cactus cactus) {

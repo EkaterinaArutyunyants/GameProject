@@ -70,8 +70,11 @@ public class Level3 extends BasicLevel {
 
     }
 
-    //COLLISION:
-
+    /**
+     * COLLISION for specified objects of level3
+     * common are in {@link game.BasicLevel#collide(CollisionEvent collisionEvent) BasicLevel.collide} method.
+     * @param collisionEvent
+     */
     @Override
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Rocket rocket) {

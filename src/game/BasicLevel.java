@@ -40,7 +40,7 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
         super(); //parent
         this.name = name;
         this.targetScore = targetScore;
-
+        //setting random initial delay for objects (heart, coin)
         factories.add(new AssetFactory(this,  random.nextInt(9000),9000, 3) {
             @Override
             protected void createAsset() {
@@ -69,7 +69,11 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
         }
     }
 
-
+    /**
+     * COLLISION for common level objects (specific collisions are in level classes)
+     *
+     * @param collisionEvent
+     */
     @Override
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Coin coin) {
@@ -86,13 +90,15 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
         }
     }
 
-
-
     @Override
     public void beginContact(SensorEvent sensorEvent) {
         System.out.println("beginContact("+sensorEvent+")");
     }
 
+    /**
+     * Processing sensor for bird in BasicLevel because in bird there are no info for our handle
+     * @param sensorEvent
+     */
     @Override
     public void endContact(SensorEvent sensorEvent) {
         System.out.println("endContact("+sensorEvent+")");

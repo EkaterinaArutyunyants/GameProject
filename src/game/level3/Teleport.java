@@ -71,6 +71,7 @@ public class Teleport extends Asset implements SensorListener {
     }
 
     /**
+     * Processing sensor in this class because here are all info for our handle.
      * when something touches the teleport sensor, this method checks if it's a Bird
      * If the Bird enters the left hole, it gets teleported to the right hole
      * @param sensorEvent The event triggered when something touches the sensor
