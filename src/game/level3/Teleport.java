@@ -1,12 +1,6 @@
 package game.level3;
 
-import city.cs.engine.AttachedImage;
-import city.cs.engine.BodyImage;
-import city.cs.engine.BoxShape;
-import city.cs.engine.CircleShape;
-import city.cs.engine.Sensor;
-import city.cs.engine.SensorEvent;
-import city.cs.engine.SensorListener;
+import city.cs.engine.*;
 import game.Asset;
 import game.AssetFactory;
 import game.Bird;
@@ -24,7 +18,7 @@ public class Teleport extends Asset implements SensorListener {
     private static final BodyImage wallImage = new BodyImage("data/level3/wall.jpg", 4);
 
     //constants for wall and holes positioning
-    private static final float ySky=22f, halfWallWidth = 3.5f / 2; //wall height, half of wall width
+    private static final float ySky = 10f, halfWallWidth = 1.5f / 2; //wall height, half of wall width
     //half height of hole; X position og the right hole
     private static final float holeHalfHeight=2f, rightHoleDistanceX=halfWallWidth +holeHalfHeight+2f;
     private static final float holeScale=1.5f,wallScale=5f; //scaling for images
@@ -34,10 +28,10 @@ public class Teleport extends Asset implements SensorListener {
     private final Vec2 rightHoleCenter= new Vec2(rightHoleDistanceX, 0);
 
     /**
-     * Constructor for the teleport object
-     * @param factory AssetFactory used for creating the teleport object
-     * @param leftHoleDistanceX X coordinate of the left teleport hole
-     * @param leftHoleDistanceY Y coordinate of the left teleport hole
+     * Constructor for teleport
+     * @param factory for creating teleport object
+     * @param leftHoleDistanceX X coord of the left teleport hole
+     * @param leftHoleDistanceY Y coord of the left teleport hole
      */
     public Teleport(AssetFactory factory,float leftHoleDistanceX,float leftHoleDistanceY) {
         super(factory, new BoxShape(halfWallWidth,ySky));
@@ -67,7 +61,6 @@ public class Teleport extends Asset implements SensorListener {
         setLinearVelocity(new Vec2(vx, 0));
         setAngleDegrees(0f);
         setAngularVelocity(0f);
-        setAlwaysOutline(true);
     }
 
     /**

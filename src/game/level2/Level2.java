@@ -13,16 +13,29 @@ import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
-//REQ: extensions: inheritance + encapsulation (superclass, subclass)
+/**
+ * Level2 class - level 2 of the game
+ * enemies added, new background, new bird
+ *
+ * REQ: extensions: inheritance + encapsulation (superclass, subclass)
+ */
 public class Level2 extends BasicLevel {
     private final Bird bird;
     private static final BodyImage image = new BodyImage("data/level2/dessertBird.png", 4);
     private static final BodyImage imageBirdFlyUp = new BodyImage("data/level2/dessertBirdFlyUp.png", 4);
 
+    /**
+     * Constructor for level2
+     * @param game controller
+     * @param name of level
+     * @param targetScore score to win
+     */
     public Level2(BirdGame game, String name, int targetScore) {
         super(game, name, targetScore); //parent
+        //bird character
         bird = new Bird(this, image, imageBirdFlyUp);
         bird.addCollisionListener(this);
+        //level 2 background
         background = new ImageIcon("data/level2/dessertBackground.jpeg").getImage();
 
         //FACTORIES:
@@ -43,6 +56,10 @@ public class Level2 extends BasicLevel {
 
         //KEYS:
         birdController = new KeyAdapter() {
+            /**
+             * key pressed
+             * @param e the event to be processed
+             */
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
@@ -59,6 +76,10 @@ public class Level2 extends BasicLevel {
                 }
             }
 
+            /**
+             * key released
+             * @param e the event to be processed
+             */
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     //switch images when release space
@@ -83,7 +104,7 @@ public class Level2 extends BasicLevel {
             bird.setStateAfterCollision();
             if (!hittedBodies.contains(cactus)) {
                 hittedBodies.add(cactus);
-                bird.decHealth();
+                bird.decHealth(); //crash sound
                 health--;
                 if (health <= 0) complete();
             }
@@ -92,11 +113,12 @@ public class Level2 extends BasicLevel {
             bird.setStateAfterCollision();
             if (!hittedBodies.contains(rock)) {
                 hittedBodies.add(rock);
-                bird.decHealth();
+                bird.decHealth(); //crash sound
                 health--;
                 if (health <= 0) complete();
             }
         } else if (collisionEvent.getOtherBody() instanceof Bomb bomb) {
+            bird.decHealth(); //crash sound
             health--;
             bomb.destroy();
         } else {

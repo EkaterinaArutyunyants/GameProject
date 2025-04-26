@@ -5,12 +5,24 @@ import game.Asset;
 import game.AssetFactory;
 import org.jbox2d.common.Vec2;
 
+/**
+ * pipe class - vertical pipes for level 1
+ * there are holes between pipes for bird to fly through
+ */
 public class Pipe extends Asset {
+    //max height range for holes
     private static final float yMax = 19f;
+    //half width for pipe
     private static final float halfWidth = 3.5f / 2;
     private static final float scale = 2.5f;
+    //speed, moves left
     private static float vx = -7f;
 
+    /**
+     * Constructor for pipe
+     * @param factory creating pipe
+     * @param holeUp vertical pos of holes between pipes
+     */
     public Pipe(AssetFactory factory, float holeUp) {
         super(factory); //parent
 
@@ -40,7 +52,9 @@ public class Pipe extends Asset {
         setAngularVelocity(0f);
     }
 
-    //after collision restoring velocity
+    /**
+     *  after collision restoring velocity
+     */
     public void restoreStateAfterCollision() {
         setLinearVelocity(new Vec2(vx, 0));
         setAngleDegrees(0f);

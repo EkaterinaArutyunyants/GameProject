@@ -8,53 +8,68 @@ import city.cs.engine.SensorEvent;
 import city.cs.engine.SensorListener;
 import city.cs.engine.SoundClip;
 import city.cs.engine.StaticBody;
-import city.cs.engine.World;
-import game.level2.Bomb;
-import game.level3.Alien;
 import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import java.awt.*;
+
 import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.util.*;
 
-//REQ: extensions: inheritance + encapsulation (superclass, subclass)
+/**
+ * Basic level class - everything that is related to each level
+ * objects creation through factory, collision, sensor for all levels
+ *
+ * REQ: extensions: inheritance + encapsulation (superclass, subclass)
+ */
 public class BasicLevel extends WorldWithBackground implements CollisionListener, SensorListener {
     private final String name;
-    private boolean complete = false;
-    private boolean success = false;
-    protected final StaticBody RIP;
+    private boolean complete = false; //level completed
+    private boolean success = false; //level win
+    protected final StaticBody RIP; //invisible platform at the bottom
+    //sounds
     private SoundClip winSound = null;
     private SoundClip lostSound = null;
+    //stats
     protected int health = 3;
     protected final int targetScore;
     protected int score = 0;
+    //asset
     protected final Collection<AssetFactory> factories = new ArrayList<>();
     protected KeyAdapter birdController;
     protected final Random random = new Random();
     protected final Set<Body> hittedBodies = new HashSet<>();
 
+    /**
+     * Constructor for BasicLevel
+     * @param game controller
+     * @param name of the level
+     * @param targetScore required to complete level with success
+     */
     public BasicLevel(BirdGame game, String name, int targetScore) {
         super(); //parent
         this.name = name;
         this.targetScore = targetScore;
+
         //setting random initial delay for objects (heart, coin)
+        //Heart factory
         factories.add(new AssetFactory(this,  random.nextInt(9000),9000, 3) {
             @Override
             protected void createAsset() {
                 new Heart(this);
             }
         });
+        //Coin factory
         factories.add(new AssetFactory(this, random.nextInt(11000),11000, 3) {
             @Override
             protected void createAsset() {
                 new Coin(this, 1);
             }
         });
-
+        //invisible bottom platform - bird collide = game over
         RIP = new StaticBody(this, new BoxShape(40f, 0.1f, new Vec2(0, -20f)));
+        //win and lost sounds
         try {
             winSound = new SoundClip("data/soundWin.wav");
             winSound.setVolume(.05);
@@ -128,39 +143,64 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
         getStaticBodies().forEach(Body::destroy);
     }
 
+    /**
+     * start level and all asset factories
+     */
     @Override
     public void start(){
         super.start();
         factories.forEach(AssetFactory::start);
     }
 
+    /**
+     * stop level and all asset factories
+     */
     @Override
     public void stop(){
         factories.forEach(AssetFactory::stop);
         super.stop();
     }
 
+//accessors
 
+    /**
+     * @return true/false level completed
+     */
     public boolean isComplete() {
         return complete;
     }
 
+    /**
+     * @return true/false - won or lost
+     */
     public boolean isSuccess() {
         return success;
     }
 
+    /**
+     * @return level name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return current score
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * @return current health
+     */
     public int getHealth() {
         return health;
     }
 
+    /**
+     * @return KeyAdapter for controlling bird
+     */
     public KeyAdapter getBirdController() {
         return birdController;
     }

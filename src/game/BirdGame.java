@@ -12,7 +12,9 @@ import javax.swing.*;
 import java.io.IOException;
 
 /**
- *
+ * BirdGame class - main for the game
+ * handles level transitions,
+ * initializes game view and level selector
  */
 public class BirdGame {
     private static final int width = 1400;
@@ -21,20 +23,28 @@ public class BirdGame {
     private final LevelSelector selector;
     private World activeWorld;
 
+    /**
+     * Constructor for BirdGame
+     * initialize level selector and game view
+     * display main window
+     */
     public BirdGame() {
         selector = new LevelSelector(this);
         view = new GameView(this, selector, width, height);
         selector.setView(view);
+        //adding mouse
         view.addMouseListener(selector.getMouseHandler());
         view.addMouseMotionListener(selector.getMouseHandler());
-        activeWorld = selector;
+        activeWorld = selector; //start game with level selector
         wrapWithSwingAndShow();
     }
 
     /**
-     * This method removes keyListener from completed level
-     * Then starting the selector to choose new level
-     * @param oldLevel
+     * Complete level
+     * This method removes completed level keyListener
+     * After - starting the selector to choose new level
+     *
+     * @param oldLevel - level that just been completed
      */
     public void completeLevel(BasicLevel oldLevel){
         System.out.println("completeLevel("+oldLevel.getName()+")");
@@ -45,8 +55,10 @@ public class BirdGame {
     }
 
     /**
-     * assdfsdfsdfsdfsdfsdfsdfds
-     * @param index
+     * start level (depends on index)
+     * removes prev key listener
+     *
+     * @param index of level (0 - level1)
      */
     public void startLevel(int index){
         System.out.println("startLevel("+index+")");
@@ -60,6 +72,11 @@ public class BirdGame {
         activeWorld.start(); //run the level
     }
 
+    /**
+     * create level (depends on index)
+     * @param index of level
+     * @return index of level
+     */
     private BasicLevel createLevel(int index) {
         return switch (index) {
             case 0 -> new Level1(this, "LEVEL1", 4);
@@ -69,25 +86,41 @@ public class BirdGame {
         };
     }
 
+    /**
+     * game app terminates
+     */
     public void exitGame(){
         System.exit(0);
     };
 
+    /**
+     * starts current level
+     * playing sound
+     */
     private void createAndStartGame() {
-//        playBacksound();
+        playBacksound();
         activeWorld.start();
     }
 
+    /**
+     * method for background sound
+     */
     private static void playBacksound() {
         try {
             SoundClip backSound = new SoundClip("data/backsound.wav");
             backSound.setVolume(.05);
             backSound.loop();
+            //catching errors if something wrong w/ file
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException skipped) {
             System.err.println(skipped.getMessage());
         }
     }
 
+    /**
+     * create swing window
+     * add game view
+     * displaying
+     */
     private void wrapWithSwingAndShow() {
         final JFrame frame = new JFrame("Bird Game v02"); //create frame + frame title
         frame.setSize(width, height); //size
@@ -95,10 +128,14 @@ public class BirdGame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
         frame.setResizable(false);
-        frame.pack();
-        frame.setVisible(true);
+        frame.pack(); //resizing frame
+        frame.setVisible(true); //show window
     }
 
+    /**
+     * main method
+     * @param args arguments
+     */
     public static void main(String[] args) {
         BirdGame game = new BirdGame();
         SwingUtilities.invokeLater(game::createAndStartGame);

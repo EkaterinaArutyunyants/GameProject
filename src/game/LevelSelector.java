@@ -18,8 +18,9 @@ import java.util.List;
 
 /**
  * LevelSelector class - screen where players can choose
- * different game levels by clicking on the buttons.
- * Also includes an option to exit the game.
+ * different game levels by clicking on the buttons and also
+ * includes an option to exit the game.
+ * Also displays game rules on the screen.
  */
 public class LevelSelector extends WorldWithBackground  {
     private GameView view;
@@ -54,10 +55,16 @@ public class LevelSelector extends WorldWithBackground  {
 
     /**
      * Handles mouse interactions:
-     * when clicking mouse - start level / exit game depends on th index of the body
+     * Level selection and exit.
      */
     private final MouseAdapter mouseHandler  = new MouseAdapter() {
         private int activeIndex = -1;
+
+        /**
+         * when clicking mouse - start level / exit game depends on the index of the body
+         *
+         * @param e the event to be processed
+         */
         public void mouseClicked(MouseEvent e) {
             int index = LevelSelector.this.getBodyIndexUnderPoint(view.viewToWorld(e.getPoint()));
             System.out.println("clicked on "+index);
@@ -74,6 +81,7 @@ public class LevelSelector extends WorldWithBackground  {
         /**
          * Handles mouse movement:
          * when moving mouse throw the body - changing passive image to active and vice versa
+         *
          * @param e the event to be processed
          */
         public void mouseMoved(MouseEvent e){
@@ -92,57 +100,65 @@ public class LevelSelector extends WorldWithBackground  {
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            view.requestFocus();
+            view.requestFocus(); //view has focus for input
         }
     };
 
     /**
-     * Constructor to initialize the level selector, set up buttons, and add images
-     * @param game The main game instance that is used to start levels or exit the game
+     * Constructor to initialize the level selector, buttons, add images
+     *
+     * @param game Main game instance used for starting levels or exit the game
      */
     public LevelSelector(BirdGame game){
         super();
         this.game = game;
-        //game rules img added
-        addGameRulesImage();
+        addGameRulesImage(); //game rules img add
         background = new ImageIcon("data/introBackground.jpg").getImage();
 
-        // Create level selection buttons with passive images and set their positions
+        // Create buttons (w/ passive images) for level selection and set their positions
         for (int i = 0; i < passiveImagePaths.length; i++) {
             var button = new StaticBody(this, shape);
             button.setPosition(new Vec2(positions[i][0], positions[i][1]));
             BodyImage image =new BodyImage(passiveImagePaths[i], imageHeight);
             button.addImage(image);
-            button.setAlwaysOutline(true);
             passiveImages.add(image);
         }
-        // Load the active images for the buttons (will be used when the mouse over a button)
+        // adding active imgs for buttons (will be used when mouse is over button)
         for (String imagePath : activeImagePaths)
             activeImages.add(new BodyImage(imagePath, imageHeight));
 
-        // create the exit button if an image for it exists
+        // create exit button (if image for it exists)
         if (passiveExitImagePath != null) {
-            exitBodyIndex = passiveImagePaths.length; // exit button is at the end of the list
+            exitBodyIndex = passiveImagePaths.length; // exit button is last in the list
             var button = new StaticBody(this, exitShape);
             button.setPosition(new Vec2(exitPosition[0], exitPosition[1]));
             BodyImage image =new BodyImage(passiveExitImagePath, imageHeight);
             button.addImage(image);
-            button.setAlwaysOutline(true);
             passiveImages.add(image);
         }
-        // Load the active image for the exit button
+        // adding active image for exit button
         if (activeExitImagePath !=null) {
             activeImages.add(new BodyImage(activeExitImagePath, activeImageHeight));
         }
+
+        //reverse list (matching indexes and images)
         Collections.reverse(activeImages);
         Collections.reverse(passiveImages);
         lastIndex = passiveImages.size()-1;
     }
 
+    /**
+     * Setter method for the view
+     * @param view - game view
+     */
     public void setView(GameView view) {
         this.view = view;
     }
 
+    /**
+     * method to return mouse handler
+     * @return MouseAdapter
+     */
     public MouseAdapter getMouseHandler() {
         return mouseHandler;
     }
@@ -150,8 +166,8 @@ public class LevelSelector extends WorldWithBackground  {
     /**
      * returning index of body when mouse is on this body
      * if mouse (point) is not on the body - return -1
-     * @param point
-     * @return
+     * @param point - checking coordinates
+     * @return index of body or -1
      */
     private int getBodyIndexUnderPoint(Vec2 point){
         List<StaticBody> bodies = getStaticBodies();
@@ -163,8 +179,8 @@ public class LevelSelector extends WorldWithBackground  {
     }
 
     /**
-     * Change the button at the specified index to its active image (hovered)
-     * @param index of the button to change to the active image
+     * changing button img to active img at index (hover)
+     * @param index of button
      */
     private void makeActiveBody(int index){
         if ((0<=index) &&(index< activeImages.size())){
@@ -175,8 +191,8 @@ public class LevelSelector extends WorldWithBackground  {
     }
 
     /**
-     * Change the button at the specified index to its passive image (default)
-     * @param index of the button to change to the passive image
+     * changing button img to passive img at index (default)
+     * @param index of button
      */
     private void makePassiveBody(int index){
         if ((0<=index) &&(index< passiveImages.size())){

@@ -1,9 +1,8 @@
 package game.level3;
 
-import city.cs.engine.Body;
 import city.cs.engine.BodyImage;
 import city.cs.engine.CollisionEvent;
-import city.cs.engine.SensorEvent;
+
 import game.AssetFactory;
 import game.BasicLevel;
 import game.Bird;
@@ -13,15 +12,24 @@ import org.jbox2d.common.Vec2;
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.HashSet;
-import java.util.Set;
 
-//REQ: extensions: inheritance + encapsulation (superclass, subclass)
+/**
+ * Level3 class - level 3 of the game
+ * new bird, new enemies , new appearance and teleport
+ * REQ: extensions: inheritance + encapsulation (superclass, subclass)
+ */
 public class Level3 extends BasicLevel {
     private final Bird bird;
+    //bird img
     private static final BodyImage image = new BodyImage("data/level3/moonBird.png", 4);
     private static final BodyImage imageBirdFlyUp = new BodyImage("data/level3/moonBirdFlyUp.png", 4);
 
+    /**
+     * Constructor for level3
+     * @param game controller
+     * @param name for level
+     * @param targetScore score to win
+     */
     public Level3(BirdGame game, String name, int targetScore) {
         super(game, name, targetScore); //parent
         bird = new Bird(this, image, imageBirdFlyUp);
@@ -42,6 +50,10 @@ public class Level3 extends BasicLevel {
         //KEYS:
 
         birdController = new KeyAdapter() {
+            /**
+             * key pressed
+             * @param e the event to be processed
+             */
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
@@ -58,6 +70,10 @@ public class Level3 extends BasicLevel {
                 }
             }
 
+            /**
+             * key released
+             * @param e the event to be processed
+             */
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     //switch images when release space
