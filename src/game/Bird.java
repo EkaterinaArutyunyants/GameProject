@@ -1,12 +1,6 @@
 package game;
 
-import city.cs.engine.BodyImage;
-import city.cs.engine.PolygonShape;
-import city.cs.engine.Sensor;
-import city.cs.engine.Shape;
-import city.cs.engine.SolidFixture;
-import city.cs.engine.SoundClip;
-import city.cs.engine.Walker;
+import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -21,7 +15,7 @@ public class Bird extends Walker {
     //bird shape
     private static final Shape shape = new PolygonShape(-2.02f, 0.43f, -2.13f, -0.23f, -0.83f, -1.94f, -0.21f, -1.95f, 2.11f, -0.83f, 2.05f, 0.91f, 0.96f, 1.94f, -0.78f, 1.57f);
     //sensor zone
-    private static final Shape sensorShape = new  PolygonShape(-7f,10f, 2.1f,10f, 2.1f,-10f, -7f, -10f);
+    private static final Shape sensorShape = new PolygonShape(-7f, 10f, 2.1f, 10f, 2.1f, -10f, -7f, -10f);
     //bird img states
     private final BodyImage image; //default
     private final BodyImage imageBirdFlyUp; //when press space (bird wings up)
@@ -34,8 +28,8 @@ public class Bird extends Walker {
      * Constructor for bird
      * appearance, sound, position
      *
-     * @param level where bird in
-     * @param image default one
+     * @param level          where bird in
+     * @param image          default one
      * @param imageBirdFlyUp used when press space and bird fly up
      */
     public Bird(BasicLevel level, BodyImage image, BodyImage imageBirdFlyUp) {
@@ -47,7 +41,7 @@ public class Bird extends Walker {
         SolidFixture fixture = new SolidFixture(this, shape);
         fixture.setDensity(50);
         //sensor
-        Sensor sensor = new Sensor(this,sensorShape);
+        Sensor sensor = new Sensor(this, sensorShape);
         sensor.addSensorListener(level);
         //position + velocity
         setPosition(new Vec2(-13, -5));
@@ -91,11 +85,9 @@ public class Bird extends Walker {
 
     /**
      * when bird collide with coins this method called
-     * increasing coins
-     *
-     * @param coins - num of collected coins
+     * plays ding sound
      */
-    public void incCoins(int coins) {
+    public void sayDing() {
         if (coinSound != null) coinSound.play();
     }
 

@@ -1,6 +1,8 @@
 package game;
 
-import city.cs.engine.*;
+import city.cs.engine.BodyImage;
+import city.cs.engine.PolygonShape;
+import city.cs.engine.Shape;
 import org.jbox2d.common.Vec2;
 
 import java.util.Random;
@@ -22,6 +24,7 @@ public class Heart extends Asset {
 
     /**
      * Constructor for heart
+     *
      * @param factory (AssetFactoru) creating hearts
      */
     public Heart(AssetFactory factory) {

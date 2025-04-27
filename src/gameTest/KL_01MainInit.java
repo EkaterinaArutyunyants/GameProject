@@ -14,11 +14,11 @@ import java.io.File;
 import java.io.IOException;
 
 public class KL_01MainInit {
-    private static int width=1024;
+    private static int width = 1024;
     private static int height = 800;
     public static SoundClip pickupJumpSound; //описание переменной
 
-    private static WorldView createWorld(){
+    private static WorldView createWorld() {
         World world = new World(); //создаем контейнер world
 
         //platform _
@@ -37,60 +37,61 @@ public class KL_01MainInit {
         platformRight.setFillColor(Color.GREEN);
 
         //first character
-        DynamicBody character = new DynamicBody(world, new BoxShape(1,2));
-        character.setPosition(new Vec2(7,-9)); //по х, у позиция
+        DynamicBody character = new DynamicBody(world, new BoxShape(1, 2));
+        character.setPosition(new Vec2(7, -9)); //по х, у позиция
         character.addImage(new BodyImage("data/student.png", 4)); //("ссылка", высота)
-        character.setLinearVelocity(new Vec2(-6,0)); //скорость по х, у !непостоянная скорость
+        character.setLinearVelocity(new Vec2(-6, 0)); //скорость по х, у !непостоянная скорость
         character.setName("boy");
         createJumpSound();
 
         //second character
-        DynamicBody secCharacter = new DynamicBody(world, new BoxShape(1,2));
-        secCharacter.setPosition(new Vec2(-7,-9));
+        DynamicBody secCharacter = new DynamicBody(world, new BoxShape(1, 2));
+        secCharacter.setPosition(new Vec2(-7, -9));
         secCharacter.addImage(new BodyImage("data/books.png", 4));
-        secCharacter.setLinearVelocity(new Vec2(6,0));
+        secCharacter.setLinearVelocity(new Vec2(6, 0));
         secCharacter.setName("books");
 
 
         return new UserView(world, width, height);
     }
 
-    private static void createAndStartGame(){
+    private static void createAndStartGame() {
         WorldView view = createWorld();
         JComponent viewWithBackground = addBackground2View(view); //вызываем background (swing)
         playBacksound(); //вызываем sound
         //у view есть world -> берем world в котором есть character, берем character, index)
         KeyListener listener = new KeyboardHandlerTest(view.getWorld().getDynamicBodies().get(1));
-        wrapWithSwingAndShow(viewWithBackground,listener); //обертываем в swing
+        wrapWithSwingAndShow(viewWithBackground, listener); //обертываем в swing
         view.getWorld().start(); //запускаем симуляцию (DinamicBody работает)
     }
 
-    private static JComponent addBackground2View(WorldView view){ //берет пар-р view
+    private static JComponent addBackground2View(WorldView view) { //берет пар-р view
         try {
             //layered pane
             JLayeredPane layeredPane = new JLayeredPane(); //как сэндвич
             layeredPane.setOpaque(false); //прозрачность
-            layeredPane.setPreferredSize(new Dimension(width,height)); //размер
+            layeredPane.setPreferredSize(new Dimension(width, height)); //размер
 
             //view объекты (чел)
-            layeredPane.add(view,0); //индекс от 0 чем больше тем дальше
+            layeredPane.add(view, 0); //индекс от 0 чем больше тем дальше
             view.setOpaque(false);
             view.setBounds(0, 0, width, height); //прямоуг resize от коорд. до width height в px
 
             //backImage считываем
             BufferedImage backImage = ImageIO.read(new File("data/background.jpg"));
             JLabel background = new JLabel(new ImageIcon(backImage)); //берем компонент JLabel и заполняем туда img
-            layeredPane.add(background,1); //background дальше чем view
+            layeredPane.add(background, 1); //background дальше чем view
             background.setBounds(0, 0, width, height);
             return layeredPane;
 
         } catch (IOException e) {
             System.err.println(e);
-        };
+        }
+        ;
         return view;
     }
 
-    private static void playBacksound(){
+    private static void playBacksound() {
         try {
             SoundClip pickupSound = new SoundClip("data/backsound.wav"); //класс SoundClip - загружаем туда файл звука
             pickupSound.setVolume(.05); //задаем громкость
@@ -105,7 +106,7 @@ public class KL_01MainInit {
         }
     }
 
-    public static void createJumpSound(){
+    public static void createJumpSound() {
         try {
             pickupJumpSound = new SoundClip("data/jumpSound.wav"); //класс SoundClip - загружаем туда файл звука
             pickupJumpSound.setVolume(.05); //задаем громкость
@@ -119,9 +120,9 @@ public class KL_01MainInit {
         }
     }
 
-    private static void wrapWithSwingAndShow(JComponent view, KeyListener listener){ //(тип пар-р, тип пар-р)
+    private static void wrapWithSwingAndShow(JComponent view, KeyListener listener) { //(тип пар-р, тип пар-р)
         final JFrame frame = new JFrame("KL_01"); //создаем frame + название
-        frame.setSize(width,height); //задаем размер
+        frame.setSize(width, height); //задаем размер
         frame.add(view); //в созданный view добавляем frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);

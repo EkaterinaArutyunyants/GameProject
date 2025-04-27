@@ -14,13 +14,14 @@ import java.util.Random;
  * appears at the screen at the random vertical position
  */
 public class Alien extends Asset {
-    private static final Shape shape = new PolygonShape(-1.18f,1.32f, 0.96f,1.32f, 1.59f,-0.77f, -0.09f,-1.09f, -1.77f,-0.74f);
+    private static final Shape shape = new PolygonShape(-1.18f, 1.32f, 0.96f, 1.32f, 1.59f, -0.77f, -0.09f, -1.09f, -1.77f, -0.74f);
     private static final BodyImage image = new BodyImage("data/level3/alien.gif", 4);
     private static final Random random = new Random();
     private static final float y_max = 15f;
 
     /**
      * Constructor for alien
+     *
      * @param factory created alien
      */
     public Alien(AssetFactory factory) {

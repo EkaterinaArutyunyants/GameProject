@@ -1,6 +1,5 @@
 package game.level1;
 
-import city.cs.engine.World;
 import game.AssetFactory;
 import game.BasicLevel;
 
@@ -16,12 +15,13 @@ public class PipeFactory extends AssetFactory {
 
     /**
      * Constructor for pipe factory
-     * @param level for this factory
+     *
+     * @param level         for this factory
      * @param creationDelay time between creating each pipe
      */
     public PipeFactory(BasicLevel level, int creationDelay) {
         // Integer.MAX_VALUE maxCount for unlimited pipes
-        super(level, creationDelay,Integer.MAX_VALUE);
+        super(level, creationDelay, Integer.MAX_VALUE);
     }
 
     /**

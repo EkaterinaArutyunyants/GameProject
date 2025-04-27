@@ -14,14 +14,15 @@ import java.io.File;
 import java.io.IOException;
 
 public class TestWalker {
-    private static int width=1024;
+    private static int width = 1024;
     private static int height = 800;
 
-    private static  Walker walker;
+    private static Walker walker;
 
     public static class KeyboardHandlerFlip extends KeyAdapter {
         @Override
-        public void keyPressed(KeyEvent e){}
+        public void keyPressed(KeyEvent e) {
+        }
 
         @Override
         public void keyReleased(KeyEvent e) {
@@ -46,7 +47,7 @@ public class TestWalker {
     }
 
 
-    private static WorldView createWorld(){
+    private static WorldView createWorld() {
         World world = new World(); //создаем контейнер world
 
         //platform _
@@ -67,52 +68,52 @@ public class TestWalker {
         //first character
 
         walker = new Walker(world, new BoxShape(1f, 2f));
-        walker.setPosition(new Vec2(7,-2)); //по х, у позиция
+        walker.setPosition(new Vec2(7, -2)); //по х, у позиция
         walker.addImage(new BodyImage("data/student.png", 4)); //("ссылка", высота)
-
 
 
         return new UserView(world, width, height);
     }
 
-    private static void createAndStartGame(){
+    private static void createAndStartGame() {
         WorldView view = createWorld();
         JComponent viewWithBackground = addBackground2View(view); //вызываем background (swing)
         //playBacksound(); //вызываем sound
         //у view есть world -> берем world в котором есть character, берем character, index)
         KeyListener listener = new KeyboardHandlerFlip();
-        wrapWithSwingAndShow(viewWithBackground,listener); //обертываем в swing
+        wrapWithSwingAndShow(viewWithBackground, listener); //обертываем в swing
         view.getWorld().start(); //запускаем симуляцию (DinamicBody работает)
     }
 
-    private static JComponent addBackground2View(WorldView view){ //берет пар-р view
+    private static JComponent addBackground2View(WorldView view) { //берет пар-р view
         try {
             //layered pane
             JLayeredPane layeredPane = new JLayeredPane(); //как сэндвич
             layeredPane.setOpaque(false); //прозрачность
-            layeredPane.setPreferredSize(new Dimension(width,height)); //размер
+            layeredPane.setPreferredSize(new Dimension(width, height)); //размер
 
             //view объекты (чел)
-            layeredPane.add(view,0); //индекс от 0 чем больше тем дальше
+            layeredPane.add(view, 0); //индекс от 0 чем больше тем дальше
             view.setOpaque(false);
             view.setBounds(0, 0, width, height); //прямоуг resize от коорд. до width height в px
 
             //backImage считываем
             BufferedImage backImage = ImageIO.read(new File("data/background.jpg"));
             JLabel background = new JLabel(new ImageIcon(backImage)); //берем компонент JLabel и заполняем туда img
-            layeredPane.add(background,1); //background дальше чем view
+            layeredPane.add(background, 1); //background дальше чем view
             background.setBounds(0, 0, width, height);
             return layeredPane;
 
         } catch (IOException e) {
             System.err.println(e);
-        };
+        }
+        ;
         return view;
     }
 
-    private static void wrapWithSwingAndShow(JComponent view, KeyListener listener){ //(тип пар-р, тип пар-р)
+    private static void wrapWithSwingAndShow(JComponent view, KeyListener listener) { //(тип пар-р, тип пар-р)
         final JFrame frame = new JFrame("KL_01"); //создаем frame + название
-        frame.setSize(width,height); //задаем размер
+        frame.setSize(width, height); //задаем размер
         frame.add(view); //в созданный view добавляем frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);

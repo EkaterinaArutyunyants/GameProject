@@ -2,7 +2,6 @@ package game.level1;
 
 import city.cs.engine.BodyImage;
 import city.cs.engine.CollisionEvent;
-import city.cs.engine.SensorEvent;
 import game.BasicLevel;
 import game.Bird;
 import game.BirdGame;
@@ -25,8 +24,9 @@ public class Level1 extends BasicLevel {
 
     /**
      * Constructor for level1
-     * @param game controller
-     * @param name of this level
+     *
+     * @param game        controller
+     * @param name        of this level
      * @param targetScore score to win level
      */
     public Level1(BirdGame game, String name, int targetScore) {
@@ -76,9 +76,11 @@ public class Level1 extends BasicLevel {
         };
 
     }
+
     /**
      * COLLISION for specified objects of level1
      * common are in {@link game.BasicLevel#collide(CollisionEvent collisionEvent) BasicLevel.collide} method.
+     *
      * @param collisionEvent
      */
     @Override

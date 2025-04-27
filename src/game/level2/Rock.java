@@ -18,13 +18,14 @@ public class Rock extends Asset {
 
     /**
      * Constructor for rock
-     * @param factory which is creating rock
+     *
+     * @param factory    which is creating rock
      * @param halfHeight of rock
      */
     public Rock(AssetFactory factory, float halfHeight) {
-        super(factory,new BoxShape(halfWidth, halfHeight));
+        super(factory, new BoxShape(halfWidth, halfHeight));
         addImage(new BodyImage("data/level2/rock.png", halfHeight * scale));
-        setPosition(new Vec2(35, yTop +halfHeight));
+        setPosition(new Vec2(35, yTop + halfHeight));
         setGravityScale(0f); //doesnt fall
         setLinearVelocity(new Vec2(vx, 0)); //moves horizontally
         setAngleDegrees(0f);

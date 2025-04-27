@@ -1,7 +1,5 @@
 package game;
 
-import city.cs.engine.World;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,25 +16,27 @@ public abstract class AssetFactory implements ActionListener {
 
     /**
      * Constructor for asset factory
-     * @param level for this factory
+     *
+     * @param level         for this factory
      * @param creationDelay - time between creating each asset
-     * @param maxCount - max asset num
+     * @param maxCount      - max asset num
      */
-    public AssetFactory(BasicLevel level, int creationDelay, int maxCount){
-        this(level,0, creationDelay,maxCount);
+    public AssetFactory(BasicLevel level, int creationDelay, int maxCount) {
+        this(level, 0, creationDelay, maxCount);
     }
 
     /**
      * Constructor for asset factory
-     * @param level for this factory
-     * @param initialDelay waiting time before creating first asset
+     *
+     * @param level         for this factory
+     * @param initialDelay  waiting time before creating first asset
      * @param creationDelay time between creating each asset
      * @param maxCount
      */
     public AssetFactory(BasicLevel level, int initialDelay, int creationDelay, int maxCount) {
         this.maxCount = maxCount;
         this.level = level;
-        timer = new Timer(creationDelay,this);
+        timer = new Timer(creationDelay, this);
         timer.setInitialDelay(initialDelay);
     }
 
@@ -62,7 +62,7 @@ public abstract class AssetFactory implements ActionListener {
     /**
      * starts the timer for creating asset
      */
-    public void start(){
+    public void start() {
         if (!timer.isRunning()) {
             timer.start();
         }
@@ -71,7 +71,7 @@ public abstract class AssetFactory implements ActionListener {
     /**
      * stops the timer
      */
-    public void stop(){
+    public void stop() {
         if (timer.isRunning()) {
             timer.stop();
         }
@@ -80,12 +80,13 @@ public abstract class AssetFactory implements ActionListener {
     /**
      * calling this method to decrease asset count when asset is destroyed
      */
-    public void decCount(){
+    public void decCount() {
         count--;
     }
 
     /**
      * method to return level
+     *
      * @return level of this factory
      */
     public BasicLevel getLevel() {

@@ -1,6 +1,9 @@
 package game.level1;
 
-import city.cs.engine.*;
+import city.cs.engine.AttachedImage;
+import city.cs.engine.BodyImage;
+import city.cs.engine.BoxShape;
+import city.cs.engine.SolidFixture;
 import game.Asset;
 import game.AssetFactory;
 import org.jbox2d.common.Vec2;
@@ -20,8 +23,9 @@ public class Pipe extends Asset {
 
     /**
      * Constructor for pipe
+     *
      * @param factory creating pipe
-     * @param holeUp vertical pos of holes between pipes
+     * @param holeUp  vertical pos of holes between pipes
      */
     public Pipe(AssetFactory factory, float holeUp) {
         super(factory); //parent
@@ -53,7 +57,7 @@ public class Pipe extends Asset {
     }
 
     /**
-     *  after collision restoring velocity
+     * after collision restoring velocity
      */
     public void restoreStateAfterCollision() {
         setLinearVelocity(new Vec2(vx, 0));

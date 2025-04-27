@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class TestDestroy {
-    private static int width=1024;
+    private static int width = 1024;
     private static int height = 800;
 
     public static SoundClip pickupJumpSound; //описание переменной
@@ -34,7 +34,7 @@ public class TestDestroy {
         @Override
         //функция кей прессед
         public void keyPressed(KeyEvent e) {
-            System.out.println("keyPressed("+e+")");
+            System.out.println("keyPressed(" + e + ")");
         }
 
         //функция кей релисд
@@ -70,7 +70,7 @@ public class TestDestroy {
         }
     }
 
-    private static WorldView createWorld(){
+    private static WorldView createWorld() {
         World world = new World(); //создаем контейнер world
 
         //platform _
@@ -89,10 +89,10 @@ public class TestDestroy {
         platformRight.setFillColor(Color.GREEN);
 
         //first character
-        character = new DynamicBody(world, new BoxShape(1,2));
-        character.setPosition(new Vec2(7,-9)); //по х, у позиция
+        character = new DynamicBody(world, new BoxShape(1, 2));
+        character.setPosition(new Vec2(7, -9)); //по х, у позиция
         character.addImage(new BodyImage("data/student.png", 4)); //("ссылка", высота)
-        character.setLinearVelocity(new Vec2(-6,0)); //скорость по х, у !непостоянная скорость
+        character.setLinearVelocity(new Vec2(-6, 0)); //скорость по х, у !непостоянная скорость
         character.setName("boy");
         createJumpSound();
         character.setAlwaysOutline(true);
@@ -110,15 +110,15 @@ public class TestDestroy {
         StepListener stepListener = new StepListener() {
             @Override
             public void preStep(StepEvent stepEvent) {
-               if (redBallCounter < maxRedBallCounter && nextRedBallTime < System.currentTimeMillis()) {
-                   DynamicBody redBall = new DynamicBody(world, new CircleShape(0.2f));
-                   redBall.setPosition(new Vec2(-10, -9));
-                   redBall.setFillColor(Color.RED);
-                   redBall.setLinearVelocity(new Vec2(5, 0f));
-                   redBall.setName("redBall");
-                   redBallCounter++;
-                   nextRedBallTime = System.currentTimeMillis() + 2000;
-               }
+                if (redBallCounter < maxRedBallCounter && nextRedBallTime < System.currentTimeMillis()) {
+                    DynamicBody redBall = new DynamicBody(world, new CircleShape(0.2f));
+                    redBall.setPosition(new Vec2(-10, -9));
+                    redBall.setFillColor(Color.RED);
+                    redBall.setLinearVelocity(new Vec2(5, 0f));
+                    redBall.setName("redBall");
+                    redBallCounter++;
+                    nextRedBallTime = System.currentTimeMillis() + 2000;
+                }
                 if (yellowBallCounter < maxYellowBallCounter && nextYellowBallTime < System.currentTimeMillis()) {
                     DynamicBody yellowBall = new DynamicBody(world, new CircleShape(0.2f));
                     yellowBall.setPosition(new Vec2(-10, -9));
@@ -169,42 +169,43 @@ public class TestDestroy {
         return new UserView(world, width, height);
     }
 
-    private static void createAndStartGame(){
+    private static void createAndStartGame() {
         WorldView view = createWorld();
         JComponent viewWithBackground = addBackground2View(view); //вызываем background (swing)
         //playBacksound(); //вызываем sound
         //у view есть world -> берем world в котором есть character, берем character, index)
         KeyListener listener = new KeyboardHandlerFlip();
-        wrapWithSwingAndShow(viewWithBackground,listener); //обертываем в swing
+        wrapWithSwingAndShow(viewWithBackground, listener); //обертываем в swing
         view.getWorld().start(); //запускаем симуляцию (DinamicBody работает)
     }
 
-    private static JComponent addBackground2View(WorldView view){ //берет пар-р view
+    private static JComponent addBackground2View(WorldView view) { //берет пар-р view
         try {
             //layered pane
             JLayeredPane layeredPane = new JLayeredPane(); //как сэндвич
             layeredPane.setOpaque(false); //прозрачность
-            layeredPane.setPreferredSize(new Dimension(width,height)); //размер
+            layeredPane.setPreferredSize(new Dimension(width, height)); //размер
 
             //view объекты (чел)
-            layeredPane.add(view,0); //индекс от 0 чем больше тем дальше
+            layeredPane.add(view, 0); //индекс от 0 чем больше тем дальше
             view.setOpaque(false);
             view.setBounds(0, 0, width, height); //прямоуг resize от коорд. до width height в px
 
             //backImage считываем
             BufferedImage backImage = ImageIO.read(new File("data/background.jpg"));
             JLabel background = new JLabel(new ImageIcon(backImage)); //берем компонент JLabel и заполняем туда img
-            layeredPane.add(background,1); //background дальше чем view
+            layeredPane.add(background, 1); //background дальше чем view
             background.setBounds(0, 0, width, height);
             return layeredPane;
 
         } catch (IOException e) {
             System.err.println(e);
-        };
+        }
+        ;
         return view;
     }
 
-    private static void playBacksound(){
+    private static void playBacksound() {
         try {
             SoundClip pickupSound = new SoundClip("data/backsound.wav"); //класс SoundClip - загружаем туда файл звука
             pickupSound.setVolume(.05); //задаем громкость
@@ -219,7 +220,7 @@ public class TestDestroy {
         }
     }
 
-    public static void createJumpSound(){
+    public static void createJumpSound() {
         try {
             pickupJumpSound = new SoundClip("data/jumpSound.wav"); //класс SoundClip - загружаем туда файл звука
             pickupJumpSound.setVolume(.05); //задаем громкость
@@ -233,9 +234,9 @@ public class TestDestroy {
         }
     }
 
-    private static void wrapWithSwingAndShow(JComponent view, KeyListener listener){ //(тип пар-р, тип пар-р)
+    private static void wrapWithSwingAndShow(JComponent view, KeyListener listener) { //(тип пар-р, тип пар-р)
         final JFrame frame = new JFrame("KL_01"); //создаем frame + название
-        frame.setSize(width,height); //задаем размер
+        frame.setSize(width, height); //задаем размер
         frame.add(view); //в созданный view добавляем frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);

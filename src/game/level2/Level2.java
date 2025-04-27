@@ -1,22 +1,21 @@
 package game.level2;
 
-import city.cs.engine.Body;
 import city.cs.engine.BodyImage;
 import city.cs.engine.CollisionEvent;
-import city.cs.engine.SensorEvent;
-import game.*;
+import game.AssetFactory;
+import game.BasicLevel;
+import game.Bird;
+import game.BirdGame;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Level2 class - level 2 of the game
  * enemies added, new background, new bird
- *
+ * <p>
  * REQ: extensions: inheritance + encapsulation (superclass, subclass)
  */
 public class Level2 extends BasicLevel {
@@ -26,8 +25,9 @@ public class Level2 extends BasicLevel {
 
     /**
      * Constructor for level2
-     * @param game controller
-     * @param name of level
+     *
+     * @param game        controller
+     * @param name        of level
      * @param targetScore score to win
      */
     public Level2(BirdGame game, String name, int targetScore) {
@@ -39,8 +39,8 @@ public class Level2 extends BasicLevel {
         background = new ImageIcon("data/level2/dessertBackground.jpeg").getImage();
 
         //FACTORIES:
-        factories.add(new CactusFactory(this, 4000,6f,12f));
-        factories.add(new RockFactory(this, 4000,6f,12f));
+        factories.add(new CactusFactory(this, 4000, 6f, 12f));
+        factories.add(new RockFactory(this, 4000, 6f, 12f));
         factories.add(new AssetFactory(this, 17000, 3) {
             @Override
             protected void createAsset() {
@@ -95,6 +95,7 @@ public class Level2 extends BasicLevel {
     /**
      * COLLISION for specified objects of level2
      * common are in {@link game.BasicLevel#collide(CollisionEvent collisionEvent) BasicLevel.collide} method.
+     *
      * @param collisionEvent
      */
     @Override

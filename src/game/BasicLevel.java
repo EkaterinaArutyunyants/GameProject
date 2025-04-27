@@ -1,18 +1,10 @@
 package game;
 
-import city.cs.engine.Body;
-import city.cs.engine.BoxShape;
-import city.cs.engine.CollisionEvent;
-import city.cs.engine.CollisionListener;
-import city.cs.engine.SensorEvent;
-import city.cs.engine.SensorListener;
-import city.cs.engine.SoundClip;
-import city.cs.engine.StaticBody;
+import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-
 import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.util.*;
@@ -20,7 +12,7 @@ import java.util.*;
 /**
  * Basic level class - everything that is related to each level
  * objects creation through factory, collision, sensor for all levels
- *
+ * <p>
  * REQ: extensions: inheritance + encapsulation (superclass, subclass)
  */
 public class BasicLevel extends WorldWithBackground implements CollisionListener, SensorListener {
@@ -43,8 +35,9 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
 
     /**
      * Constructor for BasicLevel
-     * @param game controller
-     * @param name of the level
+     *
+     * @param game        controller
+     * @param name        of the level
      * @param targetScore required to complete level with success
      */
     public BasicLevel(BirdGame game, String name, int targetScore) {
@@ -54,14 +47,14 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
 
         //setting random initial delay for objects (heart, coin)
         //Heart factory
-        factories.add(new AssetFactory(this,  random.nextInt(9000),9000, 3) {
+        factories.add(new AssetFactory(this, random.nextInt(9000), 9000, 3) {
             @Override
             protected void createAsset() {
                 new Heart(this);
             }
         });
         //Coin factory
-        factories.add(new AssetFactory(this, random.nextInt(11000),11000, 3) {
+        factories.add(new AssetFactory(this, random.nextInt(11000), 11000, 3) {
             @Override
             protected void createAsset() {
                 new Coin(this, 1);
@@ -95,9 +88,15 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
             score += coin.getCoinAmount();
             if (score >= targetScore) complete();
             coin.destroy();
+            if (collisionEvent.getReportingBody() instanceof Bird bird) {
+                bird.sayDing();
+            }
         } else if (collisionEvent.getOtherBody() instanceof Heart heart) {
             health++;
             heart.destroy();
+            if (collisionEvent.getReportingBody() instanceof Bird bird) {
+                bird.incHealth();
+            }
         } else if (RIP.equals(collisionEvent.getOtherBody())) {
             complete();
         } else {
@@ -107,20 +106,21 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
 
     @Override
     public void beginContact(SensorEvent sensorEvent) {
-        System.out.println("beginContact("+sensorEvent+")");
+        System.out.println("beginContact(" + sensorEvent + ")");
     }
 
     /**
      * Processing sensor for bird in BasicLevel because in bird there are no info for our handle
+     *
      * @param sensorEvent
      */
     @Override
     public void endContact(SensorEvent sensorEvent) {
-        System.out.println("endContact("+sensorEvent+")");
+        System.out.println("endContact(" + sensorEvent + ")");
         if (sensorEvent.getSensor().getBody() instanceof Bird && !RIP.equals(sensorEvent.getContactBody())) {
             sensorEvent.getContactBody().destroy();
         } else {
-            System.out.println("endContact("+sensorEvent+")");
+            System.out.println("endContact(" + sensorEvent + ")");
         }
     }
 
@@ -147,7 +147,7 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
      * start level and all asset factories
      */
     @Override
-    public void start(){
+    public void start() {
         super.start();
         factories.forEach(AssetFactory::start);
     }
@@ -156,7 +156,7 @@ public class BasicLevel extends WorldWithBackground implements CollisionListener
      * stop level and all asset factories
      */
     @Override
-    public void stop(){
+    public void stop() {
         factories.forEach(AssetFactory::stop);
         super.stop();
     }

@@ -46,9 +46,9 @@ public class BirdGame {
      *
      * @param oldLevel - level that just been completed
      */
-    public void completeLevel(BasicLevel oldLevel){
-        System.out.println("completeLevel("+oldLevel.getName()+")");
-        for (var listener :  view.getKeyListeners())
+    public void completeLevel(BasicLevel oldLevel) {
+        System.out.println("completeLevel(" + oldLevel.getName() + ")");
+        for (var listener : view.getKeyListeners())
             view.removeKeyListener(listener);
         view.setWorld(selector);
         selector.start();
@@ -60,9 +60,9 @@ public class BirdGame {
      *
      * @param index of level (0 - level1)
      */
-    public void startLevel(int index){
-        System.out.println("startLevel("+index+")");
-        for (var listener :  view.getKeyListeners())
+    public void startLevel(int index) {
+        System.out.println("startLevel(" + index + ")");
+        for (var listener : view.getKeyListeners())
             view.removeKeyListener(listener);
         var level = createLevel(index); //creating level by index
         view.setWorld(level); //view displays level
@@ -74,6 +74,7 @@ public class BirdGame {
 
     /**
      * create level (depends on index)
+     *
      * @param index of level
      * @return index of level
      */
@@ -89,9 +90,11 @@ public class BirdGame {
     /**
      * game app terminates
      */
-    public void exitGame(){
+    public void exitGame() {
         System.exit(0);
-    };
+    }
+
+    ;
 
     /**
      * starts current level
@@ -134,6 +137,7 @@ public class BirdGame {
 
     /**
      * main method
+     *
      * @param args arguments
      */
     public static void main(String[] args) {

@@ -6,6 +6,7 @@ import java.awt.*;
 
 public class WorldWithBackground extends World {
     protected Image background;
+
     public Image getBackground() {
         return background;
     }

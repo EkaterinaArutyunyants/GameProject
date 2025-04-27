@@ -1,7 +1,6 @@
 package game.level3;
 
 import city.cs.engine.BodyImage;
-import city.cs.engine.BoxShape;
 import city.cs.engine.CircleShape;
 import game.Asset;
 import game.AssetFactory;
@@ -19,13 +18,14 @@ public class Planet extends Asset {
 
     /**
      * Constructor for planet
-     * @param factory created this planet
+     *
+     * @param factory    created this planet
      * @param halfHeight of planet
      */
     public Planet(AssetFactory factory, float halfHeight) {
-        super(factory,new CircleShape(halfWidth));
+        super(factory, new CircleShape(halfWidth));
         addImage(new BodyImage("data/level3/planet.png", halfHeight * scale));
-        setPosition(new Vec2(35, yTop +halfHeight));
+        setPosition(new Vec2(35, yTop + halfHeight));
         setGravityScale(0f);
         setLinearVelocity(new Vec2(vx, 0));
         setAngleDegrees(0f);

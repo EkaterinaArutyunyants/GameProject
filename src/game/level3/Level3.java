@@ -2,7 +2,6 @@ package game.level3;
 
 import city.cs.engine.BodyImage;
 import city.cs.engine.CollisionEvent;
-
 import game.AssetFactory;
 import game.BasicLevel;
 import game.Bird;
@@ -26,8 +25,9 @@ public class Level3 extends BasicLevel {
 
     /**
      * Constructor for level3
-     * @param game controller
-     * @param name for level
+     *
+     * @param game        controller
+     * @param name        for level
      * @param targetScore score to win
      */
     public Level3(BirdGame game, String name, int targetScore) {
@@ -37,9 +37,9 @@ public class Level3 extends BasicLevel {
         background = new ImageIcon("data/level3/moonBackground.jpg").getImage();
 
         //FACTORIES:
-        factories.add(new RocketFactory(this, 4000,6f,12f));
-        factories.add(new PlanetFactory(this, 4000,6f,12f));
-        factories.add(new TeleportFactory(this, 10000, 10f,15f));
+        factories.add(new RocketFactory(this, 4000, 6f, 12f));
+        factories.add(new PlanetFactory(this, 4000, 6f, 12f));
+        factories.add(new TeleportFactory(this, 10000, 10f, 15f));
         factories.add(new AssetFactory(this, 17000, 3) {
             @Override
             protected void createAsset() {
@@ -89,6 +89,7 @@ public class Level3 extends BasicLevel {
     /**
      * COLLISION for specified objects of level3
      * common are in {@link game.BasicLevel#collide(CollisionEvent collisionEvent) BasicLevel.collide} method.
+     *
      * @param collisionEvent
      */
     @Override

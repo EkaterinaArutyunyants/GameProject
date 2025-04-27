@@ -9,13 +9,14 @@ import game.RandomAssetFactory;
 public class RockFactory extends RandomAssetFactory {
     /**
      * Constructor for RockFactory
-     * @param level of this factory
+     *
+     * @param level         of this factory
      * @param creationDelay time between each rock created
-     * @param minValue - min rock half height
-     * @param maxValue - max rock half height
+     * @param minValue      - min rock half height
+     * @param maxValue      - max rock half height
      */
     public RockFactory(BasicLevel level, int creationDelay, float minValue, float maxValue) {
-        super(level, creationDelay,Integer.MAX_VALUE,minValue,maxValue);
+        super(level, creationDelay, Integer.MAX_VALUE, minValue, maxValue);
     }
 
     /**

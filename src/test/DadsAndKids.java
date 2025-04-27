@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DadsAndKids {
-    static class Person{
+    static class Person {
         String name;
         String secName;
         int age;
@@ -15,6 +15,7 @@ public class DadsAndKids {
             this.age = age;
         }
     }
+
     public static void main(String[] args) {
         List<Person> people = new ArrayList<>();
         people.add(new Person("Филипп", "Иван", 38));
@@ -22,18 +23,20 @@ public class DadsAndKids {
         people.add(new Person("Максим", "Иван", 14));
         people.add(new Person("Иван", "Алексей", 56));
 
-        for(Person person : people) {
+        for (Person person : people) {
             printKids(person, people);
             printYungest(person, people);
         }
     }
+
     static void printKids(Person dad, List<Person> people) {
-        for(Person person : people) {
+        for (Person person : people) {
             if (dad.name.equals(person.secName)) {
                 System.out.println("Kid name: " + person.name + " dad name: " + dad.name);
             }
         }
     }
+
     static void printYungest(Person dad, List<Person> people) {
         Person youngest = null;
         for (Person person : people) {

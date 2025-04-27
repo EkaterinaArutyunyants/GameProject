@@ -1,9 +1,7 @@
 package game.level2;
 
-import city.cs.engine.AttachedImage;
 import city.cs.engine.BodyImage;
 import city.cs.engine.BoxShape;
-import city.cs.engine.SolidFixture;
 import game.Asset;
 import game.AssetFactory;
 import org.jbox2d.common.Vec2;
@@ -19,13 +17,14 @@ public class Cactus extends Asset {
 
     /**
      * Constructor for cactus
-     * @param factory creates cactus
+     *
+     * @param factory    creates cactus
      * @param halfHeight of cactus (visual and collision)
      */
     public Cactus(AssetFactory factory, float halfHeight) {
-        super(factory,new BoxShape(halfWidth, halfHeight));
+        super(factory, new BoxShape(halfWidth, halfHeight));
         addImage(new BodyImage("data/level2/cactusDown.png", halfHeight * scale));
-        setPosition(new Vec2(35, yGround+halfHeight));
+        setPosition(new Vec2(35, yGround + halfHeight));
         setGravityScale(0f);
         setLinearVelocity(new Vec2(vx, 0));
         setAngleDegrees(0f);

@@ -18,13 +18,14 @@ public class Rocket extends Asset {
 
     /**
      * Constructor for rocket
-     * @param factory created rocket
+     *
+     * @param factory    created rocket
      * @param halfHeight of rocket
      */
     public Rocket(AssetFactory factory, float halfHeight) {
-        super(factory,new BoxShape(halfWidth, halfHeight));
+        super(factory, new BoxShape(halfWidth, halfHeight));
         addImage(new BodyImage("data/level3/rocketDown.png", halfHeight * scale));
-        setPosition(new Vec2(35, yGround+halfHeight));
+        setPosition(new Vec2(35, yGround + halfHeight));
         setGravityScale(0f);
         setLinearVelocity(new Vec2(vx, 0));
         setAngleDegrees(0f);

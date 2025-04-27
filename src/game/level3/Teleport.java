@@ -20,21 +20,22 @@ public class Teleport extends Asset implements SensorListener {
     //constants for wall and holes positioning
     private static final float ySky = 10f, halfWallWidth = 1.5f / 2; //wall height, half of wall width
     //half height of hole; X position og the right hole
-    private static final float holeHalfHeight=2f, rightHoleDistanceX=halfWallWidth +holeHalfHeight+2f;
-    private static final float holeScale=1.5f,wallScale=5f; //scaling for images
+    private static final float holeHalfHeight = 2f, rightHoleDistanceX = halfWallWidth + holeHalfHeight + 2f;
+    private static final float holeScale = 1.5f, wallScale = 5f; //scaling for images
     private static float vx = -7f; //teleporting hole velocity
 
     //position of the right hole relative to wall
-    private final Vec2 rightHoleCenter= new Vec2(rightHoleDistanceX, 0);
+    private final Vec2 rightHoleCenter = new Vec2(rightHoleDistanceX, 0);
 
     /**
      * Constructor for teleport
-     * @param factory for creating teleport object
+     *
+     * @param factory           for creating teleport object
      * @param leftHoleDistanceX X coord of the left teleport hole
      * @param leftHoleDistanceY Y coord of the left teleport hole
      */
-    public Teleport(AssetFactory factory,float leftHoleDistanceX,float leftHoleDistanceY) {
-        super(factory, new BoxShape(halfWallWidth,ySky));
+    public Teleport(AssetFactory factory, float leftHoleDistanceX, float leftHoleDistanceY) {
+        super(factory, new BoxShape(halfWallWidth, ySky));
 
         //position of the left hole
         Vec2 leftHoleCenter = new Vec2(-leftHoleDistanceX, leftHoleDistanceY);
@@ -67,18 +68,20 @@ public class Teleport extends Asset implements SensorListener {
      * Processing sensor in this class because here are all info for our handle.
      * when something touches the teleport sensor, this method checks if it's a Bird
      * If the Bird enters the left hole, it gets teleported to the right hole
+     *
      * @param sensorEvent The event triggered when something touches the sensor
      */
     @Override
     public void beginContact(SensorEvent sensorEvent) {
-        if ((sensorEvent.getSensor().getBody() instanceof Teleport teleport) && (sensorEvent.getContactBody() instanceof Bird bird)){
+        if ((sensorEvent.getSensor().getBody() instanceof Teleport teleport) && (sensorEvent.getContactBody() instanceof Bird bird)) {
             //teleport the bird to the right hole position
             bird.setPosition(teleport.getPosition().add(rightHoleCenter));
         } else {
-            System.out.println("beginContact("+ sensorEvent+")");
+            System.out.println("beginContact(" + sensorEvent + ")");
         }
     }
 
     @Override
-    public void endContact(SensorEvent sensorEvent) {}
+    public void endContact(SensorEvent sensorEvent) {
+    }
 }

@@ -2,9 +2,7 @@ package game;
 
 import city.cs.engine.BodyImage;
 import city.cs.engine.CircleShape;
-import city.cs.engine.DynamicBody;
 import city.cs.engine.Shape;
-import city.cs.engine.World;
 import org.jbox2d.common.Vec2;
 
 import java.util.Random;
@@ -14,7 +12,7 @@ import java.util.Random;
  * with random vertical position and moving to the left by linear velocity.
  * player can collect coins to increase score.
  */
-public class Coin extends Asset{
+public class Coin extends Asset {
     //circle shape
     private static final Shape shape = new CircleShape(1f);
     //REQ: interesting use of image - GIF
@@ -28,7 +26,8 @@ public class Coin extends Asset{
 
     /**
      * Constructor for coin
-     * @param factory - creating this coin
+     *
+     * @param factory    - creating this coin
      * @param coinAmount - value of the collected coin
      */
     public Coin(AssetFactory factory, int coinAmount) {
@@ -43,6 +42,7 @@ public class Coin extends Asset{
 
     /**
      * getter method for score value
+     *
      * @return amount of points which coin gives
      */
     public int getCoinAmount() {

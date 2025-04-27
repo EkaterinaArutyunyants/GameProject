@@ -1,11 +1,6 @@
 package gameTest;
 
-import city.cs.engine.BoxShape;
-import city.cs.engine.DynamicBody;
-import city.cs.engine.StaticBody;
-import city.cs.engine.UserView;
-import city.cs.engine.World;
-import city.cs.engine.WorldView;
+import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
@@ -14,9 +9,8 @@ import java.awt.event.KeyListener;
 import java.util.Objects;
 
 public class TestGravity {
-    private static int width=1024;
+    private static int width = 1024;
     private static int height = 800;
-
 
 
     private static WorldView createWorld() {
@@ -37,7 +31,7 @@ public class TestGravity {
         //right platform
         StaticBody platformRight = new StaticBody(world, new BoxShape(0.5f, 5f));
         platformRight.setFillColor(Color.GREEN);
-        platformRight.putOn(10.5f,ground);
+        platformRight.putOn(10.5f, ground);
 
         final Image background = new ImageIcon("data/background.jpg").getImage();
         return new UserView(world, width, height) {
@@ -48,18 +42,18 @@ public class TestGravity {
         };
     }
 
-    private static void createAndStartGame(){
+    private static void createAndStartGame() {
         WorldView view = createWorld();
         //playBacksound(); //вызываем sound
         //у view есть world -> берем world в котором есть character, берем character, index)
-        wrapWithSwingAndShow(view,null); //обертываем в swing
+        wrapWithSwingAndShow(view, null); //обертываем в swing
         view.getWorld().start(); //запускаем симуляцию (DinamicBody работает)
     }
 
 
-    private static void wrapWithSwingAndShow(JComponent view, KeyListener listener){ //(тип пар-р, тип пар-р)
+    private static void wrapWithSwingAndShow(JComponent view, KeyListener listener) { //(тип пар-р, тип пар-р)
         final JFrame frame = new JFrame("KL_01"); //создаем frame + название
-        frame.setSize(width,height); //задаем размер
+        frame.setSize(width, height); //задаем размер
         frame.add(view); //в созданный view добавляем frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);

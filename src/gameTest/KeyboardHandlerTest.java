@@ -14,11 +14,12 @@ public class KeyboardHandlerTest extends KeyAdapter {
     @Override
     //функция кей прессед
     public void keyPressed(KeyEvent e) {
-        System.out.println("keyPressed("+e+")");
+        System.out.println("keyPressed(" + e + ")");
     }
 
     //неизмен, итоговый, тип, атрибут
     private final DynamicBody character;
+
     //constructor
     public KeyboardHandlerTest(DynamicBody character) {
         this.character = character;
